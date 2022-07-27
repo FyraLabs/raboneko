@@ -28,10 +28,13 @@ WORKDIR /app
 
 # Copy package.json from build-runner
 COPY --from=build-runner /tmp/app/package.json /app/package.json
+# Copy prisma from build-runner
+COPY --from=build-runner /tmp/app/prisma /app/prisma
 
 # Install dependencies
 RUN npm install -g pnpm
 RUN pnpm install --only=production
+RUN pnpx prisma generate
 
 # Move build files
 COPY --from=build-runner /tmp/app/build /app/build
