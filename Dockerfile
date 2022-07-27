@@ -40,4 +40,4 @@ RUN pnpx prisma generate
 COPY --from=build-runner /tmp/app/build /app/build
 
 # Start bot
-CMD [ "pnpx prisma migrate deploy", "&&", "node", "build/main.js" ]
+CMD [ "pnpx", "prisma", "migrate", "deploy", "&&", "node", "build/main.js" ]
