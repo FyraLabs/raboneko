@@ -9,3 +9,4 @@ bot.db
 # folders
 build
 node_modules
+data
