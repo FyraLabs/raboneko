@@ -3,6 +3,8 @@ services:
   app:
     build: .
     command: node build/main.js
+    volumes:
+      - bot.db:/bot.db
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
       - DATABASE_URL=${DATABASE_URL}
