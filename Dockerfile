@@ -12,6 +12,7 @@ RUN npm install -g pnpm
 RUN pnpm install
 
 # Move source files
+COPY prisma ./prisma
 COPY src ./src
 COPY tsconfig.json   .
 
