@@ -75,7 +75,7 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
   Promise.all(
     Object.entries(grouped).map(async ([product, logs]) => {
       const formatted = await Promise.all(
-        logs.map(async (l) => {
+        [...logs].sort((l1, l2) => l1.createdAt.valueOf() - l2.createdAt.valueOf()).map(async (l) => {
           const guild = await getPrimaryGuild();
           let memberName;
           try {
