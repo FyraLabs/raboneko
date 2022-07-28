@@ -1,3 +1,4 @@
+import { ArgsOf, GuardFunction } from "discordx";
 import { bot } from "./main.js";
 
 export const enumStringsToChoice = (e: Map<number, string>) =>
@@ -11,3 +12,16 @@ export const getPrimaryGuild = () =>
 
 export const getAnnoucementsChannel = () =>
   bot.channels.fetch(process.env.ANNOUNCEMENTS_CHANNEL_ID!);
+
+export const MentionsBot: GuardFunction<ArgsOf<"messageCreate">> = async (
+  [message],
+  client,
+  next
+) => {
+  const me = client.user?.id;
+  if (!me || !message.mentions.has(me)) {
+    return;
+  }
+
+  await next();
+};
