@@ -50,7 +50,7 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.BLOCKER, "Blocker"],
   [LogType.RELEASE, "Release"],
   [LogType.FEATURE, "Feature"],
-  [LogType.IMPROVEMENT, "Feature"],
+  [LogType.IMPROVEMENT, "Improvement"],
   [LogType.BUG_FIX, "Bug Fix"],
   [LogType.OTHER, "Other"],
 ]);
