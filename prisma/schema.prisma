@@ -11,7 +11,7 @@ datasource db {
 }
 
 model ProgressLog {
-  id String @id @default(uuid())
+  id Int @id @default(autoincrement())
   userID String
   createdAt DateTime @default(now())
   type Int

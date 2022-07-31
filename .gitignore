@@ -5,6 +5,8 @@
 package-lock.json
 yarn.lock
 bot.db
+bot.db-journal
+.DS_Store
 
 # folders
 build
