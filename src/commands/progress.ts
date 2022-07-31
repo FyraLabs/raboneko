@@ -24,6 +24,7 @@ enum Product {
   HOMEPAGE,
   PHOTON_BROWSER,
   INTERNAL,
+  RABONEKO,
 }
 
 const productToString: Map<Product, string> = new Map([
@@ -31,6 +32,7 @@ const productToString: Map<Product, string> = new Map([
   [Product.HOMEPAGE, "Homepage"],
   [Product.PHOTON_BROWSER, "photonBrowser"],
   [Product.INTERNAL, "InternalTools"],
+  [Product.RABONEKO, "Raboneko (me :3)"],
 ]);
 
 enum LogType {
@@ -77,19 +79,21 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
   Promise.all(
     Object.entries(grouped).map(async ([product, logs]) => {
       const formatted = await Promise.all(
-        [...logs].sort((l1, l2) => l1.createdAt.valueOf() - l2.createdAt.valueOf()).map(async (l) => {
-          const guild = await getPrimaryGuild();
-          let memberName;
-          try {
-            memberName = (await guild.members.fetch(l.userID)).displayName;
-          } catch {
-            memberName = (await bot.users.fetch(l.userID)).username;
-          }
+        [...logs]
+          .sort((l1, l2) => l1.createdAt.valueOf() - l2.createdAt.valueOf())
+          .map(async (l) => {
+            const guild = await getPrimaryGuild();
+            let memberName;
+            try {
+              memberName = (await guild.members.fetch(l.userID)).displayName;
+            } catch {
+              memberName = (await bot.users.fetch(l.userID)).username;
+            }
 
-          const emoji = logTypeToEmoji.get(l.type);
+            const emoji = logTypeToEmoji.get(l.type);
 
-          return `${memberName} • ${emoji} ${l.summary}`;
-        })
+            return `${memberName} • ${emoji} ${l.summary}`;
+          })
       );
 
       return {
