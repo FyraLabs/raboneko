@@ -95,7 +95,7 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
 
             const emoji = logTypeToEmoji.get(l.type);
 
-            return `${memberName} • ${l.id.toString()} • ${emoji} ${l.summary}`;
+            return `${memberName} • ${emoji} ${l.summary}`;
           })
       );
 
