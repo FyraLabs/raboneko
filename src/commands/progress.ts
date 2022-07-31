@@ -95,7 +95,7 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
 
             const emoji = logTypeToEmoji.get(l.type);
 
-            return `${memberName} • ${emoji} ${l.summary}`;
+            return `${memberName} • ${l.id.toString()} • ${emoji} ${l.summary}`;
           })
       );
 
@@ -166,7 +166,7 @@ class Progress {
       return;
     }
 
-    await client.progressLog.create({
+    const log = await client.progressLog.create({
       data: {
         userID: interaction.user.id,
         type,
@@ -178,6 +178,9 @@ class Progress {
     const embed = new EmbedBuilder()
       .setTitle("Progress Log Submitted")
       .setColor("#00ff00")
+      .setFooter({
+        text: "ID: #" + log.id.toString(),
+      })
       .setAuthor({
         name: interaction.member.displayName,
         iconURL: interaction.member.displayAvatarURL(),
