@@ -28,9 +28,9 @@ enum Product {
 
 const productToString: Map<Product, string> = new Map([
   [Product.TAUOS, "tauOS"],
-  [Product.HOMEPAGE, "homepage"],
+  [Product.HOMEPAGE, "Homepage"],
   [Product.PHOTON_BROWSER, "photonBrowser"],
-  [Product.INTERNAL, "internal"],
+  [Product.INTERNAL, "InternalTools"],
 ]);
 
 enum LogType {
