@@ -1,4 +1,5 @@
-import { ArgsOf, Discord, Guard, On } from "discordx";
+import type { ArgsOf } from "discordx";
+import { Discord, Guard, On } from "discordx";
 import { MentionsBot } from "../util.js";
 
 const mentionedResponses = [
