@@ -42,6 +42,7 @@ enum LogType {
   FEATURE,
   BUG_FIX,
   OTHER,
+  IMPROVEMENT,
 }
 
 const logTypeToString: Map<LogType, string> = new Map([
@@ -49,6 +50,7 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.BLOCKER, "Blocker"],
   [LogType.RELEASE, "Release"],
   [LogType.FEATURE, "Feature"],
+  [LogType.IMPROVEMENT, "Feature"],
   [LogType.BUG_FIX, "Bug Fix"],
   [LogType.OTHER, "Other"],
 ]);
@@ -58,6 +60,7 @@ const logTypeToEmoji: Map<LogType, string> = new Map([
   [LogType.BLOCKER, ":octagonal_sign:"],
   [LogType.RELEASE, ":rocket:"],
   [LogType.FEATURE, ":sparkles:"],
+  [LogType.IMPROVEMENT, ":hammer:"],
   [LogType.BUG_FIX, ":bug:"],
   [LogType.OTHER, ":notepad_spiral:"],
 ]);
