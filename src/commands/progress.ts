@@ -12,6 +12,7 @@ import {
   enumStringsToChoice,
   getAnnoucementsChannel,
   getPrimaryGuild,
+  getUpdatesChannel,
 } from "../util.js";
 import { ProgressLog } from "@prisma/client";
 import { bot } from "../main.js";
@@ -194,6 +195,17 @@ class Progress {
     await interaction.reply({
       content:
         "Thanks for submitting your progress log! I'll add it to our weekly report :3\nFor now, here's a preview of your log:",
+      embeds: [embed],
+    });
+
+    const updatesChannel = await getUpdatesChannel();
+
+    if (!updatesChannel?.isTextBased()) {
+      throw new Error("Updates channel is not a text channel.");
+    }
+
+    await updatesChannel.send({
+      content: "Yay, a progress log just got submitted~",
       embeds: [embed],
     });
   }
