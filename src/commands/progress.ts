@@ -23,12 +23,14 @@ enum Product {
   TAUOS,
   HOMEPAGE,
   PHOTON_BROWSER,
+  INTERNAL,
 }
 
 const productToString: Map<Product, string> = new Map([
   [Product.TAUOS, "tauOS"],
   [Product.HOMEPAGE, "homepage"],
   [Product.PHOTON_BROWSER, "photonBrowser"],
+  [Product.INTERNAL, "internal"],
 ]);
 
 enum LogType {
