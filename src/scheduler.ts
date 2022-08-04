@@ -31,4 +31,6 @@ const reportWorker = new Worker(
       },
     }
   );
+
+  await reportQueue.add("generateFinalReport", {});
 })();
