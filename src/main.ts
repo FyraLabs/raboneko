@@ -1,5 +1,6 @@
 import "dotenv/config";
 import "reflect-metadata";
+import "./scheduler";
 
 import { dirname, importx } from "@discordx/importer";
 import type { Interaction, Message } from "discord.js";

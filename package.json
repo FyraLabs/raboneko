@@ -15,7 +15,7 @@
   "dependencies": {
     "@discordx/importer": "^1.1.10",
     "@prisma/client": "^4.1.1",
-    "cron": "^2.1.0",
+    "bullmq": "^1.86.10",
     "dayjs": "^1.11.4",
     "discord.js": "^14.1.2",
     "discordx": "^11.0.3",

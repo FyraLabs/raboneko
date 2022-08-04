@@ -3,9 +3,6 @@ import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import isoWeek from "dayjs/plugin/isoWeek.js";
-import { CronJob } from "cron";
-
-new CronJob("0 0 * * 0", () => generateFinalReport(), null, true, "UTC");
 
 import { client } from "../prisma.js";
 import {
@@ -107,7 +104,7 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
     })
   );
 
-const generateFinalReport = async () => {
+export const generateFinalReport = async () => {
   const lastWeek = dayjs.utc().isoWeekday(-1);
   const startOfWeek = lastWeek.startOf("isoWeek");
   const endOfWeek = lastWeek.endOf("isoWeek");
