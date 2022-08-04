@@ -1,6 +1,6 @@
 import { Queue, QueueScheduler, Worker } from "bullmq";
-import { generateFinalReport } from "./commands/progress";
-import { getRedisConnection } from "./util";
+import { generateFinalReport } from "./commands/progress.js";
+import { getRedisConnection } from "./util.js";
 
 const reportQueueScheduler = new QueueScheduler("report");
 const reportQueue = new Queue("report", {
