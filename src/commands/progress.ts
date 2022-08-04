@@ -23,6 +23,7 @@ enum Product {
   PHOTON_BROWSER,
   INTERNAL,
   RABONEKO,
+  ANDAMAN,
 }
 
 const productToString: Map<Product, string> = new Map([
@@ -31,6 +32,7 @@ const productToString: Map<Product, string> = new Map([
   [Product.PHOTON_BROWSER, "photonBrowser"],
   [Product.INTERNAL, "InternalTools"],
   [Product.RABONEKO, "Raboneko (me :3)"],
+  [Product.ANDAMAN, "Andaman"]
 ]);
 
 enum LogType {
