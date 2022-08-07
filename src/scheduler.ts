@@ -26,7 +26,7 @@ const reportWorker = new Worker(
     {},
     {
       repeat: {
-        cron: "0 0 * * 0",
+        cron: "10 0 * * 1",
         utc: true,
       },
     }
