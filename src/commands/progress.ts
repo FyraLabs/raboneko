@@ -32,7 +32,7 @@ const productToString: Map<Product, string> = new Map([
   [Product.PHOTON_BROWSER, "photonBrowser"],
   [Product.INTERNAL, "InternalTools"],
   [Product.RABONEKO, "Raboneko (me :3)"],
-  [Product.ANDAMAN, "Andaman"]
+  [Product.ANDAMAN, "Andaman"],
 ]);
 
 enum LogType {
@@ -144,6 +144,7 @@ export const generateFinalReport = async () => {
 @SlashGroup({
   name: "progress",
   description: "Track progress for Fyra projects, per week",
+  dmPermission: false,
 })
 @SlashGroup("progress")
 class Progress {
