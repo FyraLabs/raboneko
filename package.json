@@ -15,17 +15,17 @@
   "dependencies": {
     "@discordx/importer": "^1.1.10",
     "@prisma/client": "^4.1.1",
-    "bullmq": "^1.86.10",
+    "bullmq": "^1.87.0",
     "dayjs": "^1.11.4",
     "discord.js": "^14.1.2",
-    "discordx": "^11.0.3",
+    "discordx": "^11.0.8",
     "dotenv": "^16.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/cron": "^2.0.0",
     "@types/ioredis": "^4.28.10",
-    "@types/node": "^18.6.3",
+    "@types/node": "^18.6.4",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "prisma": "^4.1.1",
