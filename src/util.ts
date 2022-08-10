@@ -16,6 +16,9 @@ export const getAnnoucementsChannel = () =>
 export const getUpdatesChannel = () =>
   bot.channels.fetch(process.env.UPDATES_CHANNEL_ID!);
 
+export const getGeneralChannel = () =>
+  bot.channels.fetch(process.env.GENERAL_CHANNEL_ID!);
+
 export const MentionsBot: GuardFunction<ArgsOf<"messageCreate">> = async (
   [message],
   client,
