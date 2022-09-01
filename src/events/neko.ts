@@ -11,6 +11,7 @@ const mentionedResponses = [
   "huh?",
   "*runs with toast in mouth*",
   "how are nyu?",
+  "hai!"
 ];
 
 @Discord()
