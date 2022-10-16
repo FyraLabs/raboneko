@@ -42,6 +42,10 @@ const productToString: Map<Product, string> = new Map([
   [Product.TERRA, "Terra"],
 ]);
 
+const stringToProduct: Map<string, Product> = new Map(
+  [...productToString.entries()].map(([k, v]) => [v, k])
+);
+
 enum LogType {
   MILESTONE,
   BLOCKER,
@@ -61,6 +65,10 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.BUG_FIX, "Bug Fix"],
   [LogType.OTHER, "Other"],
 ]);
+
+const stringToLogType: Map<string, LogType> = new Map(
+  [...logTypeToString.entries()].map(([k, v]) => [v, k])
+);
 
 const logTypeToEmoji: Map<LogType, string> = new Map([
   [LogType.MILESTONE, ":bookmark:"],
@@ -166,7 +174,7 @@ class Progress {
       type: ApplicationCommandOptionType.String,
       required: true,
     })
-    product: Product,
+    productStr: string,
     @SlashChoice(...enumStringsToChoice(logTypeToString))
     @SlashOption({
       name: "type",
@@ -174,7 +182,7 @@ class Progress {
       type: ApplicationCommandOptionType.String,
       required: true,
     })
-    type: LogType,
+    typeStr: string,
     @SlashOption({
       name: "summary",
       description: "The summary of your progress",
@@ -190,6 +198,9 @@ class Progress {
       );
       return;
     }
+
+    const type = stringToLogType.get(productStr)!;
+    const product = stringToProduct.get(typeStr)!;
 
     const log = await client.progressLog.create({
       data: {
