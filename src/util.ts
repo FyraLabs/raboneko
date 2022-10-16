@@ -4,7 +4,7 @@ import { bot } from "./main.js";
 export const enumStringsToChoice = (e: Map<number, string>) =>
   Array.from(e.entries())
     .sort((a, b) => a[0] - b[0])
-    .map((e) => e[0]);
+    .map((e) => e[1]);
 
 export const getPrimaryGuild = () =>
   bot.guilds.fetch(process.env.PRIMARY_GUILD_ID!);
