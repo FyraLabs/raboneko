@@ -24,6 +24,7 @@ enum Product {
   INTERNAL,
   RABONEKO,
   ANDAMAN,
+  TERRA,
 }
 
 const productToString: Map<Product, string> = new Map([
@@ -33,6 +34,7 @@ const productToString: Map<Product, string> = new Map([
   [Product.INTERNAL, "InternalTools"],
   [Product.RABONEKO, "Raboneko (me :3)"],
   [Product.ANDAMAN, "Andaman"],
+  [Product.TERRA, "Terra"],
 ]);
 
 enum LogType {
