@@ -11,12 +11,14 @@ const mentionedResponses = [
   "huh?",
   "*runs with toast in mouth*",
   "how are nyu?",
-  "hai!"
+  "hai!",
 ];
 
 @Discord()
 class Neko {
-  @On("messageCreate")
+  @On({
+    event: "messageCreate",
+  })
   @Guard(MentionsBot)
   async onMention([message]: ArgsOf<"messageCreate">) {
     message.reply(
@@ -24,7 +26,9 @@ class Neko {
     );
   }
 
-  @On("guildMemberAdd")
+  @On({
+    event: "guildMemberAdd",
+  })
   async onJoin([member]: ArgsOf<"guildMemberAdd">) {
     const generalChannel = await getGeneralChannel();
 

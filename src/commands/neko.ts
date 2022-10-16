@@ -5,12 +5,16 @@ const headpatResponses = ["nya!", "*purrrr*", "mew~", "Hehe, thanks!"];
 
 @Discord()
 export class Neko {
-  @Slash()
+  @Slash({
+    description: "Ping me!",
+  })
   ping(interaction: CommandInteraction): void {
     interaction.reply("Pong! ^._.^");
   }
 
-  @Slash()
+  @Slash({
+    description: "Give me headpats!",
+  })
   headpat(interaction: CommandInteraction): void {
     interaction.reply(
       headpatResponses[Math.floor(Math.random() * headpatResponses.length)]

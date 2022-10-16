@@ -1,4 +1,9 @@
-import { CommandInteraction, EmbedBuilder, GuildMember } from "discord.js";
+import {
+  ApplicationCommandOptionType,
+  CommandInteraction,
+  EmbedBuilder,
+  GuildMember,
+} from "discord.js";
 import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
@@ -150,15 +155,32 @@ export const generateFinalReport = async () => {
 })
 @SlashGroup("progress")
 class Progress {
-  @Slash()
+  @Slash({
+    description: "Log some progress",
+  })
   async log(
     @SlashChoice(...enumStringsToChoice(productToString))
-    @SlashOption("product", { description: "The product the log is for" })
+    @SlashOption({
+      name: "product",
+      description: "The product the log is for",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    })
     product: Product,
     @SlashChoice(...enumStringsToChoice(logTypeToString))
-    @SlashOption("type", { description: "The type of progress log" })
+    @SlashOption({
+      name: "type",
+      description: "The type of progress log",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    })
     type: LogType,
-    @SlashOption("summary", { description: "The summary of your progress" })
+    @SlashOption({
+      name: "summary",
+      description: "The summary of your progress",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    })
     summary: string,
     interaction: CommandInteraction
   ) {
@@ -212,7 +234,9 @@ class Progress {
     });
   }
 
-  @Slash()
+  @Slash({
+    description: "Generate a progress report",
+  })
   async report(interaction: CommandInteraction) {
     const guild = interaction.guild;
     if (guild === null) {
