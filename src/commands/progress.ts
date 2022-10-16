@@ -199,8 +199,8 @@ class Progress {
       return;
     }
 
-    const type = stringToLogType.get(productStr)!;
-    const product = stringToProduct.get(typeStr)!;
+    const type = stringToLogType.get(typeStr)!;
+    const product = stringToProduct.get(productStr)!;
 
     const log = await client.progressLog.create({
       data: {
