@@ -2,10 +2,10 @@ import { ArgsOf, GuardFunction } from "discordx";
 import { bot } from "./main.js";
 
 export const enumStringsToChoice = (e: Map<number, string>) =>
-  Array.from(e.entries()).map(([key, value]) => ({
-    name: value,
-    value: key,
-  }));
+  Array.from(e.entries())
+    .slice()
+    .sort((a, b) => a[0] - b[0])
+    .map((e) => e[1]);
 
 export const getPrimaryGuild = () =>
   bot.guilds.fetch(process.env.PRIMARY_GUILD_ID!);
