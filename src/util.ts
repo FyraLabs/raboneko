@@ -3,7 +3,6 @@ import { bot } from "./main.js";
 
 export const enumStringsToChoice = (e: Map<number, string>) =>
   Array.from(e.entries())
-    .slice()
     .sort((a, b) => a[0] - b[0])
     .map((e) => e[1]);
 
