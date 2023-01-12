@@ -1,7 +1,7 @@
 import type { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
 
-const headpatResponses = ["nya!", "*purrrr*", "mew~", "Hehe, thanks!"];
+const headpatResponses = ["nya!", "*purrrr*", "mew~", "Hehe, thanks!", "more headpats, pwease~"];
 
 @Discord()
 export class Neko {
