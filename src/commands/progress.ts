@@ -30,6 +30,7 @@ enum Product {
   RABONEKO,
   ANDAMAN,
   TERRA,
+  OTHER,
 }
 
 const productToString: Map<Product, string> = new Map([
@@ -40,6 +41,7 @@ const productToString: Map<Product, string> = new Map([
   [Product.RABONEKO, "Raboneko (me :3)"],
   [Product.ANDAMAN, "Andaman"],
   [Product.TERRA, "Terra"],
+  [Product.OTHER, "Other"],
 ]);
 
 const stringToProduct: Map<string, Product> = new Map(
