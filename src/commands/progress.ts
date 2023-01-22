@@ -95,6 +95,25 @@ const groupLogs = (logs: ProgressLog[]) =>
     return prev;
   }, {} as Record<string, ProgressLog[]>);
 
+const partitionStringsByLength = (strings: string[], maxLength: number) => {
+  const final: string[][] = [[]];
+  let sub = final[0];
+
+  strings.forEach((string) => {
+    const lengthAfterPush =
+      sub.reduce((acc, curr) => acc + curr.length, 0) + string.length;
+    if (lengthAfterPush <= maxLength) {
+      sub.push(string);
+    } else {
+      sub = [];
+      final.push(sub);
+      sub.push(string);
+    }
+  });
+
+  return final;
+};
+
 const generateFields = (grouped: Record<string, ProgressLog[]>) =>
   Promise.all(
     Object.entries(grouped).map(async ([product, logs]) => {
@@ -116,12 +135,14 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
           })
       );
 
-      return {
-        name: product,
-        value: formatted.join("\n"),
-      };
+      const paritioned = partitionStringsByLength(formatted, 1024);
+
+      return paritioned.map((parition, i) => ({
+        name: i != 0 ? `${product} (continued)` : product,
+        value: parition.join("\n"),
+      }));
     })
-  );
+  ).then((fields) => fields.flat());
 
 export const generateFinalReport = async () => {
   const lastWeek = dayjs.utc().isoWeekday(-1);
