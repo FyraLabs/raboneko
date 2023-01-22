@@ -269,6 +269,42 @@ class Progress {
   }
 
   @Slash({
+    description: "Remove a progress log",
+  })
+  async remove(
+    @SlashOption({
+      name: "id",
+      description: "The ID of the log to remove",
+      type: ApplicationCommandOptionType.Integer,
+      minValue: 0,
+      required: true,
+    })
+    id: number,
+    interaction: CommandInteraction
+  ) {
+    const log = await client.progressLog.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!log) {
+      await interaction.reply("You can't remove a log that doesn't exist! :P");
+      return;
+    }
+
+    await client.progressLog.delete({
+      where: {
+        id,
+      },
+    });
+
+    await interaction.reply(
+      `Okie, just removed the log with ID #${id}! Destroying things is fun >:3`
+    );
+  }
+
+  @Slash({
     description: "Generate a progress report",
   })
   async report(interaction: CommandInteraction) {
