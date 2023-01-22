@@ -316,6 +316,8 @@ class Progress {
       return;
     }
 
+    await interaction.deferReply();
+
     const startOfWeek = dayjs().utc().startOf("isoWeek");
     const endOfWeek = dayjs().utc().endOf("isoWeek");
 
@@ -334,7 +336,7 @@ class Progress {
       .addFields(fields)
       .setDescription(fields.length > 0 ? null : "*No progress this week.*");
 
-    await interaction.reply({
+    await interaction.editReply({
       content: "Here's a summary of the current week. Great progress so far~",
       embeds: [embed],
     });
