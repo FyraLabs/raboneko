@@ -1,3 +1,4 @@
+import { ChannelType } from "discord.js";
 import type { ArgsOf } from "discordx";
 import { Discord, Guard, On } from "discordx";
 import { getGeneralChannel, MentionsBot } from "../util.js";
@@ -12,7 +13,7 @@ const mentionedResponses = [
   "*runs with toast in mouth*",
   "how are nyu?",
   "hai!",
-  "gmeow~"
+  "gmeow~",
 ];
 
 @Discord()
@@ -33,7 +34,7 @@ class Neko {
   async onJoin([member]: ArgsOf<"guildMemberAdd">) {
     const generalChannel = await getGeneralChannel();
 
-    if (!generalChannel?.isTextBased()) {
+    if (generalChannel?.type !== ChannelType.GuildText) {
       throw new Error("General channel is not a text channel.");
     }
 

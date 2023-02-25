@@ -1,5 +1,6 @@
 import {
   ApplicationCommandOptionType,
+  ChannelType,
   CommandInteraction,
   EmbedBuilder,
   GuildMember,
@@ -166,7 +167,7 @@ export const generateFinalReport = async () => {
 
   const announcementsChannel = await getAnnoucementsChannel();
 
-  if (!announcementsChannel?.isTextBased()) {
+  if (announcementsChannel?.type !== ChannelType.GuildText) {
     throw new Error("Announcements channel is not a text channel.");
   }
 
@@ -258,7 +259,7 @@ class Progress {
 
     const updatesChannel = await getUpdatesChannel();
 
-    if (!updatesChannel?.isTextBased()) {
+    if (updatesChannel?.type !== ChannelType.GuildText) {
       throw new Error("Updates channel is not a text channel.");
     }
 

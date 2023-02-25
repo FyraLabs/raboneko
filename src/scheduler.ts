@@ -23,7 +23,7 @@ const reportWorker = new Worker(
     {},
     {
       repeat: {
-        cron: "10 0 * * 1",
+        pattern: "10 0 * * 1",
         utc: true,
       },
     }
