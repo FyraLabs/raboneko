@@ -34,4 +34,5 @@ export const MentionsBot: GuardFunction<ArgsOf<"messageCreate">> = async (
 export const getRedisConnection = () => ({
   host: process.env.REDIS_HOST!,
   port: Number.parseInt(process.env.REDIS_PORT!),
+  db: process.env.REDIS_DB ? Number.parseInt(process.env.REDIS_DB!) : 0,
 });
