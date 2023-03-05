@@ -1,7 +1,13 @@
-import type { CommandInteraction } from "discord.js";
-import { Discord, Slash } from "discordx";
+import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
+import { Discord, Slash, SlashOption } from "discordx";
 
-const headpatResponses = ["nya!", "*purrrr*", "mew~", "Hehe, thanks!", "more headpats, pwease~"];
+const headpatResponses = [
+  "nya!",
+  "*purrrr*",
+  "mew~",
+  "Hehe, thanks!",
+  "more headpats, pwease~",
+];
 
 @Discord()
 export class Neko {
@@ -18,6 +24,24 @@ export class Neko {
   headpat(interaction: CommandInteraction): void {
     interaction.reply(
       headpatResponses[Math.floor(Math.random() * headpatResponses.length)]
+    );
+  }
+
+  @Slash({
+    description: "Report an HR issue",
+  })
+  hr(
+    interaction: CommandInteraction,
+    @SlashOption({
+      name: "report",
+      description: "The issue you're reporting",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    })
+    _report: string
+  ): void {
+    interaction.reply(
+      "Thank nyu for reporting this issue! After extensive investigation, we've detewminyed that you should go seek thewapy. nya~"
     );
   }
 }
