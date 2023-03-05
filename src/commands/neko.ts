@@ -31,14 +31,14 @@ export class Neko {
     description: "Report an HR issue",
   })
   hr(
-    interaction: CommandInteraction,
     @SlashOption({
       name: "report",
       description: "The issue you're reporting",
       type: ApplicationCommandOptionType.String,
       required: true,
     })
-    _report: string
+    _report: string,
+    interaction: CommandInteraction
   ): void {
     interaction.reply(
       "Thank nyu for reporting this issue! After extensive investigation, we've detewminyed that you should go seek thewapy. nya~"
