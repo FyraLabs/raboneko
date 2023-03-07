@@ -22,7 +22,14 @@ export class Neko {
     description: "Shameless plug ;)",
   })
   onegrid(interaction: CommandInteraction): void {
-    interaction.reply("The one in the grid. https://onegr.id");
+    interaction.reply("https://onegr.id");
+  }
+
+  @Slash({
+    description: "Psychz Networks Homie, No refunds ya know?"
+  })
+  psychz(interaction: CommandInteraction): void {
+    interaction.reply("You can listen to this banger, here https://rummage.cc/files/best_tracks/Psychz%20Networks%20-%20Down%20Low%20Ft.%20Young%20George.mp3")
   }
 
   @Slash({
