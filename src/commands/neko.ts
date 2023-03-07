@@ -19,6 +19,13 @@ export class Neko {
   }
 
   @Slash({
+    description: "Shameless plug ;)",
+  })
+  onegrid(interaction: CommandInteraction): void {
+    interaction.reply("The one in the grid. https://onegr.id");
+  }
+
+  @Slash({
     description: "Give me headpats!",
   })
   headpat(interaction: CommandInteraction): void {
