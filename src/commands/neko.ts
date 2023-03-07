@@ -15,7 +15,10 @@ export class Neko {
     description: "Ping me!",
   })
   ping(interaction: CommandInteraction): void {
-    interaction.reply("Pong! ^._.^");
+
+    // Get ping from Discord API
+    const ping = interaction.client.ws.ping;
+    interaction.reply(`Pong! ^._.^, my latency to Discord is \`${ping}ms\`!`);
   }
 
   @Slash({
