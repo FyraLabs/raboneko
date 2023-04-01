@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-import { SlashCreator, GatewayServer } from 'slash-create';
-import { Client, IntentsBitField, GatewayDispatchEvents } from 'discord.js';
+import { GatewayServer, SlashCreator } from 'slash-create';
+import { Client, GatewayDispatchEvents, IntentsBitField } from 'discord.js';
 import path from 'path';
 import CatLoggr from 'cat-loggr/ts';
 
@@ -11,7 +11,7 @@ dotenv.config({ path: dotenvPath });
 
 const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 const { Flags } = IntentsBitField;
-const client = new Client({
+export const client = new Client({
   intents: [
     Flags.Guilds,
     Flags.GuildMembers,
@@ -56,4 +56,4 @@ creator
   .registerCommandsIn(path.join(__dirname, 'commands'))
   .syncCommands();
 
-client.login(process.env.DISCORD_BOT_TOKEN)
+client.login(process.env.DISCORD_BOT_TOKEN);
