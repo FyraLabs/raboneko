@@ -1,3 +1,11 @@
-# Raboneko
+# raboneko
 
-Fyra Labs' robot neko assistant.
+yeah
+
+## Installation
+
+```sh
+pnpx slash-up sync
+pnpm build
+pnpm start
+```
