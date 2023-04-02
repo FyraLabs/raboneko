@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
-import { GatewayServer, SlashCreator } from 'slash-create';
+import { GatewayServer } from 'slash-create';
 import { Client, GatewayDispatchEvents, IntentsBitField } from 'discord.js';
 import path from 'path';
 import CatLoggr from 'cat-loggr/ts';
 import './scheduler';
+import RaboSlashCreator from './creator';
 
 let dotenvPath = path.join(process.cwd(), '.env');
 if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
@@ -35,7 +36,7 @@ export const client = new Client({
     Flags.AutoModerationExecution
   ]
 });
-const creator = new SlashCreator({
+const creator = new RaboSlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
   publicKey: process.env.DISCORD_PUBLIC_KEY,
   token: process.env.DISCORD_BOT_TOKEN,
