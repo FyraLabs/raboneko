@@ -194,14 +194,13 @@ export default class Progress extends SlashCommand {
   }
 
   public async run(ctx: CommandContext) {
-    console.log(ctx.member);
     if (!(ctx.member instanceof Member)) {
       await ctx.sendFollowUp("Sorry, I couldn't understand your request for some reason >_<");
       return;
     }
 
-    const type = ctx.options.type as LogType;
-    const product = ctx.options.product as LogType;
+    const type = parseInt(ctx.options.type) as LogType;
+    const product = parseInt(ctx.options.product) as Product;
 
     const log = await client.progressLog.create({
       data: {
