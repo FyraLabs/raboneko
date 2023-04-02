@@ -67,3 +67,6 @@ http
   .listen(process.env.HEALTH_PORT);
 
 client.login(process.env.DISCORD_BOT_TOKEN);
+
+import './modules/ping';
+import './modules/guildMemberAdd';
