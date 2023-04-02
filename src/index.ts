@@ -5,6 +5,7 @@ import path from 'path';
 import CatLoggr from 'cat-loggr/ts';
 import './scheduler';
 import RaboSlashCreator from './creator';
+import * as http from 'http';
 
 let dotenvPath = path.join(process.cwd(), '.env');
 if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
@@ -57,5 +58,12 @@ creator
   .withServer(new GatewayServer((handler) => client.ws.on(GatewayDispatchEvents.InteractionCreate, handler)))
   .registerCommandsIn(path.join(__dirname, 'commands'))
   .syncCommands();
+
+http
+  .createServer((_, res) => {
+    res.writeHead(200);
+    res.end();
+  })
+  .listen(process.env.HEALTH_PORT);
 
 client.login(process.env.DISCORD_BOT_TOKEN);
