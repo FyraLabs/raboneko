@@ -1,7 +1,7 @@
 {
-  "name": "slash-create-template",
-  "version": "1.0.0",
-  "description": "A template for slash-create",
+  "name": "raboneko",
+  "version": "0.6.0",
+  "description": "Raboneko.",
   "main": "dist/index.js",
   "scripts": {
     "sync": "slash-up sync",
