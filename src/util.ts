@@ -1,4 +1,4 @@
-import { client } from './index.js';
+import { client } from './index';
 
 export const enumStringsToChoice = (e: Map<number, string>) =>
   Array.from(e.entries())
@@ -12,3 +12,10 @@ export const getAnnoucementsChannel = () => client.channels.fetch(process.env.AN
 export const getUpdatesChannel = () => client.channels.fetch(process.env.UPDATES_CHANNEL_ID!);
 
 export const getGeneralChannel = () => client.channels.fetch(process.env.GENERAL_CHANNEL_ID!);
+
+export const getRedisConnection = () => ({
+  host: process.env.REDIS_HOST!,
+  port: Number.parseInt(process.env.REDIS_PORT!),
+  db: process.env.REDIS_DB ? Number.parseInt(process.env.REDIS_DB!) : 0,
+  password: process.env.REDIS_PASSWORD
+});

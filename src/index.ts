@@ -3,6 +3,7 @@ import { GatewayServer, SlashCreator } from 'slash-create';
 import { Client, GatewayDispatchEvents, IntentsBitField } from 'discord.js';
 import path from 'path';
 import CatLoggr from 'cat-loggr/ts';
+import './scheduler';
 
 let dotenvPath = path.join(process.cwd(), '.env');
 if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
