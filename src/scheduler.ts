@@ -24,7 +24,7 @@ new Worker(
     {},
     {
       repeat: {
-        pattern: '*/1 * * * *',
+        pattern: '10 0 * * 1',
         utc: true
       }
     }

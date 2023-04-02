@@ -12,7 +12,7 @@ export class Ping extends SlashCommand {
   }
 
   public async run(ctx: CommandContext) {
-    await ctx.sendFollowUp(`Pong! ^._.^, my latency to Discord is \`${client.ws.ping}\`!`);
+    await ctx.sendFollowUp(`Pong! ^._.^, my latency to Discord is \`${client.ws.ping}ms\`!`);
   }
 }
 
