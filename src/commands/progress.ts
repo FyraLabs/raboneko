@@ -154,10 +154,13 @@ export const generateFinalReport = async () => {
     throw new Error('Announcements channel is not a text channel.');
   }
 
+  let content = `Here is the final report for the week of ${startOfWeek.format('MMMM D, YYYY')} to ${endOfWeek.format(
+    'MMMM D, YYYY'
+  )}. Great work everyone!`;
+  if (Math.random() < 0.05)
+    content = "New face filters on Instagram today. This one's my favorite so far. Nice job team!";
   await announcementsChannel.send({
-    content: `Here is the final report for the week of ${startOfWeek.format('MMMM D, YYYY')} to ${endOfWeek.format(
-      'MMMM D, YYYY'
-    )}. Great work everyone!`,
+    content,
     embeds: [embed.data]
   });
 };
