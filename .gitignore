@@ -1,14 +1,16 @@
-# files
-.vscode
-.env
-.env.local
-package-lock.json
+# Packages
+node_modules/
 yarn.lock
-bot.db
-bot.db-journal
-.DS_Store
+package_lock.json
 
-# folders
-build
-node_modules
-data
+# Log files
+logs/
+*.log
+
+# Miscellaneous
+.tmp/
+.vscode/**/*
+.idea/**/*
+!.vscode/extensions.json
+.env
+dist/

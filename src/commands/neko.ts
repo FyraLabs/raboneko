@@ -1,49 +1,52 @@
-import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import { Discord, Slash, SlashOption } from "discordx";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
+import { client } from '../index';
 
-const headpatResponses = [
-  "nya!",
-  "*purrrr*",
-  "mew~",
-  "Hehe, thanks!",
-  "more headpats, pwease~",
-];
+const headpatResponses = ['nya!', '*purrrr*', 'mew~', 'Hehe, thanks!', 'more headpats, pwease~'];
 
-@Discord()
-export class Neko {
-  @Slash({
-    description: "Ping me!",
-  })
-  ping(interaction: CommandInteraction): void {
-
-    // Get ping from Discord API
-    const ping = interaction.client.ws.ping;
-    interaction.reply(`Pong! ^._.^, my latency to Discord is \`${ping}ms\`!`);
+export class Ping extends SlashCommand {
+  public constructor(creator: SlashCreator) {
+    super(creator, {
+      name: 'ping',
+      description: 'Ping me!'
+    });
   }
 
-  @Slash({
-    description: "Give me headpats!",
-  })
-  headpat(interaction: CommandInteraction): void {
-    interaction.reply(
-      headpatResponses[Math.floor(Math.random() * headpatResponses.length)]
-    );
+  public async run(ctx: CommandContext) {
+    await ctx.sendFollowUp(`Pong! ^._.^, my latency to Discord is \`${client.ws.ping}\`!`);
+  }
+}
+
+export class Headpat extends SlashCommand {
+  public constructor(creator: SlashCreator) {
+    super(creator, {
+      name: 'headpat',
+      description: 'Give me headpats!'
+    });
   }
 
-  @Slash({
-    description: "Report an HR issue",
-  })
-  hr(
-    @SlashOption({
-      name: "report",
+  public async run(ctx: CommandContext) {
+    await ctx.sendFollowUp(headpatResponses[Math.floor(Math.random() * headpatResponses.length)]);
+  }
+}
+
+export class Hr extends SlashCommand {
+  public constructor(creator: SlashCreator) {
+    super(creator, {
+      name: 'hr',
       description: "The issue you're reporting",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-    })
-    _report: string,
-    interaction: CommandInteraction
-  ): void {
-    interaction.reply(
+      options: [
+        {
+          type: CommandOptionType.STRING,
+          name: 'report',
+          description: "The issue you're reporting",
+          required: true
+        }
+      ]
+    });
+  }
+
+  public async run(ctx: CommandContext) {
+    await ctx.sendFollowUp(
       "Thank nyu for reporting this issue! After extensive investigation, we've detewminyed that you should go seek thewapy. nya~"
     );
   }

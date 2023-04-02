@@ -1,24 +1,12 @@
-import {
-  ApplicationCommandOptionType,
-  ChannelType,
-  CommandInteraction,
-  EmbedBuilder,
-  GuildMember,
-} from "discord.js";
-import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc.js";
-import isoWeek from "dayjs/plugin/isoWeek.js";
-
-import { client } from "../prisma.js";
-import {
-  enumStringsToChoice,
-  getAnnoucementsChannel,
-  getPrimaryGuild,
-  getUpdatesChannel,
-} from "../util.js";
-import { ProgressLog } from "@prisma/client";
-import { bot } from "../main.js";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import { ProgressLog } from '@prisma/client';
+import { client } from '../prisma';
+import { client as bot } from '../index';
+import { enumStringsToChoice, getAnnoucementsChannel, getPrimaryGuild, getUpdatesChannel } from '../util';
+import { ChannelType, EmbedBuilder } from 'discord.js';
+import { CommandContext, CommandOptionType, Member, SlashCommand, SlashCreator } from 'slash-create';
 
 dayjs.extend(isoWeek);
 dayjs.extend(utc);
@@ -31,23 +19,21 @@ enum Product {
   RABONEKO,
   ANDAMAN,
   TERRA,
-  OTHER,
+  OTHER
 }
 
 const productToString: Map<Product, string> = new Map([
-  [Product.TAUOS, "tauOS"],
-  [Product.HOMEPAGE, "Homepage"],
-  [Product.PHOTON_BROWSER, "photonBrowser"],
-  [Product.INTERNAL, "InternalTools"],
-  [Product.RABONEKO, "Raboneko (me :3)"],
-  [Product.ANDAMAN, "Andaman"],
-  [Product.TERRA, "Terra"],
-  [Product.OTHER, "Other"],
+  [Product.TAUOS, 'tauOS'],
+  [Product.HOMEPAGE, 'Homepage'],
+  [Product.PHOTON_BROWSER, 'photonBrowser'],
+  [Product.INTERNAL, 'InternalTools'],
+  [Product.RABONEKO, 'Raboneko (me :3)'],
+  [Product.ANDAMAN, 'Andaman'],
+  [Product.TERRA, 'Terra'],
+  [Product.OTHER, 'Other']
 ]);
 
-const stringToProduct: Map<string, Product> = new Map(
-  [...productToString.entries()].map(([k, v]) => [v, k])
-);
+const stringToProduct: Map<string, Product> = new Map([...productToString.entries()].map(([k, v]) => [v, k]));
 
 enum LogType {
   MILESTONE,
@@ -56,31 +42,29 @@ enum LogType {
   FEATURE,
   BUG_FIX,
   OTHER,
-  IMPROVEMENT,
+  IMPROVEMENT
 }
 
 const logTypeToString: Map<LogType, string> = new Map([
-  [LogType.MILESTONE, "Milestone"],
-  [LogType.BLOCKER, "Blocker"],
-  [LogType.RELEASE, "Release"],
-  [LogType.FEATURE, "Feature"],
-  [LogType.IMPROVEMENT, "Improvement"],
-  [LogType.BUG_FIX, "Bug Fix"],
-  [LogType.OTHER, "Other"],
+  [LogType.MILESTONE, 'Milestone'],
+  [LogType.BLOCKER, 'Blocker'],
+  [LogType.RELEASE, 'Release'],
+  [LogType.FEATURE, 'Feature'],
+  [LogType.IMPROVEMENT, 'Improvement'],
+  [LogType.BUG_FIX, 'Bug Fix'],
+  [LogType.OTHER, 'Other']
 ]);
 
-const stringToLogType: Map<string, LogType> = new Map(
-  [...logTypeToString.entries()].map(([k, v]) => [v, k])
-);
+const stringToLogType: Map<string, LogType> = new Map([...logTypeToString.entries()].map(([k, v]) => [v, k]));
 
 const logTypeToEmoji: Map<LogType, string> = new Map([
-  [LogType.MILESTONE, ":bookmark:"],
-  [LogType.BLOCKER, ":octagonal_sign:"],
-  [LogType.RELEASE, ":rocket:"],
-  [LogType.FEATURE, ":sparkles:"],
-  [LogType.IMPROVEMENT, ":hammer:"],
-  [LogType.BUG_FIX, ":bug:"],
-  [LogType.OTHER, ":notepad_spiral:"],
+  [LogType.MILESTONE, ':bookmark:'],
+  [LogType.BLOCKER, ':octagonal_sign:'],
+  [LogType.RELEASE, ':rocket:'],
+  [LogType.FEATURE, ':sparkles:'],
+  [LogType.IMPROVEMENT, ':hammer:'],
+  [LogType.BUG_FIX, ':bug:'],
+  [LogType.OTHER, ':notepad_spiral:']
 ]);
 
 const groupLogs = (logs: ProgressLog[]) =>
@@ -101,8 +85,7 @@ const partitionStringsByLength = (strings: string[], maxLength: number) => {
   let sub = final[0];
 
   strings.forEach((string) => {
-    const lengthAfterPush =
-      sub.reduce((acc, curr) => acc + curr.length, 0) + string.length;
+    const lengthAfterPush = sub.reduce((acc, curr) => acc + curr.length, 0) + string.length;
     if (lengthAfterPush <= maxLength) {
       sub.push(string);
     } else {
@@ -140,206 +123,128 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
 
       return paritioned.map((parition, i) => ({
         name: i != 0 ? `${product} (continued)` : product,
-        value: parition.join("\n"),
+        value: parition.join('\n')
       }));
     })
   ).then((fields) => fields.flat());
 
 export const generateFinalReport = async () => {
   const lastWeek = dayjs.utc().isoWeekday(-1);
-  const startOfWeek = lastWeek.startOf("isoWeek");
-  const endOfWeek = lastWeek.endOf("isoWeek");
+  const startOfWeek = lastWeek.startOf('isoWeek');
+  const endOfWeek = lastWeek.endOf('isoWeek');
 
   const logs = await client.progressLog.findMany({
     where: {
       createdAt: {
         gte: startOfWeek.toDate(),
-        lte: endOfWeek.toDate(),
-      },
-    },
+        lte: endOfWeek.toDate()
+      }
+    }
   });
 
   const grouped = groupLogs(logs);
   const fields = await generateFields(grouped);
   const embed = new EmbedBuilder()
     .addFields(fields)
-    .setDescription(fields.length > 0 ? null : "*No progress this week.*");
+    .setDescription(fields.length > 0 ? null : '*No progress this week.*');
 
   const announcementsChannel = await getAnnoucementsChannel();
 
   if (announcementsChannel?.type !== ChannelType.GuildText) {
-    throw new Error("Announcements channel is not a text channel.");
+    throw new Error('Announcements channel is not a text channel.');
   }
 
+  let content = `Here is the final report for the week of ${startOfWeek.format('MMMM D, YYYY')} to ${endOfWeek.format(
+    'MMMM D, YYYY'
+  )}. Great work everyone!`;
+  if (Math.random() < 0.05)
+    content = "New face filters on Instagram today. This one's my favorite so far. Nice job team!";
   await announcementsChannel.send({
-    content: `Here is the final report for the week of ${startOfWeek.format(
-      "MMMM D, YYYY"
-    )} to ${endOfWeek.format("MMMM D, YYYY")}. Great work everyone!`,
-    embeds: [embed.data],
+    content,
+    embeds: [embed.data]
   });
 };
 
-@Discord()
-@SlashGroup({
-  name: "progress",
-  description: "Track progress for Fyra projects, per week",
-  dmPermission: false,
-})
-@SlashGroup("progress")
-class Progress {
-  @Slash({
-    description: "Log some progress",
-  })
-  async log(
-    @SlashChoice(...enumStringsToChoice(productToString))
-    @SlashOption({
-      name: "product",
-      description: "The product the log is for",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-    })
-    productStr: string,
-    @SlashChoice(...enumStringsToChoice(logTypeToString))
-    @SlashOption({
-      name: "type",
-      description: "The type of progress log",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-    })
-    typeStr: string,
-    @SlashOption({
-      name: "summary",
-      description: "The summary of your progress",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-    })
-    summary: string,
-    interaction: CommandInteraction
-  ) {
-    if (!(interaction.member instanceof GuildMember)) {
-      await interaction.reply(
-        "Sorry, I couldn't understand your request for some reason >_<"
-      );
+export default class Progress extends SlashCommand {
+  public constructor(creator: SlashCreator) {
+    super(creator, {
+      name: 'progress',
+      description: 'Track progress for Fyra projects, per week',
+      dmPermission: false,
+      options: [
+        {
+          type: CommandOptionType.STRING,
+          name: 'product',
+          description: 'The product the log is for',
+          choices: enumStringsToChoice(productToString),
+          required: true
+        },
+        {
+          type: CommandOptionType.STRING,
+          name: 'type',
+          description: 'The type of progress log',
+          choices: enumStringsToChoice(logTypeToString),
+          required: true
+        },
+        {
+          type: CommandOptionType.STRING,
+          name: 'summary',
+          description: 'The summary of your progress',
+          required: true
+        }
+      ]
+    });
+  }
+
+  public async run(ctx: CommandContext) {
+    if (!(ctx.member instanceof Member)) {
+      await ctx.sendFollowUp("Sorry, I couldn't understand your request for some reason >_<");
       return;
     }
 
-    const type = stringToLogType.get(typeStr)!;
-    const product = stringToProduct.get(productStr)!;
+    const type = parseInt(ctx.options.type) as LogType;
+    const product = parseInt(ctx.options.product) as Product;
 
     const log = await client.progressLog.create({
       data: {
-        userID: interaction.user.id,
+        userID: ctx.user.id,
         type,
         product,
-        summary,
-      },
+        summary: ctx.options.summary
+      }
     });
 
     const embed = new EmbedBuilder()
-      .setTitle("Progress Log Submitted")
-      .setColor("#00ff00")
+      .setTitle('Progress Log Submitted')
+      .setColor('#00ff00')
       .setFooter({
-        text: "ID: #" + log.id.toString(),
+        text: 'ID: #' + log.id.toString()
       })
       .setAuthor({
-        name: interaction.member.displayName,
-        iconURL: interaction.member.displayAvatarURL(),
+        name: ctx.member.displayName,
+        iconURL: ctx.member.avatarURL
       })
-      .setDescription(summary)
+      .setDescription(ctx.options.summary)
       .setFields([
-        { name: "Product", value: productToString.get(product)!, inline: true },
-        { name: "Type", value: logTypeToString.get(type)!, inline: true },
-      ]);
+        { name: 'Product', value: productToString.get(product)!, inline: true },
+        { name: 'Type', value: logTypeToString.get(type)!, inline: true }
+      ]).data;
 
-    await interaction.reply({
+    await ctx.sendFollowUp({
       content:
         "Thanks for submitting your progress log! I'll add it to our weekly report :3\nFor now, here's a preview of your log:",
-      embeds: [embed],
+      embeds: [embed]
     });
 
     const updatesChannel = await getUpdatesChannel();
 
     if (updatesChannel?.type !== ChannelType.GuildText) {
-      throw new Error("Updates channel is not a text channel.");
+      throw new Error('Updates channel is not a text channel.');
     }
 
     await updatesChannel.send({
-      content: "Yay, a progress log just got submitted~",
-      embeds: [embed],
-    });
-  }
-
-  @Slash({
-    description: "Remove a progress log",
-  })
-  async remove(
-    @SlashOption({
-      name: "id",
-      description: "The ID of the log to remove",
-      type: ApplicationCommandOptionType.Integer,
-      minValue: 0,
-      required: true,
-    })
-    id: number,
-    interaction: CommandInteraction
-  ) {
-    const log = await client.progressLog.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!log) {
-      await interaction.reply("You can't remove a log that doesn't exist! :P");
-      return;
-    }
-
-    await client.progressLog.delete({
-      where: {
-        id,
-      },
-    });
-
-    await interaction.reply(
-      `Okie, just removed the log with ID #${id}! Destroying things is fun >:3`
-    );
-  }
-
-  @Slash({
-    description: "Generate a progress report",
-  })
-  async report(interaction: CommandInteraction) {
-    const guild = interaction.guild;
-    if (guild === null) {
-      await interaction.reply(
-        "Sorry, I couldn't understand your request for some reason >_<"
-      );
-      return;
-    }
-
-    await interaction.deferReply();
-
-    const startOfWeek = dayjs().utc().startOf("isoWeek");
-    const endOfWeek = dayjs().utc().endOf("isoWeek");
-
-    const logs = await client.progressLog.findMany({
-      where: {
-        createdAt: {
-          gte: startOfWeek.toDate(),
-          lte: endOfWeek.toDate(),
-        },
-      },
-    });
-
-    const grouped = groupLogs(logs);
-    const fields = await generateFields(grouped);
-    const embed = new EmbedBuilder()
-      .addFields(fields)
-      .setDescription(fields.length > 0 ? null : "*No progress this week.*");
-
-    await interaction.editReply({
-      content: "Here's a summary of the current week. Great progress so far~",
-      embeds: [embed],
+      content: 'Yay, a progress log just got submitted~',
+      embeds: [embed]
     });
   }
 }

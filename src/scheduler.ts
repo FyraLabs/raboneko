@@ -1,31 +1,32 @@
-import { Queue, Worker } from "bullmq";
-import { generateFinalReport } from "./commands/progress.js";
-import { getRedisConnection } from "./util.js";
+import { Queue, Worker } from 'bullmq';
+import { generateFinalReport } from './commands/progress';
+import { getRedisConnection } from './util';
 
-const reportQueue = new Queue("report", {
-  connection: getRedisConnection(),
+const reportQueue = new Queue('report', {
+  connection: getRedisConnection()
 });
-const reportWorker = new Worker(
-  "report",
+
+new Worker(
+  'report',
   async (job) => {
-    if (job.name === "generateFinalReport") {
+    if (job.name === 'generateFinalReport') {
       await generateFinalReport();
     }
   },
   {
-    connection: getRedisConnection(),
+    connection: getRedisConnection()
   }
 );
 
 (async () => {
   await reportQueue.add(
-    "generateFinalReport",
+    'generateFinalReport',
     {},
     {
       repeat: {
-        pattern: "10 0 * * 1",
-        utc: true,
-      },
+        pattern: '*/1 * * * *',
+        utc: true
+      }
     }
   );
 })();
