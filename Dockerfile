@@ -37,7 +37,7 @@ RUN pnpm install --only=production
 RUN pnpx prisma generate
 
 # Move build files
-COPY --from=build-runner /tmp/app/build /app/build
+COPY --from=build-runner /tmp/app/dist /app/dist
 
 # Start bot
-CMD [ "node", "build/main.js" ]
+CMD [ "node", "dist/index.js" ]
