@@ -4,9 +4,20 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 import { ProgressLog } from '@prisma/client';
 import { client } from '../prisma';
 import { client as bot } from '../index';
-import { enumStringsToChoice, getAnnoucementsChannel, getPrimaryGuild, getUpdatesChannel } from '../util';
+import {
+  enumStringsToChoice,
+  getAnnoucementsChannel,
+  getPrimaryGuild,
+  getUpdatesChannel,
+} from '../util';
 import { ChannelType, EmbedBuilder } from 'discord.js';
-import { CommandContext, CommandOptionType, Member, SlashCommand, SlashCreator } from 'slash-create';
+import {
+  CommandContext,
+  CommandOptionType,
+  Member,
+  SlashCommand,
+  SlashCreator,
+} from 'slash-create';
 
 dayjs.extend(isoWeek);
 dayjs.extend(utc);
@@ -19,7 +30,7 @@ enum Product {
   RABONEKO,
   ANDAMAN,
   TERRA,
-  OTHER
+  OTHER,
 }
 
 const productToString: Map<Product, string> = new Map([
@@ -30,10 +41,12 @@ const productToString: Map<Product, string> = new Map([
   [Product.RABONEKO, 'Raboneko (me :3)'],
   [Product.ANDAMAN, 'Andaman'],
   [Product.TERRA, 'Terra'],
-  [Product.OTHER, 'Other']
+  [Product.OTHER, 'Other'],
 ]);
 
-const stringToProduct: Map<string, Product> = new Map([...productToString.entries()].map(([k, v]) => [v, k]));
+const _stringToProduct: Map<string, Product> = new Map(
+  [...productToString.entries()].map(([k, v]) => [v, k]),
+);
 
 enum LogType {
   MILESTONE,
@@ -42,7 +55,7 @@ enum LogType {
   FEATURE,
   BUG_FIX,
   OTHER,
-  IMPROVEMENT
+  IMPROVEMENT,
 }
 
 const logTypeToString: Map<LogType, string> = new Map([
@@ -52,10 +65,12 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.FEATURE, 'Feature'],
   [LogType.IMPROVEMENT, 'Improvement'],
   [LogType.BUG_FIX, 'Bug Fix'],
-  [LogType.OTHER, 'Other']
+  [LogType.OTHER, 'Other'],
 ]);
 
-const stringToLogType: Map<string, LogType> = new Map([...logTypeToString.entries()].map(([k, v]) => [v, k]));
+const stringToLogType: Map<string, LogType> = new Map(
+  [...logTypeToString.entries()].map(([k, v]) => [v, k]),
+);
 
 const logTypeToEmoji: Map<LogType, string> = new Map([
   [LogType.MILESTONE, ':bookmark:'],
@@ -64,10 +79,10 @@ const logTypeToEmoji: Map<LogType, string> = new Map([
   [LogType.FEATURE, ':sparkles:'],
   [LogType.IMPROVEMENT, ':hammer:'],
   [LogType.BUG_FIX, ':bug:'],
-  [LogType.OTHER, ':notepad_spiral:']
+  [LogType.OTHER, ':notepad_spiral:'],
 ]);
 
-const groupLogs = (logs: ProgressLog[]) =>
+const groupLogs = (logs: ProgressLog[]): Record<string, ProgressLog[]> =>
   logs.reduce((prev, l) => {
     const productString = productToString.get(l.product)!;
 
@@ -80,7 +95,7 @@ const groupLogs = (logs: ProgressLog[]) =>
     return prev;
   }, {} as Record<string, ProgressLog[]>);
 
-const partitionStringsByLength = (strings: string[], maxLength: number) => {
+const partitionStringsByLength = (strings: string[], maxLength: number): string[][] => {
   const final: string[][] = [[]];
   let sub = final[0];
 
@@ -98,7 +113,9 @@ const partitionStringsByLength = (strings: string[], maxLength: number) => {
   return final;
 };
 
-const generateFields = (grouped: Record<string, ProgressLog[]>) =>
+const generateFields = (
+  grouped: Record<string, ProgressLog[]>,
+): Promise<Array<{ name: string; value: string }>> =>
   Promise.all(
     Object.entries(grouped).map(async ([product, logs]) => {
       const formatted = await Promise.all(
@@ -116,19 +133,19 @@ const generateFields = (grouped: Record<string, ProgressLog[]>) =>
             const emoji = logTypeToEmoji.get(l.type);
 
             return `${memberName} • ${emoji} ${l.summary}`;
-          })
+          }),
       );
 
       const paritioned = partitionStringsByLength(formatted, 1024);
 
       return paritioned.map((parition, i) => ({
         name: i != 0 ? `${product} (continued)` : product,
-        value: parition.join('\n')
+        value: parition.join('\n'),
       }));
-    })
+    }),
   ).then((fields) => fields.flat());
 
-export const generateFinalReport = async () => {
+export const generateFinalReport = async (): Promise<void> => {
   const lastWeek = dayjs.utc().isoWeekday(-1);
   const startOfWeek = lastWeek.startOf('isoWeek');
   const endOfWeek = lastWeek.endOf('isoWeek');
@@ -137,9 +154,9 @@ export const generateFinalReport = async () => {
     where: {
       createdAt: {
         gte: startOfWeek.toDate(),
-        lte: endOfWeek.toDate()
-      }
-    }
+        lte: endOfWeek.toDate(),
+      },
+    },
   });
 
   const grouped = groupLogs(logs);
@@ -154,14 +171,14 @@ export const generateFinalReport = async () => {
     throw new Error('Announcements channel is not a text channel.');
   }
 
-  let content = `Here is the final report for the week of ${startOfWeek.format('MMMM D, YYYY')} to ${endOfWeek.format(
-    'MMMM D, YYYY'
-  )}. Great work everyone!`;
+  let content = `Here is the final report for the week of ${startOfWeek.format(
+    'MMMM D, YYYY',
+  )} to ${endOfWeek.format('MMMM D, YYYY')}. Great work everyone!`;
   if (Math.random() < 0.05)
     content = "New face filters on Instagram today. This one's my favorite so far. Nice job team!";
   await announcementsChannel.send({
     content,
-    embeds: [embed.data]
+    embeds: [embed.data],
   });
 };
 
@@ -177,63 +194,63 @@ export default class Progress extends SlashCommand {
           name: 'product',
           description: 'The product the log is for',
           choices: enumStringsToChoice(productToString),
-          required: true
+          required: true,
         },
         {
           type: CommandOptionType.STRING,
           name: 'type',
           description: 'The type of progress log',
           choices: enumStringsToChoice(logTypeToString),
-          required: true
+          required: true,
         },
         {
           type: CommandOptionType.STRING,
           name: 'summary',
           description: 'The summary of your progress',
-          required: true
-        }
-      ]
+          required: true,
+        },
+      ],
     });
   }
 
-  public async run(ctx: CommandContext) {
+  public async run(ctx: CommandContext): Promise<void> {
     if (!(ctx.member instanceof Member)) {
       await ctx.sendFollowUp("Sorry, I couldn't understand your request for some reason >_<");
       return;
     }
 
-    const type = parseInt(ctx.options.type) as LogType;
-    const product = parseInt(ctx.options.product) as Product;
+    const type = parseInt(ctx.options.type, 10) as LogType;
+    const product = parseInt(ctx.options.product, 10) as Product;
 
     const log = await client.progressLog.create({
       data: {
         userID: ctx.user.id,
         type,
         product,
-        summary: ctx.options.summary
-      }
+        summary: ctx.options.summary,
+      },
     });
 
     const embed = new EmbedBuilder()
       .setTitle('Progress Log Submitted')
       .setColor('#00ff00')
       .setFooter({
-        text: 'ID: #' + log.id.toString()
+        text: `ID: #${log.id.toString()}`,
       })
       .setAuthor({
         name: ctx.member.displayName,
-        iconURL: ctx.member.avatarURL
+        iconURL: ctx.member.avatarURL,
       })
       .setDescription(ctx.options.summary)
       .setFields([
         { name: 'Product', value: productToString.get(product)!, inline: true },
-        { name: 'Type', value: logTypeToString.get(type)!, inline: true }
+        { name: 'Type', value: logTypeToString.get(type)!, inline: true },
       ]).data;
 
     await ctx.sendFollowUp({
       content:
         "Thanks for submitting your progress log! I'll add it to our weekly report :3\nFor now, here's a preview of your log:",
-      embeds: [embed]
+      embeds: [embed],
     });
 
     const updatesChannel = await getUpdatesChannel();
@@ -244,7 +261,7 @@ export default class Progress extends SlashCommand {
 
     await updatesChannel.send({
       content: 'Yay, a progress log just got submitted~',
-      embeds: [embed]
+      embeds: [embed],
     });
   }
 }

@@ -1,0 +1,37 @@
+extends: eslint-config-dmitmel/presets/node
+env:
+  browser: true
+parser: '@typescript-eslint/parser'
+parserOptions:
+  sourceType: module
+plugins:
+  - '@typescript-eslint'
+
+settings:
+  node:
+    tryExtensions: ['.ts', '.js', '.json', '.node']
+
+rules:
+  node/no-unsupported-features/es-syntax:
+    - error
+    - ignores:
+        - modules
+
+overrides:
+  - files: '**/*.ts*'
+    extends:
+      - eslint-config-dmitmel/presets/typescript-addon
+    parserOptions:
+      project: 'tsconfig.json'
+      sourceType: module
+    rules:
+      eqeqeq: 0
+      require-await: 0
+      no-undefined: 0
+      # May the Gods smite me for these two.
+      'node/no-unpublished-import': 0
+      'node/no-missing-import': 0
+      '@typescript-eslint/no-dynamic-delete': 0
+      '@typescript-eslint/no-explicit-any': 0
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 0
+      '@typescript-eslint/naming-convention': 0

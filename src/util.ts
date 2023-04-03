@@ -7,7 +7,8 @@ export const enumStringsToChoice = (e: Map<number, string>) =>
 
 export const getPrimaryGuild = () => client.guilds.fetch(process.env.PRIMARY_GUILD_ID!);
 
-export const getAnnoucementsChannel = () => client.channels.fetch(process.env.ANNOUNCEMENTS_CHANNEL_ID!);
+export const getAnnoucementsChannel = () =>
+  client.channels.fetch(process.env.ANNOUNCEMENTS_CHANNEL_ID!);
 
 export const getUpdatesChannel = () => client.channels.fetch(process.env.UPDATES_CHANNEL_ID!);
 
@@ -17,5 +18,5 @@ export const getRedisConnection = () => ({
   host: process.env.REDIS_HOST!,
   port: Number.parseInt(process.env.REDIS_PORT!),
   db: process.env.REDIS_DB ? Number.parseInt(process.env.REDIS_DB!) : 0,
-  password: process.env.REDIS_PASSWORD
+  password: process.env.REDIS_PASSWORD,
 });

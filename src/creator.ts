@@ -23,7 +23,8 @@ export default class RaboSlashCreator extends SlashCreator {
           commands.push(mod);
         } else {
           for (const cmd of Object.values(mod).filter(
-            (v) => typeof v === 'function' && 'prototype' in v && v.prototype instanceof SlashCommand
+            (v) =>
+              typeof v === 'function' && 'prototype' in v && v.prototype instanceof SlashCommand,
           )) {
             commands.push(cmd);
           }

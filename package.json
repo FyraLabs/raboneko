@@ -3,13 +3,21 @@
   "version": "0.6.0",
   "description": "Raboneko.",
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=19.7.0"
+  },
   "scripts": {
     "sync": "slash-up sync",
     "sync:dev": "slash-up sync -e development",
     "start": "cd dist && node index.js",
     "build": "npx tsc",
-    "lint": "npx eslint --ext .ts ./src",
-    "lint:fix": "npx eslint --ext .ts ./src --fix"
+    "check": "tsc --noEmit",
+    "prettier:check": "prettier ./src --check",
+    "eslint:check": "eslint ./src/**/*.ts",
+    "prettier:fix": "prettier ./src --write",
+    "eslint:fix": "eslint ./src/**/*.ts --fix",
+    "lint": "pnpm run prettier:check && pnpm run eslint:check && pnpm run check",
+    "lint:fix": "pnpm run prettier:fix && pnpm run eslint:fix"
   },
   "dependencies": {
     "@prisma/client": "^4.12.0",
@@ -28,7 +36,9 @@
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "eslint": "^8.37.0",
+    "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.7",
     "prisma": "^4.12.0",

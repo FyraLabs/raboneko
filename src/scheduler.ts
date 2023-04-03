@@ -3,7 +3,7 @@ import { generateFinalReport } from './commands/progress';
 import { getRedisConnection } from './util';
 
 const reportQueue = new Queue('report', {
-  connection: getRedisConnection()
+  connection: getRedisConnection(),
 });
 
 new Worker(
@@ -14,8 +14,8 @@ new Worker(
     }
   },
   {
-    connection: getRedisConnection()
-  }
+    connection: getRedisConnection(),
+  },
 );
 
 (async () => {
@@ -25,8 +25,8 @@ new Worker(
     {
       repeat: {
         pattern: '10 0 * * 1',
-        utc: true
-      }
-    }
+        utc: true,
+      },
+    },
   );
 })();
