@@ -30,6 +30,11 @@ export default class Remind extends SlashCommand {
             },
           ],
         },
+        {
+          type: CommandOptionType.SUB_COMMAND,
+          name: 'list',
+          description: 'List your running reminders',
+        },
       ],
     });
   }
@@ -63,6 +68,28 @@ export default class Remind extends SlashCommand {
               );
             });
         });
+        break;
+      }
+      case 'list': {
+        let reminders = await client.reminder.findMany({
+          where: {
+            userID: ctx.member.id,
+          },
+          orderBy: {
+            time: 'asc',
+          },
+        });
+
+        let content = "Here's your reminders!\n";
+        for (let reminder of reminders) {
+          if (reminder.time.getTime() > Date.now()) {
+            content += `- ${reminder.content}: [link](${reminder.link}) (<t:${
+              (reminder.time.getTime() / 1000) | 0
+            }:R>)\n`;
+          }
+        }
+
+        ctx.sendFollowUp(content);
       }
     }
   }
