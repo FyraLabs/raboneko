@@ -18,3 +18,12 @@ model ProgressLog {
   product Int
   summary String
 }
+
+model Reminder {
+  id Int @id @default(autoincrement())
+  userID String
+  createdAt DateTime @default(now())
+  content String
+  time DateTime
+  link String
+}
