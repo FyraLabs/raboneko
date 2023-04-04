@@ -2,7 +2,16 @@ import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 's
 import parse from 'parse-duration';
 import raboneko from '../client';
 import { client } from '../prisma';
-import { TextChannel } from 'discord.js';
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ComponentType,
+  ModalBuilder,
+  TextChannel,
+  TextInputBuilder,
+  TextInputStyle,
+} from 'discord.js';
 import { reminderQueue } from '../scheduler';
 
 export const handleReminderEvent = async (reminderID: number): Promise<void> => {
@@ -14,10 +23,49 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
 
   if (!reminder) return;
 
-  const user = await raboneko.users.cache.get(reminder.userID).fetch();
-  await user.send(
-    `Gmeow! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okay? :3`,
+  const buttonRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setCustomId('snooze')
+      .setLabel('Snooze')
+      .setStyle(ButtonStyle.Secondary)
+      .setEmoji('🛌'),
   );
+
+  const user = await raboneko.users.cache.get(reminder.userID).fetch();
+  const message = await user.send({
+    content: `Gmeow! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okie? :3`,
+    components: [buttonRow],
+  });
+
+  // we love memory leak
+  try {
+    const ctx = await message.awaitMessageComponent({
+      componentType: ComponentType.Button,
+    });
+
+    const modal = new ModalBuilder()
+      .setCustomId('reschedule')
+      .setTitle('Reschedule this reminder?');
+
+    const input = new TextInputBuilder()
+      .setCustomId('duration')
+      .setLabel('Duration')
+      .setStyle(TextInputStyle.Short)
+      .setMaxLength(20)
+      .setPlaceholder('5m')
+      .setRequired(true);
+    const inputActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(input);
+
+    modal.addComponents(inputActionRow);
+    await ctx.showModal(modal);
+
+    const modalSubmit = await ctx.awaitModalSubmit({ time: 60_000 });
+    console.log(modalSubmit);
+  } catch {
+    return;
+  }
+
+  await message.edit('this is just a test you bitch');
 };
 
 export default class Remind extends SlashCommand {
