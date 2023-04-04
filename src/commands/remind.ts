@@ -2,7 +2,7 @@ import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 's
 import parse from 'parse-duration';
 import raboneko from '../client';
 import { client } from '../prisma';
-import { Message, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
 import { reminderQueue } from '../scheduler';
 
 export const handleReminderEvent = async (reminderID: number): Promise<void> => {
@@ -15,7 +15,9 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
   if (!reminder) return;
 
   const user = await raboneko.users.cache.get(reminder.userID).fetch();
-  await user.send(`Heya~ Here's your reminder to \`${reminder.content}\`.`);
+  await user.send(
+    `Gmeow! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okay? :3`,
+  );
 };
 
 export default class Remind extends SlashCommand {
@@ -61,7 +63,7 @@ export default class Remind extends SlashCommand {
         const reminder = options.reminder ?? '...';
         const delay = parse(options.time);
         const time = new Date(Date.now() + delay);
-        const msg = await ctx.sendFollowUp('Creating reminder...');
+        const msg = await ctx.sendFollowUp('Creating your reminder...');
 
         const channel = (await raboneko.channels.cache.get(msg.channelID).fetch()) as TextChannel;
         const message = await channel.messages.fetch(msg.id);
@@ -78,7 +80,9 @@ export default class Remind extends SlashCommand {
         await reminderQueue.add('reminder', { id }, { delay });
 
         await msg.edit(
-          `Alright ${ctx.member.mention}, <t:${(time.getTime() / 1000) | 0}:R>: ${reminder}`,
+          `Alrightie ${ctx.member.mention}, I'll remind you in <t:${
+            (time.getTime() / 1000) | 0
+          }:R> to \`${reminder}\`~`,
         );
         break;
       }
@@ -93,7 +97,7 @@ export default class Remind extends SlashCommand {
         });
 
         if (reminders.length === 0) {
-          ctx.sendFollowUp('You have no reminders :(');
+          ctx.sendFollowUp("Nyu have no reminders, looks like someone's all caught up :3");
           return;
         }
 
