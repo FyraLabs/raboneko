@@ -6,7 +6,13 @@
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
-		"ghcr.io/devcontainers-contrib/features/pnpm:2": {}
+		"ghcr.io/devcontainers-contrib/features/pnpm:2": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "latest"
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
