@@ -1,8 +1,22 @@
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import parse from 'parse-duration';
-import { client as raboneko } from '../';
+import raboneko from '../client';
 import { client } from '../prisma';
 import { Message, TextChannel } from 'discord.js';
+import { reminderQueue } from '../scheduler';
+
+export const handleReminderEvent = async (reminderID: number): Promise<void> => {
+  const reminder = await client.reminder.findUnique({
+    where: {
+      id: reminderID,
+    },
+  });
+
+  if (!reminder) return;
+
+  const user = await raboneko.users.cache.get(reminder.userID).fetch();
+  await user.send(`Heya~ Here's your reminder to \`${reminder.content}\`.`);
+};
 
 export default class Remind extends SlashCommand {
   public constructor(creator: SlashCreator) {
@@ -43,35 +57,33 @@ export default class Remind extends SlashCommand {
     // Good grief, what a terrible way to do this.
     switch (ctx.subcommands[0]) {
       case 'create': {
-        let options = ctx.options[ctx.subcommands[0]];
-        let reminder = options.reminder ?? '...';
-        let time = new Date(Date.now() + parse(options.time));
-        ctx.sendFollowUp('Creating reminder...').then(async (msg) => {
-          let channel = await raboneko.channels.cache.get(msg.channelID).fetch();
-          let message: Message;
-          if (channel instanceof TextChannel) {
-            message = await channel.messages.fetch(msg.id);
-          }
+        const options = ctx.options[ctx.subcommands[0]];
+        const reminder = options.reminder ?? '...';
+        const delay = parse(options.time);
+        const time = new Date(Date.now() + delay);
+        const msg = await ctx.sendFollowUp('Creating reminder...');
 
-          client.reminder
-            .create({
-              data: {
-                userID: ctx.user.id,
-                content: reminder,
-                time,
-                link: message.url,
-              },
-            })
-            .then(() => {
-              msg.edit(
-                `Alright ${ctx.member.mention}, <t:${(time.getTime() / 1000) | 0}:R>: ${reminder}`,
-              );
-            });
+        const channel = (await raboneko.channels.cache.get(msg.channelID).fetch()) as TextChannel;
+        const message = await channel.messages.fetch(msg.id);
+
+        const { id } = await client.reminder.create({
+          data: {
+            userID: ctx.user.id,
+            content: reminder,
+            time,
+            link: message.url,
+          },
         });
+
+        await reminderQueue.add('reminder', { id }, { delay });
+
+        await msg.edit(
+          `Alright ${ctx.member.mention}, <t:${(time.getTime() / 1000) | 0}:R>: ${reminder}`,
+        );
         break;
       }
       case 'list': {
-        let reminders = await client.reminder.findMany({
+        const reminders = await client.reminder.findMany({
           where: {
             userID: ctx.member.id,
           },
@@ -80,8 +92,13 @@ export default class Remind extends SlashCommand {
           },
         });
 
+        if (reminders.length === 0) {
+          ctx.sendFollowUp('You have no reminders :(');
+          return;
+        }
+
         let content = "Here's your reminders!\n";
-        for (let reminder of reminders) {
+        for (const reminder of reminders) {
           if (reminder.time.getTime() > Date.now()) {
             content += `- ${reminder.content}: [link](${reminder.link}) (<t:${
               (reminder.time.getTime() / 1000) | 0
@@ -89,7 +106,7 @@ export default class Remind extends SlashCommand {
           }
         }
 
-        ctx.sendFollowUp(content);
+        await ctx.sendFollowUp(content);
       }
     }
   }
