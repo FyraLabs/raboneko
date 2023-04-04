@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import { GatewayServer } from 'slash-create';
-import { Client, GatewayDispatchEvents, IntentsBitField } from 'discord.js';
+import { GatewayDispatchEvents } from 'discord.js';
 import path from 'path';
 import CatLoggr from 'cat-loggr/ts';
+import client from './client';
 import './scheduler';
 import RaboSlashCreator from './creator';
 import * as http from 'http';
@@ -13,30 +14,6 @@ if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cw
 dotenv.config({ path: dotenvPath });
 
 const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
-const { Flags } = IntentsBitField;
-export const client = new Client({
-  intents: [
-    Flags.Guilds,
-    Flags.GuildMembers,
-    Flags.GuildModeration,
-    Flags.GuildEmojisAndStickers,
-    Flags.GuildIntegrations,
-    Flags.GuildWebhooks,
-    Flags.GuildInvites,
-    Flags.GuildVoiceStates,
-    Flags.GuildPresences,
-    Flags.GuildMessages,
-    Flags.GuildMessageReactions,
-    Flags.GuildMessageTyping,
-    Flags.DirectMessages,
-    Flags.DirectMessageReactions,
-    Flags.DirectMessageTyping,
-    Flags.MessageContent,
-    Flags.GuildScheduledEvents,
-    Flags.AutoModerationConfiguration,
-    Flags.AutoModerationExecution,
-  ],
-});
 const creator = new RaboSlashCreator({
   applicationID: process.env.DISCORD_APP_ID,
   publicKey: process.env.DISCORD_PUBLIC_KEY,

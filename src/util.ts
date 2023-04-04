@@ -1,4 +1,4 @@
-import { client } from './index';
+import client from './client';
 
 export const enumStringsToChoice = (e: Map<number, string>) =>
   Array.from(e.entries())

@@ -1,4 +1,4 @@
-import { client } from '../index';
+import client from '../client';
 import { ChannelType, Events } from 'discord.js';
 import { getGeneralChannel } from '../util';
 

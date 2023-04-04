@@ -3,7 +3,7 @@ import utc from 'dayjs/plugin/utc';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { ProgressLog } from '@prisma/client';
 import { client } from '../prisma';
-import { client as bot } from '../index';
+import bot from '../client';
 import {
   enumStringsToChoice,
   getAnnoucementsChannel,
