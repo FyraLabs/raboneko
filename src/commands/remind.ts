@@ -1,4 +1,10 @@
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
+import {
+  AutocompleteContext,
+  CommandContext,
+  CommandOptionType,
+  SlashCommand,
+  SlashCreator,
+} from 'slash-create';
 import parse from 'parse-duration';
 import raboneko from '../client';
 import { client } from '../prisma';
@@ -24,6 +30,10 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
   if (!reminder) return;
 
   const buttonRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
+      .setLabel('Go to original message')
+      .setStyle(ButtonStyle.Link)
+      .setURL(reminder.link),
     new ButtonBuilder()
       .setCustomId('snooze')
       .setLabel('Snooze')
