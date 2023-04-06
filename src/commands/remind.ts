@@ -2,6 +2,7 @@ import {
   AutocompleteContext,
   CommandContext,
   CommandOptionType,
+  ComponentTextInput,
   SlashCommand,
   SlashCreator,
 } from 'slash-create';
@@ -29,6 +30,12 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
 
   if (!reminder) return;
 
+  await client.reminder.delete({
+    where: {
+      id: reminderID,
+    },
+  });
+
   const buttonRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
       .setLabel('Go to original message')
@@ -54,7 +61,7 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
       time: 1000 * 60 * 10,
     });
 
-    if (ctx.member.user.id !== reminder.userID)
+    if (ctx.user.id !== reminder.userID)
       ctx.followUp({ content: 'This snooze button is not for you, sorry!', ephemeral: true });
 
     const modal = new ModalBuilder()
@@ -73,13 +80,28 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
     modal.addComponents(inputActionRow);
     await ctx.showModal(modal);
 
-    const modalSubmit = await ctx.awaitModalSubmit({ time: 60_000 });
-    console.log(modalSubmit);
-  } catch {
-    return;
-  }
+    // hit the fucking breakpoint you cunt.. ah
+    // I think I see why
 
-  await message.edit('this is just a test you bitch');
+    const modalSubmit = await ctx.awaitModalSubmit({ time: 60_000 });
+    console.log('¬¬¬', modalSubmit.deferred, modalSubmit.replied);
+    return;
+
+    const delay = parse(modalSubmit.fields.getTextInputValue('duration'));
+    const time = new Date(Date.now() + delay);
+
+    const { id } = await client.reminder.create({
+      data: { ...reminder, createdAt: undefined, time },
+    });
+
+    await reminderQueue.add('reminder', { id }, { delay });
+
+    await modalSubmit.editReply(
+      `Alrightie ${ctx.user.toString()}, I'll re-remind you in <t:${
+        (time.getTime() / 1000) | 0
+      }:R> to \`${reminder}\`~`,
+    );
+  } catch {}
 };
 
 export default class Remind extends SlashCommand {
