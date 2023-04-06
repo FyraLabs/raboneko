@@ -51,7 +51,11 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
   try {
     const ctx = await message.awaitMessageComponent({
       componentType: ComponentType.Button,
+      time: 1000 * 60 * 10,
     });
+
+    if (ctx.member.user.id !== reminder.userID)
+      ctx.followUp({ content: 'This snooze button is not for you, sorry!', ephemeral: true });
 
     const modal = new ModalBuilder()
       .setCustomId('reschedule')
