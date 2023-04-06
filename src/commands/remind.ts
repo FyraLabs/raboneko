@@ -131,6 +131,31 @@ export default class Remind extends SlashCommand {
     });
   }
 
+  public async autocomplete(ctx: AutocompleteContext): Promise<void> {
+    switch (ctx.subcommands[0]) {
+      case 'delete': {
+        if (ctx.focused !== 'reminder') return;
+
+        const value = ctx.options.delete.reminder as string;
+
+        const reminders = await client.reminder.findMany({
+          where: {
+            userID: ctx.member.id,
+          },
+          orderBy: {
+            time: 'asc',
+          },
+        });
+
+        const filtered = reminders.filter((r) => r.content.startsWith(value));
+        console.log(filtered);
+        await ctx.sendResults(filtered?.map((t) => ({ name: t.content, value: t.id })) || []);
+
+        break;
+      }
+    }
+  }
+
   public async run(ctx: CommandContext): Promise<void> {
     // Good grief, what a terrible way to do this.
     switch (ctx.subcommands[0]) {
