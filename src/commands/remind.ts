@@ -109,6 +109,20 @@ export default class Remind extends SlashCommand {
           name: 'list',
           description: 'List your running reminders',
         },
+        {
+          type: CommandOptionType.SUB_COMMAND,
+          name: 'delete',
+          description: 'Delete a reminder',
+          options: [
+            {
+              type: CommandOptionType.INTEGER,
+              name: 'reminder',
+              description: 'Reminder to delete',
+              required: true,
+              autocomplete: true,
+            },
+          ],
+        },
       ],
     });
   }
@@ -155,7 +169,7 @@ export default class Remind extends SlashCommand {
         });
 
         if (reminders.length === 0) {
-          ctx.sendFollowUp("Nyu have no reminders, looks like someone's all caught up :3");
+          await ctx.sendFollowUp("Nyu have no reminders, looks like someone's all caught up :3");
           return;
         }
 
@@ -169,6 +183,12 @@ export default class Remind extends SlashCommand {
         }
 
         await ctx.sendFollowUp(content);
+        break;
+      }
+      case 'delete': {
+        const options = ctx.options[ctx.subcommands[0]];
+        console.log(options);
+        ctx.sendFollowUp('baller');
       }
     }
   }
