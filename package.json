@@ -10,6 +10,7 @@
     "sync": "slash-up sync",
     "sync:dev": "slash-up sync -e development",
     "start": "cd dist && node index.js",
+    "dev": "tsc-watch --noClear --onSuccess \"node ./dist/index.js\"",
     "build": "npx tsc",
     "check": "tsc --noEmit",
     "prettier:check": "prettier ./src --check",
@@ -45,6 +46,7 @@
     "prisma": "^4.12.0",
     "slash-up": "^1.3.0",
     "ts-node": "^10.9.1",
+    "tsc-watch": "^6.0.0",
     "typescript": "^5.0.3"
   }
 }
