@@ -15,9 +15,9 @@ dotenv.config({ path: dotenvPath });
 
 const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 const creator = new RaboSlashCreator({
-  applicationID: process.env.DISCORD_APP_ID,
-  publicKey: process.env.DISCORD_PUBLIC_KEY,
-  token: process.env.DISCORD_BOT_TOKEN,
+  applicationID: process.env.DISCORD_APP_ID!,
+  publicKey: process.env.DISCORD_PUBLIC_KEY!,
+  token: process.env.DISCORD_BOT_TOKEN!,
   client,
 });
 

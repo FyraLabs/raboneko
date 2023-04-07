@@ -48,7 +48,7 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
       .setEmoji('🛌'),
   );
 
-  const user = await raboneko.users.cache.get(reminder.userID).fetch();
+  const user = await raboneko.users.cache.get(reminder.userID)!.fetch();
   const message = await user.send({
     content: `Gmeow! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okie? :3`,
     components: [buttonRow],
@@ -61,8 +61,13 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
       time: 1000 * 60 * 10,
     });
 
-    if (ctx.user.id !== reminder.userID)
-      ctx.followUp({ content: 'This snooze button is not for you, sorry!', ephemeral: true });
+    if (ctx.user.id !== reminder.userID) {
+      await ctx.followUp({
+        content: 'This snooze button is not for you, sorry!',
+        ephemeral: true,
+      });
+      return;
+    }
 
     const modal = new ModalBuilder()
       .setCustomId('reschedule')
@@ -85,13 +90,17 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
 
     const modalSubmit = await ctx.awaitModalSubmit({ time: 60_000 });
     console.log('¬¬¬', modalSubmit.deferred, modalSubmit.replied);
-    return;
 
     const delay = parse(modalSubmit.fields.getTextInputValue('duration'));
     const time = new Date(Date.now() + delay);
 
     const { id } = await client.reminder.create({
-      data: { ...reminder, createdAt: undefined, time },
+      data: {
+        userID: reminder.userID,
+        content: reminder.content,
+        link: reminder.link,
+        time,
+      },
     });
 
     await reminderQueue.add('reminder', { id }, { delay });
@@ -162,7 +171,7 @@ export default class Remind extends SlashCommand {
 
         const reminders = await client.reminder.findMany({
           where: {
-            userID: ctx.member.id,
+            userID: ctx.user.id,
           },
           orderBy: {
             time: 'asc',
@@ -188,7 +197,7 @@ export default class Remind extends SlashCommand {
         const time = new Date(Date.now() + delay);
         const msg = await ctx.sendFollowUp('Creating your reminder...');
 
-        const channel = (await raboneko.channels.cache.get(msg.channelID).fetch()) as TextChannel;
+        const channel = (await raboneko.channels.cache.get(msg.channelID)!.fetch()) as TextChannel;
         const message = await channel.messages.fetch(msg.id);
 
         const { id } = await client.reminder.create({
@@ -203,7 +212,7 @@ export default class Remind extends SlashCommand {
         await reminderQueue.add('reminder', { id }, { delay });
 
         await msg.edit(
-          `Alrightie ${ctx.member.mention}, I'll remind you in <t:${
+          `Alrightie ${ctx.user.mention}, I'll remind you in <t:${
             (time.getTime() / 1000) | 0
           }:R> to \`${reminder}\`~`,
         );
@@ -212,7 +221,7 @@ export default class Remind extends SlashCommand {
       case 'list': {
         const reminders = await client.reminder.findMany({
           where: {
-            userID: ctx.member.id,
+            userID: ctx.user.id,
           },
           orderBy: {
             time: 'asc',

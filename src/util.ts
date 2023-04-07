@@ -3,6 +3,11 @@ import client from './client';
 import { ConnectionOptions } from 'bullmq';
 import { ApplicationCommandOptionChoice } from 'slash-create';
 
+// Why? Because throw expressions don't exist yet. One can wish... https://github.com/tc39/proposal-throw-expressions
+export const throwError = (message: string): never => {
+  throw new Error(message);
+};
+
 export const enumStringsToChoice = (e: Map<number, string>): ApplicationCommandOptionChoice[] =>
   Array.from(e.entries())
     .sort((a, b) => a[0] - b[0])
@@ -11,14 +16,17 @@ export const enumStringsToChoice = (e: Map<number, string>): ApplicationCommandO
 export const getPrimaryGuild = (): Promise<Guild> =>
   client.guilds.fetch(process.env.PRIMARY_GUILD_ID!);
 
-export const getAnnoucementsChannel = (): Promise<Channel> =>
-  client.channels.fetch(process.env.ANNOUNCEMENTS_CHANNEL_ID!);
+export const getAnnoucementsChannel = async (): Promise<Channel> =>
+  (await client.channels.fetch(process.env.ANNOUNCEMENTS_CHANNEL_ID!)) ??
+  throwError('Announcements channel not found');
 
-export const getUpdatesChannel = (): Promise<Channel> =>
-  client.channels.fetch(process.env.UPDATES_CHANNEL_ID!);
+export const getUpdatesChannel = async (): Promise<Channel> =>
+  (await client.channels.fetch(process.env.UPDATES_CHANNEL_ID!)) ??
+  throwError('Updates channel not found');
 
-export const getGeneralChannel = (): Promise<Channel> =>
-  client.channels.fetch(process.env.GENERAL_CHANNEL_ID!);
+export const getGeneralChannel = async (): Promise<Channel> =>
+  (await client.channels.fetch(process.env.GENERAL_CHANNEL_ID!)) ??
+  throwError('General channel not found');
 
 export const getRedisConnection = (): ConnectionOptions => ({
   host: process.env.REDIS_HOST!,
