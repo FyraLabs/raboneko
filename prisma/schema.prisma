@@ -26,4 +26,6 @@ model Reminder {
   content String
   time DateTime
   link String
+  // The Discord ID of the message that was sent to the user, to remind them of the reminder
+  reminderMessageID String? @unique
 }

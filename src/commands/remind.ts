@@ -2,23 +2,16 @@ import {
   AutocompleteContext,
   CommandContext,
   CommandOptionType,
-  ComponentTextInput,
+  ComponentContext,
+  ComponentType,
   SlashCommand,
   SlashCreator,
+  TextInputStyle,
 } from 'slash-create';
 import parse from 'parse-duration';
 import raboneko from '../client';
 import { client } from '../prisma';
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  ComponentType,
-  ModalBuilder,
-  TextChannel,
-  TextInputBuilder,
-  TextInputStyle,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel } from 'discord.js';
 import { reminderQueue } from '../scheduler';
 
 export const handleReminderEvent = async (reminderID: number): Promise<void> => {
@@ -29,12 +22,6 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
   });
 
   if (!reminder) return;
-
-  await client.reminder.delete({
-    where: {
-      id: reminderID,
-    },
-  });
 
   const buttonRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
@@ -54,63 +41,14 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
     components: [buttonRow],
   });
 
-  // we love memory leak
-  try {
-    const ctx = await message.awaitMessageComponent({
-      componentType: ComponentType.Button,
-      time: 1000 * 60 * 10,
-    });
-
-    if (ctx.user.id !== reminder.userID) {
-      await ctx.followUp({
-        content: 'This snooze button is not for you, sorry!',
-        ephemeral: true,
-      });
-      return;
-    }
-
-    const modal = new ModalBuilder()
-      .setCustomId('reschedule')
-      .setTitle('Reschedule this reminder?');
-
-    const input = new TextInputBuilder()
-      .setCustomId('duration')
-      .setLabel('Duration')
-      .setStyle(TextInputStyle.Short)
-      .setMaxLength(20)
-      .setPlaceholder('5m')
-      .setRequired(true);
-    const inputActionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(input);
-
-    modal.addComponents(inputActionRow);
-    await ctx.showModal(modal);
-
-    // hit the fucking breakpoint you cunt.. ah
-    // I think I see why
-
-    const modalSubmit = await ctx.awaitModalSubmit({ time: 60_000 });
-    console.log('¬¬¬', modalSubmit.deferred, modalSubmit.replied);
-
-    const delay = parse(modalSubmit.fields.getTextInputValue('duration'));
-    const time = new Date(Date.now() + delay);
-
-    const { id } = await client.reminder.create({
-      data: {
-        userID: reminder.userID,
-        content: reminder.content,
-        link: reminder.link,
-        time,
-      },
-    });
-
-    await reminderQueue.add('reminder', { id }, { delay });
-
-    await modalSubmit.editReply(
-      `Alrightie ${ctx.user.toString()}, I'll re-remind you in <t:${
-        (time.getTime() / 1000) | 0
-      }:R> to \`${reminder}\`~`,
-    );
-  } catch {}
+  await client.reminder.update({
+    where: {
+      id: reminderID,
+    },
+    data: {
+      reminderMessageID: message.id,
+    },
+  });
 };
 
 export default class Remind extends SlashCommand {
@@ -160,6 +98,63 @@ export default class Remind extends SlashCommand {
         },
       ],
     });
+
+    creator.registerGlobalComponent('snooze', this.snoozeHandler);
+  }
+
+  private async snoozeHandler(ctx: ComponentContext): Promise<void> {
+    const reminder = await client.reminder.findUnique({
+      where: {
+        reminderMessageID: ctx.message.id,
+      },
+    });
+
+    if (!reminder) return;
+
+    if (ctx.user.id !== reminder.userID) {
+      await ctx.sendFollowUp({
+        content: 'This snooze button is not for you, sorry!',
+        ephemeral: true,
+      });
+      return;
+    }
+
+    await ctx.sendModal(
+      {
+        title: 'Reschedule this reminder?',
+        components: [
+          {
+            type: ComponentType.ACTION_ROW,
+            components: [
+              {
+                type: ComponentType.TEXT_INPUT,
+                custom_id: 'duration',
+                label: 'Duration',
+                style: TextInputStyle.SHORT,
+                max_length: 20,
+                placeholder: '5m',
+                required: true,
+              },
+            ],
+          },
+        ],
+      },
+      async (ctx) => {
+        const delay = parse(ctx.values.duration);
+        const time = new Date(Date.now() + delay);
+
+        await reminderQueue.add('reminder', { id: reminder.id }, { delay });
+
+        await ctx.editParent(
+          `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
+            (time.getTime() / 1000) | 0
+          }:R> to \`${reminder.content}\`~`,
+          {
+            components: [],
+          },
+        );
+      },
+    );
   }
 
   public async autocomplete(ctx: AutocompleteContext): Promise<void> {
