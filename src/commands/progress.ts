@@ -68,7 +68,7 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.OTHER, 'Other'],
 ]);
 
-const stringToLogType: Map<string, LogType> = new Map(
+const _stringToLogType: Map<string, LogType> = new Map(
   [...logTypeToString.entries()].map(([k, v]) => [v, k]),
 );
 

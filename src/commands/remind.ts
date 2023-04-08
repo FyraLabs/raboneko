@@ -102,61 +102,6 @@ export default class Remind extends SlashCommand {
     creator.registerGlobalComponent('snooze', this.snoozeHandler);
   }
 
-  private async snoozeHandler(ctx: ComponentContext): Promise<void> {
-    const reminder = await client.reminder.findUnique({
-      where: {
-        reminderMessageID: ctx.message.id,
-      },
-    });
-
-    if (!reminder) return;
-
-    if (ctx.user.id !== reminder.userID) {
-      await ctx.sendFollowUp({
-        content: 'This snooze button is not for you, sorry!',
-        ephemeral: true,
-      });
-      return;
-    }
-
-    await ctx.sendModal(
-      {
-        title: 'Reschedule this reminder?',
-        components: [
-          {
-            type: ComponentType.ACTION_ROW,
-            components: [
-              {
-                type: ComponentType.TEXT_INPUT,
-                custom_id: 'duration',
-                label: 'Duration',
-                style: TextInputStyle.SHORT,
-                max_length: 20,
-                placeholder: '5m',
-                required: true,
-              },
-            ],
-          },
-        ],
-      },
-      async (ctx) => {
-        const delay = parse(ctx.values.duration);
-        const time = new Date(Date.now() + delay);
-
-        await reminderQueue.add('reminder', { id: reminder.id }, { delay });
-
-        await ctx.editParent(
-          `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
-            (time.getTime() / 1000) | 0
-          }:R> to \`${reminder.content}\`~`,
-          {
-            components: [],
-          },
-        );
-      },
-    );
-  }
-
   public async autocomplete(ctx: AutocompleteContext): Promise<void> {
     switch (ctx.subcommands[0]) {
       case 'delete': {
@@ -246,5 +191,60 @@ export default class Remind extends SlashCommand {
         ctx.sendFollowUp('baller');
       }
     }
+  }
+
+  private async snoozeHandler(ctx: ComponentContext): Promise<void> {
+    const reminder = await client.reminder.findUnique({
+      where: {
+        reminderMessageID: ctx.message.id,
+      },
+    });
+
+    if (!reminder) return;
+
+    if (ctx.user.id !== reminder.userID) {
+      await ctx.sendFollowUp({
+        content: 'This snooze button is not for you, sorry!',
+        ephemeral: true,
+      });
+      return;
+    }
+
+    await ctx.sendModal(
+      {
+        title: 'Reschedule this reminder?',
+        components: [
+          {
+            type: ComponentType.ACTION_ROW,
+            components: [
+              {
+                type: ComponentType.TEXT_INPUT,
+                custom_id: 'duration',
+                label: 'Duration',
+                style: TextInputStyle.SHORT,
+                max_length: 20,
+                placeholder: '5m',
+                required: true,
+              },
+            ],
+          },
+        ],
+      },
+      async (ctx) => {
+        const delay = parse(ctx.values.duration);
+        const time = new Date(Date.now() + delay);
+
+        await reminderQueue.add('reminder', { id: reminder.id }, { delay });
+
+        await ctx.editParent(
+          `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
+            (time.getTime() / 1000) | 0
+          }:R> to \`${reminder.content}\`~`,
+          {
+            components: [],
+          },
+        );
+      },
+    );
   }
 }
