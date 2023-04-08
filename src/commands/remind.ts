@@ -112,6 +112,9 @@ export default class Remind extends SlashCommand {
         const reminders = await client.reminder.findMany({
           where: {
             userID: ctx.user.id,
+            time: {
+              gte: new Date(),
+            },
           },
           orderBy: {
             time: 'asc',
@@ -162,6 +165,9 @@ export default class Remind extends SlashCommand {
         const reminders = await client.reminder.findMany({
           where: {
             userID: ctx.user.id,
+            time: {
+              gte: new Date(),
+            },
           },
           orderBy: {
             time: 'asc',
@@ -175,11 +181,9 @@ export default class Remind extends SlashCommand {
 
         let content = "Here's your reminders!\n";
         for (const reminder of reminders) {
-          if (reminder.time.getTime() > Date.now()) {
-            content += `- ${reminder.content}: [link](${reminder.link}) (<t:${
-              (reminder.time.getTime() / 1000) | 0
-            }:R>)\n`;
-          }
+          content += `- ${reminder.content}: [link](${reminder.link}) (<t:${
+            (reminder.time.getTime() / 1000) | 0
+          }:R>)\n`;
         }
 
         await ctx.sendFollowUp(content);
