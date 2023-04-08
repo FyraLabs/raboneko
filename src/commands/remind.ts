@@ -187,8 +187,12 @@ export default class Remind extends SlashCommand {
       }
       case 'delete': {
         const options = ctx.options[ctx.subcommands[0]];
-        console.log(options);
-        ctx.sendFollowUp('baller');
+        const reminder = await client.reminder.delete({
+          where: {
+            id: options.reminder,
+          },
+        });
+        await ctx.sendFollowUp(`Deleted \`${reminder.content}\`!`);
       }
     }
   }
