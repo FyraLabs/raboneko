@@ -1,6 +1,9 @@
 ## build runner
 FROM node:lts-alpine as build-runner
 
+# Add git
+RUN apk add git
+
 # Set temp directory
 WORKDIR /tmp/app
 
@@ -22,6 +25,9 @@ RUN pnpm run build
 
 ## producation runner
 FROM node:lts-alpine as prod-runner
+
+# Add git
+RUN apk add git
 
 # Set work directory
 WORKDIR /app
