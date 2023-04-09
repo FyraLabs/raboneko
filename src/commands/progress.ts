@@ -3,7 +3,7 @@ import utc from 'dayjs/plugin/utc';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { ProgressLog } from '@prisma/client';
 import { client } from '../prisma';
-import { client as bot } from '../index';
+import bot from '../client';
 import {
   enumStringsToChoice,
   getAnnoucementsChannel,
@@ -68,7 +68,7 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.OTHER, 'Other'],
 ]);
 
-const stringToLogType: Map<string, LogType> = new Map(
+const _stringToLogType: Map<string, LogType> = new Map(
   [...logTypeToString.entries()].map(([k, v]) => [v, k]),
 );
 

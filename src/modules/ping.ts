@@ -1,4 +1,4 @@
-import { client } from '../index';
+import client from '../client';
 import { Events } from 'discord.js';
 
 const mentionedResponses = [
