@@ -35,9 +35,9 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
       .setEmoji('🛌'),
   );
 
-  const user = await raboneko.users.cache.get(reminder.userID)!.fetch();
-  const message = await user.send({
-    content: `Gmeow! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okie? :3`,
+  const channel = (await raboneko.channels.cache.get(reminder.channelID)!.fetch()) as TextChannel;
+  const message = await channel.send({
+    content: `Gmeow <@${reminder.userID}>! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okie? :3`,
     components: [buttonRow],
   });
 
@@ -146,6 +146,7 @@ export default class Remind extends SlashCommand {
         const { id } = await client.reminder.create({
           data: {
             userID: ctx.user.id,
+            channelID: ctx.channelID,
             content: reminder,
             time,
             link: message.url,

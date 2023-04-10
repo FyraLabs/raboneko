@@ -22,6 +22,7 @@ model ProgressLog {
 model Reminder {
   id Int @id @default(autoincrement())
   userID String
+  channelID String
   createdAt DateTime @default(now())
   content String
   time DateTime
