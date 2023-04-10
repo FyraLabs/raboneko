@@ -137,6 +137,12 @@ export default class Remind extends SlashCommand {
         const options = ctx.options[ctx.subcommands[0]];
         const reminder = options.reminder ?? '...';
         const delay = parse(options.time);
+        if (delay === null) {
+          await ctx.sendFollowUp(
+            'The time you input is invalid! The format must be something along the lines of `1h30m25s`.',
+          );
+          return;
+        }
         const time = new Date(Date.now() + delay);
         const msg = await ctx.sendFollowUp('Creating your reminder...');
 
