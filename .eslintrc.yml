@@ -4,14 +4,15 @@ env:
 parser: '@typescript-eslint/parser'
 parserOptions:
   sourceType: module
-plugins:
-  - '@typescript-eslint'
+plugins: ['prettier']
 
 settings:
   node:
     tryExtensions: ['.ts', '.js', '.json', '.node']
 
 rules:
+  prettier/prettier:
+    - error
   node/no-unsupported-features/es-syntax:
     - error
     - ignores:
