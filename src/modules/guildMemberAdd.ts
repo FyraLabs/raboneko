@@ -1,11 +1,11 @@
 import client from '../client';
-import { ChannelType, Events } from 'discord.js';
+import { Events } from 'discord.js';
 import { getGeneralChannel } from '../util';
 
 client.on(Events.GuildMemberAdd, async (member) => {
   const generalChannel = await getGeneralChannel();
 
-  if (generalChannel?.type !== ChannelType.GuildText) {
+  if (!generalChannel.isTextBased()) {
     throw new Error('General channel is not a text channel.');
   }
 

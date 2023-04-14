@@ -167,7 +167,7 @@ export const generateFinalReport = async (): Promise<void> => {
 
   const announcementsChannel = await getAnnoucementsChannel();
 
-  if (announcementsChannel?.type !== ChannelType.GuildText) {
+  if (!announcementsChannel.isTextBased()) {
     throw new Error('Announcements channel is not a text channel.');
   }
 
@@ -255,7 +255,7 @@ export default class Progress extends SlashCommand {
 
     const updatesChannel = await getUpdatesChannel();
 
-    if (updatesChannel?.type !== ChannelType.GuildText) {
+    if (!updatesChannel.isTextBased()) {
       throw new Error('Updates channel is not a text channel.');
     }
 
