@@ -137,7 +137,7 @@ export default class Remind extends SlashCommand {
         const options = ctx.options[ctx.subcommands[0]];
         const reminder = options.reminder ?? '...';
         const delay = parse(options.time);
-        if (delay === null) {
+        if (typeof delay !== 'number') {
           await ctx.sendFollowUp(
             'The time you input is invalid! The format must be something along the lines of `1h30m25s`.',
           );
@@ -247,8 +247,14 @@ export default class Remind extends SlashCommand {
       },
       async (ctx) => {
         const delay = parse(ctx.values.duration);
-        const time = new Date(Date.now() + delay);
+        if (typeof delay !== 'number') {
+          await ctx.sendFollowUp(
+            'The time you input is invalid! The format must be something along the lines of `1h30m25s`.',
+          );
+          return;
+        }
 
+        const time = new Date(Date.now() + delay);
         await reminderQueue.add('reminder', { id: reminder.id }, { delay });
 
         await ctx.editParent(
