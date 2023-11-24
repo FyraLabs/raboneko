@@ -10,7 +10,7 @@ import {
   getPrimaryGuild,
   getUpdatesChannel,
 } from '../util';
-import { ChannelType, EmbedBuilder } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import {
   CommandContext,
   CommandOptionType,
@@ -33,7 +33,7 @@ enum Product {
   OTHER,
 }
 
-const productToString: Map<Product, string> = new Map([
+const productToString = new Map<Product, string>([
   [Product.TAUOS, 'tauOS'],
   [Product.HOMEPAGE, 'Homepage'],
   [Product.PHOTON_BROWSER, 'photonBrowser'],
@@ -44,7 +44,7 @@ const productToString: Map<Product, string> = new Map([
   [Product.OTHER, 'Other'],
 ]);
 
-const _stringToProduct: Map<string, Product> = new Map(
+const _stringToProduct = new Map<string, Product>(
   [...productToString.entries()].map(([k, v]) => [v, k]),
 );
 
@@ -58,7 +58,7 @@ enum LogType {
   IMPROVEMENT,
 }
 
-const logTypeToString: Map<LogType, string> = new Map([
+const logTypeToString = new Map<LogType, string>([
   [LogType.MILESTONE, 'Milestone'],
   [LogType.BLOCKER, 'Blocker'],
   [LogType.RELEASE, 'Release'],
@@ -68,11 +68,11 @@ const logTypeToString: Map<LogType, string> = new Map([
   [LogType.OTHER, 'Other'],
 ]);
 
-const _stringToLogType: Map<string, LogType> = new Map(
+const _stringToLogType = new Map<string, LogType>(
   [...logTypeToString.entries()].map(([k, v]) => [v, k]),
 );
 
-const logTypeToEmoji: Map<LogType, string> = new Map([
+const logTypeToEmoji = new Map<LogType, string>([
   [LogType.MILESTONE, ':bookmark:'],
   [LogType.BLOCKER, ':octagonal_sign:'],
   [LogType.RELEASE, ':rocket:'],
@@ -83,17 +83,20 @@ const logTypeToEmoji: Map<LogType, string> = new Map([
 ]);
 
 const groupLogs = (logs: ProgressLog[]): Record<string, ProgressLog[]> =>
-  logs.reduce((prev, l) => {
-    const productString = productToString.get(l.product)!;
+  logs.reduce(
+    (prev, l) => {
+      const productString = productToString.get(l.product)!;
 
-    if (!(productString in prev)) {
-      prev[productString] = [];
-    }
+      if (!(productString in prev)) {
+        prev[productString] = [];
+      }
 
-    prev[productString].push(l);
+      prev[productString].push(l);
 
-    return prev;
-  }, {} as Record<string, ProgressLog[]>);
+      return prev;
+    },
+    {} as Record<string, ProgressLog[]>,
+  );
 
 const partitionStringsByLength = (strings: string[], maxLength: number): string[][] => {
   const final: string[][] = [[]];

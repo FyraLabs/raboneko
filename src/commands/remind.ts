@@ -257,14 +257,12 @@ export default class Remind extends SlashCommand {
         const time = new Date(Date.now() + delay);
         await reminderQueue.add('reminder', { id: reminder.id }, { delay });
 
-        await ctx.editParent(
-          `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
+        await ctx.editParent({
+          components: [],
+          content: `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
             (time.getTime() / 1000) | 0
           }:R> to \`${reminder.content}\`~`,
-          {
-            components: [],
-          },
-        );
+        });
       },
     );
   }
