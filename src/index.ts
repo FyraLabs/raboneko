@@ -37,13 +37,6 @@ creator.on('commandError', (command, error) =>
   logger.error(`Command ${command.commandName}:`, error),
 );
 
-creator
-  .withServer(
-    new GatewayServer((handler) => client.ws.on(GatewayDispatchEvents.InteractionCreate, handler)),
-  )
-  .registerCommandsIn(path.join(__dirname, 'commands'))
-  .syncCommands();
-
 http
   .createServer((_, res) => {
     res.writeHead(200);
@@ -51,7 +44,19 @@ http
   })
   .listen(process.env.HEALTH_PORT);
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+(async () => {
+  await creator
+    .withServer(
+      new GatewayServer((handler) =>
+        client.ws.on(GatewayDispatchEvents.InteractionCreate, handler),
+      ),
+    )
+    .registerCommandsIn(path.join(__dirname, 'commands'));
+
+  await creator.syncCommands();
+
+  await client.login(process.env.DISCORD_BOT_TOKEN);
+})();
 
 import './modules/ping';
 import './modules/guildMemberAdd';

@@ -1,6 +1,20 @@
 import { SlashCommand, SlashCreator } from 'slash-create';
-import { getFiles } from 'slash-create/lib/util';
 import path from 'path';
+import { lstat, readdir } from 'fs/promises';
+
+// This is vendored from slash-create's command loading implementation, which is
+// not exported. We use this for our own command loader.
+const getFiles = async (folderPath: string): Promise<string[]> => {
+  const fileList = await readdir(folderPath);
+  const files: string[] = [];
+  for (const file of fileList) {
+    const filePath = path.join(folderPath, file);
+    const stat = await lstat(filePath);
+    if (stat.isDirectory()) files.push(...(await getFiles(filePath)));
+    else files.push(filePath);
+  }
+  return files;
+};
 
 export default class RaboSlashCreator extends SlashCreator {
   // Currently, the SlashCreator's implementation of loading commands takes the
@@ -11,9 +25,14 @@ export default class RaboSlashCreator extends SlashCreator {
   // are just simple text responses. So, override the command loading
   // implementation to check if there is either a default export or multiple
   // exports, and load them based on that.
-  public registerCommandsIn(commandPath: string, customExtensions: string[] = []): this {
+  public async registerCommandsIn(
+    commandPath: string,
+    customExtensions: string[] = [],
+  ): Promise<Array<SlashCommand<this>>> {
     const extensions = ['.js', '.cjs', ...customExtensions];
-    const paths = getFiles(commandPath).filter((file) => extensions.includes(path.extname(file)));
+    const paths = (await getFiles(commandPath)).filter((file) =>
+      extensions.includes(path.extname(file)),
+    );
     const commands: any[] = [];
     for (const filePath of paths) {
       try {
