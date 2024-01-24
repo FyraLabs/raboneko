@@ -84,17 +84,20 @@ const logTypeToEmoji = new Map<LogType, string>([
 ]);
 
 const groupLogs = (logs: ProgressLog[]): Record<string, ProgressLog[]> =>
-  logs.reduce((prev, l) => {
-    const productString = productToString.get(l.product)!;
+  logs.reduce(
+    (prev, l) => {
+      const productString = productToString.get(l.product)!;
 
-    if (!(productString in prev)) {
-      prev[productString] = [];
-    }
+      if (!(productString in prev)) {
+        prev[productString] = [];
+      }
 
-    prev[productString].push(l);
+      prev[productString].push(l);
 
-    return prev;
-  }, {} as Record<string, ProgressLog[]>);
+      return prev;
+    },
+    {} as Record<string, ProgressLog[]>,
+  );
 
 const partitionStringsByLength = (strings: string[], maxLength: number): string[][] => {
   const final: string[][] = [[]];
@@ -232,7 +235,7 @@ export default class Progress extends SlashCommand {
               name: 'log',
               description: 'The the log to delete',
               required: true,
-              autocomplete: true
+              autocomplete: true,
             },
           ],
         },
