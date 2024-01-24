@@ -10,7 +10,7 @@ import {
   getPrimaryGuild,
   getUpdatesChannel,
 } from '../util';
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder, RESTError, RESTJSONErrorCodes } from 'discord.js';
 import {
   AutocompleteContext,
   CommandContext,
@@ -291,9 +291,19 @@ export default class Progress extends SlashCommand {
       throw new Error('Updates channel is not a text channel.');
     }
 
-    await updatesChannel.send({
+    const updateMessage = await updatesChannel.send({
       content: 'Yay, a progress log just got submitted~',
       embeds: [embed],
+    });
+
+    // we can't do this in one op, since we don't know the update message ID until it's created
+    await client.progressLog.update({
+      where: {
+        id: log.id,
+      },
+      data: {
+        logMessageID: updateMessage.id,
+      },
     });
   }
 
@@ -318,6 +328,23 @@ export default class Progress extends SlashCommand {
         id: options.log,
       },
     });
+
+    if (log.logMessageID !== null) {
+      const updatesChannel = await getUpdatesChannel();
+
+      if (!updatesChannel.isTextBased()) {
+        throw new Error('Updates channel is not a text channel.');
+      }
+
+      try {
+        await updatesChannel.messages.delete(log.logMessageID);
+      } catch (e) {
+        // if the error IS NOT that the message doesn't exist, throw it up
+        if ((e as RESTError).code !== RESTJSONErrorCodes.UnknownMessage) {
+          throw e;
+        }
+      }
+    }
 
     await ctx.sendFollowUp(
       `Okie, just removed the log \`${log.summary}\`! Destroying things is fun >:3`,

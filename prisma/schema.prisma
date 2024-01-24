@@ -17,6 +17,8 @@ model ProgressLog {
   type Int
   product Int
   summary String
+  // The Discord ID of the message logged in the updates channel, used so we can delete it if the user deletes the log
+  logMessageID String? @unique
 }
 
 model Reminder {
