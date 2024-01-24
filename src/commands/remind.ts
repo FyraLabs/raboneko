@@ -55,7 +55,7 @@ export default class Remind extends SlashCommand {
   public constructor(creator: SlashCreator) {
     super(creator, {
       name: 'remind',
-      description: 'All in one command to manager your reminders!',
+      description: 'All in one command to manage your reminders!',
       dmPermission: false,
       options: [
         {
@@ -122,7 +122,6 @@ export default class Remind extends SlashCommand {
         });
 
         const filtered = reminders.filter((r) => r.content.startsWith(value));
-        console.log(filtered);
         await ctx.sendResults(filtered?.map((t) => ({ name: t.content, value: t.id })) || []);
 
         break;

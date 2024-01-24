@@ -12,6 +12,7 @@ import {
 } from '../util';
 import { EmbedBuilder } from 'discord.js';
 import {
+  AutocompleteContext,
   CommandContext,
   CommandOptionType,
   Member,
@@ -83,20 +84,17 @@ const logTypeToEmoji = new Map<LogType, string>([
 ]);
 
 const groupLogs = (logs: ProgressLog[]): Record<string, ProgressLog[]> =>
-  logs.reduce(
-    (prev, l) => {
-      const productString = productToString.get(l.product)!;
+  logs.reduce((prev, l) => {
+    const productString = productToString.get(l.product)!;
 
-      if (!(productString in prev)) {
-        prev[productString] = [];
-      }
+    if (!(productString in prev)) {
+      prev[productString] = [];
+    }
 
-      prev[productString].push(l);
+    prev[productString].push(l);
 
-      return prev;
-    },
-    {} as Record<string, ProgressLog[]>,
-  );
+    return prev;
+  }, {} as Record<string, ProgressLog[]>);
 
 const partitionStringsByLength = (strings: string[], maxLength: number): string[][] => {
   const final: string[][] = [[]];
@@ -193,44 +191,72 @@ export default class Progress extends SlashCommand {
       dmPermission: false,
       options: [
         {
-          type: CommandOptionType.STRING,
-          name: 'product',
-          description: 'The product the log is for',
-          choices: enumStringsToChoice(productToString),
-          required: true,
+          type: CommandOptionType.SUB_COMMAND,
+          name: 'create',
+          description: 'Create a progress log',
+          options: [
+            {
+              type: CommandOptionType.STRING,
+              name: 'product',
+              description: 'The product the log is for',
+              choices: enumStringsToChoice(productToString),
+              required: true,
+            },
+            {
+              type: CommandOptionType.STRING,
+              name: 'type',
+              description: 'The type of progress log',
+              choices: enumStringsToChoice(logTypeToString),
+              required: true,
+            },
+            {
+              type: CommandOptionType.STRING,
+              name: 'summary',
+              description: 'The summary of your progress',
+              required: true,
+            },
+          ],
         },
         {
-          type: CommandOptionType.STRING,
-          name: 'type',
-          description: 'The type of progress log',
-          choices: enumStringsToChoice(logTypeToString),
-          required: true,
+          type: CommandOptionType.SUB_COMMAND,
+          name: 'report',
+          description: 'Generate a progress report',
         },
         {
-          type: CommandOptionType.STRING,
-          name: 'summary',
-          description: 'The summary of your progress',
-          required: true,
+          type: CommandOptionType.SUB_COMMAND,
+          name: 'delete',
+          description: 'Delete a progress log',
+          options: [
+            {
+              type: CommandOptionType.INTEGER,
+              name: 'log',
+              description: 'The the log to delete',
+              required: true,
+              autocomplete: true
+            },
+          ],
         },
       ],
     });
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  private async create(ctx: CommandContext): Promise<void> {
     if (!(ctx.member instanceof Member)) {
       await ctx.sendFollowUp("Sorry, I couldn't understand your request for some reason >_<");
       return;
     }
 
-    const type = parseInt(ctx.options.type, 10) as LogType;
-    const product = parseInt(ctx.options.product, 10) as Product;
+    const options = ctx.options[ctx.subcommands[0]];
+
+    const type = parseInt(options.type, 10) as LogType;
+    const product = parseInt(options.product, 10) as Product;
 
     const log = await client.progressLog.create({
       data: {
         userID: ctx.user.id,
         type,
         product,
-        summary: ctx.options.summary,
+        summary: options.summary,
       },
     });
 
@@ -244,7 +270,7 @@ export default class Progress extends SlashCommand {
         name: ctx.member.displayName,
         iconURL: ctx.member.avatarURL,
       })
-      .setDescription(ctx.options.summary)
+      .setDescription(options.summary)
       .setFields([
         { name: 'Product', value: productToString.get(product)!, inline: true },
         { name: 'Type', value: logTypeToString.get(type)!, inline: true },
@@ -266,5 +292,103 @@ export default class Progress extends SlashCommand {
       content: 'Yay, a progress log just got submitted~',
       embeds: [embed],
     });
+  }
+
+  private async delete(ctx: CommandContext): Promise<void> {
+    const options = ctx.options[ctx.subcommands[0]];
+
+    // not atomic, don't care, error handling sucks in Prisma (and I don't want to use transactions here)
+
+    const log = await client.progressLog.findUnique({
+      where: {
+        id: options.log,
+      },
+    });
+
+    if (!log) {
+      await ctx.sendFollowUp("You can't remove a log that doesn't exist! :P");
+      return;
+    }
+
+    await client.progressLog.delete({
+      where: {
+        id: options.log,
+      },
+    });
+
+    await ctx.sendFollowUp(
+      `Okie, just removed the log \`${log.summary}\`! Destroying things is fun >:3`,
+    );
+  }
+
+  private async report(ctx: CommandContext): Promise<void> {
+    await ctx.defer();
+
+    const startOfWeek = dayjs().utc().startOf('isoWeek');
+    const endOfWeek = dayjs().utc().endOf('isoWeek');
+
+    const logs = await client.progressLog.findMany({
+      where: {
+        createdAt: {
+          gte: startOfWeek.toDate(),
+          lte: endOfWeek.toDate(),
+        },
+      },
+    });
+
+    const grouped = groupLogs(logs);
+    const fields = await generateFields(grouped);
+    const embed = new EmbedBuilder()
+      .addFields(fields)
+      .setDescription(fields.length > 0 ? null : '*No progress this week.*').data;
+
+    await ctx.editOriginal({
+      content: "Here's a summary of the current week. Great progress so far~",
+      embeds: [embed],
+    });
+  }
+
+  public async autocomplete(ctx: AutocompleteContext): Promise<void> {
+    switch (ctx.subcommands[0]) {
+      case 'delete': {
+        if (ctx.focused !== 'log') return;
+
+        const value = ctx.options.delete.log as string;
+
+        const startOfWeek = dayjs().utc().startOf('isoWeek');
+        const endOfWeek = dayjs().utc().endOf('isoWeek');
+
+        const reminders = await client.progressLog.findMany({
+          where: {
+            createdAt: {
+              gte: startOfWeek.toDate(),
+              lte: endOfWeek.toDate(),
+            },
+          },
+          orderBy: {
+            createdAt: 'asc',
+          },
+        });
+
+        const filtered = reminders.filter((r) => r.summary.startsWith(value));
+        await ctx.sendResults(filtered?.map((t) => ({ name: t.summary, value: t.id })) || []);
+
+        break;
+      }
+    }
+  }
+
+  public async run(ctx: CommandContext): Promise<void> {
+    switch (ctx.subcommands[0]) {
+      case 'create':
+        await this.create(ctx);
+        break;
+      case 'report':
+        await this.report(ctx);
+        break;
+      case 'delete':
+        await this.delete(ctx);
+        break;
+    }
   }
 }
