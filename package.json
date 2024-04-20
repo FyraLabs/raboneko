@@ -30,7 +30,7 @@
     "dotenv": "^16.4.0",
     "fastify": "^4.26.2",
     "parse-duration": "^1.1.0",
-    "slash-create": "^6.0.2"
+    "slash-create": "^6.1.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
