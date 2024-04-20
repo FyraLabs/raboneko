@@ -60,3 +60,4 @@ http
 
 import './modules/ping';
 import './modules/guildMemberAdd';
+import './modules/skull';
