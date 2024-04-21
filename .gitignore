@@ -1,6 +1,7 @@
 # Packages
 node_modules/
 yarn.lock
+bun.lockb
 package_lock.json
 
 # Log files
