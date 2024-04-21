@@ -1,9 +1,8 @@
 import client from '../client';
 import { Events, Message } from 'discord.js';
 
-function containsWord(msg: Message, word: string): boolean {
-  return msg.content.match(`/\\b${word}\\b/i`)?.length !== 0;
-}
+const containsWord = (msg: Message, word: string): boolean =>
+  msg.content.match(`/\\b${word}\\b/i`)?.length !== 0;
 
 client.on(Events.MessageCreate, async (message) => {
   if (containsWord(message, 'krane')) {
