@@ -6,9 +6,10 @@ const containsWord = (msg: Message, word: string): boolean =>
 
 client.on(Events.MessageCreate, async (message) => {
   if (containsWord(message, 'krane')) {
-    await message.reply({
-      stickers: ['1229211273904787531'],
-    });
+    await message.react('1233642528889245776');
+  }
+  if (containsWord(message, 'hayato')) {
+    await message.react('1231664960032215070');
   }
   if (message.content.toLowerCase() == 'skull' || containsWord(message, 'skull\\s+emoji')) {
     await message.react('💀');
