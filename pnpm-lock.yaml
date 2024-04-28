@@ -24,8 +24,8 @@ dependencies:
     specifier: ^14.14.1
     version: 14.14.1
   dotenv:
-    specifier: ^16.4.0
-    version: 16.4.0
+    specifier: ^16.4.5
+    version: 16.4.5
   fastify:
     specifier: ^4.26.2
     version: 4.26.2
@@ -1184,8 +1184,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /dotenv@16.4.0:
-    resolution: {integrity: sha512-WvImr5kpN5NGNn7KaDjJnLTh5rDVLZiDf/YLA8T1ZEZEBZNEDOE+mnkS0PVjPax8ZxBP5zC5SLMB3/9VV5de9g==}
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
 
   /duplexer@0.1.2:
@@ -2255,7 +2255,7 @@ packages:
       common-tags: 1.8.2
       cross-spawn: 7.0.3
       degit: 2.8.4
-      dotenv: 16.4.0
+      dotenv: 16.4.5
       enquirer: 2.4.1
       find-up: 5.0.0
       log-symbols: 4.1.0
