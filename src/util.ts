@@ -2,6 +2,7 @@ import { Channel, Guild } from 'discord.js';
 import client from './client';
 import { ConnectionOptions } from 'bullmq';
 import { ApplicationCommandOptionChoice } from 'slash-create';
+import { Message } from 'discord.js';
 
 // Why? Because throw expressions don't exist yet. One can wish... https://github.com/tc39/proposal-throw-expressions
 export const throwError = (message: string): never => {
