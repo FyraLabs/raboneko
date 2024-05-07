@@ -16,6 +16,7 @@ const mentionedResponses = [
 ];
 
 client.on(Events.MessageCreate, async (message) => {
+  if (message.author.id === message.client.user.id) return;
   const me = client.user?.id;
   if (!me || !message.mentions.has(me)) {
     return;

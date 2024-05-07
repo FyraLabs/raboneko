@@ -1,8 +1,9 @@
 import client from '../client';
-import { Events, Message } from 'discord.js';
-import { containsWord } from '../util'
+import { Events } from 'discord.js';
+import { containsWord } from '../util';
 
 client.on(Events.MessageCreate, async (message) => {
+  if (message.author.id === message.client.user.id) return;
   if (containsWord(message, 'krane')) {
     await message.react('1233642528889245776');
   }
