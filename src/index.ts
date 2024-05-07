@@ -61,3 +61,4 @@ http
 import './modules/ping';
 import './modules/guildMemberAdd';
 import './modules/funAI';
+import './modules/cutefishInfo';
