@@ -1,6 +1,6 @@
 {
   "name": "raboneko",
-  "version": "0.17.1",
+  "version": "0.17.2",
   "description": "Raboneko.",
   "main": "dist/index.js",
   "engines": {
