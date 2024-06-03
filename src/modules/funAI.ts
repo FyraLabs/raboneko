@@ -13,4 +13,7 @@ client.on(Events.MessageCreate, async (message) => {
   if (message.content.toLowerCase() == 'skull' || containsWord(message, 'skull\\s+emoji')) {
     await message.react('💀');
   }
+  if (containsWord(message, 'good\\s+bot')) {
+    await message.reply("thank nyu~")
+  }
 });
