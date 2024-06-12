@@ -161,9 +161,9 @@ export default class Remind extends SlashCommand {
         await reminderQueue.add('reminder', { id }, { delay });
 
         await msg.edit(
-          `Alrightie ${ctx.user.mention}, I'll remind you in <t:${
-            (time.getTime() / 1000) | 0
-          }:R> to \`${reminder}\`~`,
+          `Alrightie ${ctx.user.mention}, I'll remind you in <t:${Math.trunc(
+            time.getTime() / 1000,
+          )}:R> to \`${reminder}\`~`,
         );
         break;
       }
@@ -187,9 +187,9 @@ export default class Remind extends SlashCommand {
 
         let content = "Here's your reminders!\n";
         for (const reminder of reminders) {
-          content += `- ${reminder.content}: [link](${reminder.link}) (<t:${
-            (reminder.time.getTime() / 1000) | 0
-          }:R>)\n`;
+          content += `- ${reminder.content}: [link](${reminder.link}) (<t:${Math.trunc(
+            reminder.time.getTime() / 1000,
+          )}:R>)\n`;
         }
 
         await ctx.sendFollowUp(content);
@@ -258,9 +258,9 @@ export default class Remind extends SlashCommand {
 
         await ctx.editParent({
           components: [],
-          content: `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
-            (time.getTime() / 1000) | 0
-          }:R> to \`${reminder.content}\`~`,
+          content: `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${Math.trunc(
+            time.getTime() / 1000,
+          )}:R> to \`${reminder.content}\`~`,
         });
       },
     );
