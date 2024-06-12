@@ -9,8 +9,8 @@ dependencies:
     specifier: ^5.15.0
     version: 5.15.0(prisma@5.15.0)
   bullmq:
-    specifier: ^5.7.6
-    version: 5.7.6
+    specifier: ^5.8.0
+    version: 5.8.0
   cat-loggr:
     specifier: ^1.2.2
     version: 1.2.2
@@ -1036,11 +1036,11 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  /bullmq@5.7.6:
-    resolution: {integrity: sha512-bDTNqqNDrmUGHcA5lw6tcestchS4vV7/VkTyywybvOiXGtkGZCyjuziBzCNwDYMKibPpWmKySe5yTJsEb5bIlw==}
+  /bullmq@5.8.0:
+    resolution: {integrity: sha512-0DlneJH99rV0KGhzYpSl4SQY7NNzkjhMGF9t2fFz0FKPmziRzmcjgGccNNTmvPJEOQNEII/xGTXn7e7s4Z4jwQ==}
     dependencies:
       cron-parser: 4.9.0
-      ioredis: 5.3.2
+      ioredis: 5.4.1
       msgpackr: 1.10.1
       node-abort-controller: 3.1.1
       semver: 7.5.4
@@ -1720,8 +1720,8 @@ packages:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: true
 
-  /ioredis@5.3.2:
-    resolution: {integrity: sha512-1DKMMzlIHM02eBBVOFQ1+AolGjs6+xEcM4PDL7NqOS6szq7H9jSaEkIUH6/a5Hl241LzW6JLSiAbNvTQjUupUA==}
+  /ioredis@5.4.1:
+    resolution: {integrity: sha512-2YZsvl7jopIa1gaePkeMtd9rAcSjOOjPtpcLlOeusyO+XH2SK5ZcT+UCrElPP+WVIInh2TzeI4XW9ENaSLVVHA==}
     engines: {node: '>=12.22.0'}
     dependencies:
       '@ioredis/commands': 1.2.0
