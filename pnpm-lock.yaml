@@ -12,8 +12,8 @@ importers:
         specifier: ^5.15.0
         version: 5.15.0(prisma@5.15.0)
       bullmq:
-        specifier: ^5.8.0
-        version: 5.8.0
+        specifier: ^5.8.3
+        version: 5.8.3
       cat-loggr:
         specifier: ^1.2.2
         version: 1.2.2
@@ -636,8 +636,8 @@ packages:
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
-  bullmq@5.8.0:
-    resolution: {integrity: sha512-0DlneJH99rV0KGhzYpSl4SQY7NNzkjhMGF9t2fFz0FKPmziRzmcjgGccNNTmvPJEOQNEII/xGTXn7e7s4Z4jwQ==}
+  bullmq@5.8.3:
+    resolution: {integrity: sha512-RJgQu/vgSZqjOYrZ7F1UJsSAzveNx7FFpR3Tp/1TxOMXXN9TtZMSly5MT+vjzOhQX//3+YWNRbMWpC1mkqBc9w==}
 
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -2095,7 +2095,7 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bullmq@5.8.0:
+  bullmq@5.8.3:
     dependencies:
       cron-parser: 4.9.0
       ioredis: 5.4.1
