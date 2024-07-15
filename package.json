@@ -28,7 +28,7 @@
     "discord-api-types": "^0.37.92",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
-    "fastify": "^4.28.0",
+    "fastify": "^4.28.1",
     "parse-duration": "^1.1.0",
     "slash-create": "^6.1.4"
   },
