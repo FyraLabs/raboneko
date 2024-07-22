@@ -36,8 +36,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       slash-create:
-        specifier: ^6.1.4
-        version: 6.1.4(fastify@4.28.1)
+        specifier: ^6.2.1
+        version: 6.2.1(fastify@4.28.1)
     devDependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -1355,8 +1355,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  slash-create@6.1.4:
-    resolution: {integrity: sha512-UxTIsGPDu0HfWLZsOPUQSe4kr8/C80bsFM0C9HuYzZsaFLxRxSV6hhhv5m+Oc+QqOCcOB7D9IZxtE9LM/9cawQ==}
+  slash-create@6.2.1:
+    resolution: {integrity: sha512-ootudSRNVVeOdTgD4WLWwLOhw31Tfgi3243du3UiqDpGcAUJQNJ4dSBRcf44pmlmT7T/8YppHU1bS847S1iYbg==}
     engines: {node: '>=16'}
     peerDependencies:
       express: ^4
@@ -2844,7 +2844,7 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  slash-create@6.1.4(fastify@4.28.1):
+  slash-create@6.2.1(fastify@4.28.1):
     dependencies:
       eventemitter3: 5.0.1
       lodash.isequal: 4.5.0
@@ -2864,7 +2864,7 @@ snapshots:
       enquirer: 2.4.1
       find-up: 5.0.0
       log-symbols: 4.1.0
-      slash-create: 6.1.4(fastify@4.28.1)
+      slash-create: 6.2.1(fastify@4.28.1)
       yargs: 17.7.2
     transitivePeerDependencies:
       - express
