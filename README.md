@@ -1,6 +1,6 @@
 # raboneko
 
-yeah
+Fyra Labs' neko assistant.
 
 ## Installation
 
