@@ -26,7 +26,7 @@
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.13",
     "discord-api-types": "^0.37.100",
-    "discord.js": "^14.15.3",
+    "discord.js": "^14.16.1",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "parse-duration": "^1.1.0",
