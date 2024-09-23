@@ -12,8 +12,8 @@ importers:
         specifier: ^5.19.1
         version: 5.19.1(prisma@5.19.0)
       bullmq:
-        specifier: ^5.12.14
-        version: 5.12.14
+        specifier: ^5.13.2
+        version: 5.13.2
       cat-loggr:
         specifier: ^1.2.2
         version: 1.2.2
@@ -648,8 +648,8 @@ packages:
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
-  bullmq@5.12.14:
-    resolution: {integrity: sha512-mcSQHq9EY+DKtAP6XSmkP+0f1ifFithcpLTwo8WmUauArE9dxk45Gae3Fls1Nwf0Er9MoaDhPcglfe6LV/XCOg==}
+  bullmq@5.13.2:
+    resolution: {integrity: sha512-McGE8k3mrCvdUHdU0sHkTKDS1xr4pff+hbEKBY51wk5S6Za0gkuejYA620VQTo3Zz37E/NVWMgumwiXPQ3yZcA==}
 
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -1501,9 +1501,6 @@ packages:
     peerDependencies:
       typescript: '*'
 
-  tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
@@ -2124,14 +2121,14 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bullmq@5.12.14:
+  bullmq@5.13.2:
     dependencies:
       cron-parser: 4.9.0
       ioredis: 5.4.1
       msgpackr: 1.10.1
       node-abort-controller: 3.1.1
       semver: 7.5.4
-      tslib: 2.6.2
+      tslib: 2.7.0
       uuid: 9.0.1
     transitivePeerDependencies:
       - supports-color
@@ -2962,7 +2959,7 @@ snapshots:
   synckit@0.9.1:
     dependencies:
       '@pkgr/core': 0.1.1
-      tslib: 2.6.2
+      tslib: 2.7.0
 
   text-table@0.2.0: {}
 
@@ -3009,8 +3006,6 @@ snapshots:
       ps-tree: 1.2.0
       string-argv: 0.3.2
       typescript: 5.5.4
-
-  tslib@2.6.2: {}
 
   tslib@2.7.0: {}
 
