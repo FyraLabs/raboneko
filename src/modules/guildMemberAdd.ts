@@ -5,7 +5,7 @@ import { getGeneralChannel } from '../util';
 client.on(Events.GuildMemberAdd, async (member) => {
   const generalChannel = await getGeneralChannel();
 
-  if (!generalChannel.isTextBased()) {
+  if (!generalChannel.isSendable()) {
     throw new Error('General channel is not a text channel.');
   }
 
