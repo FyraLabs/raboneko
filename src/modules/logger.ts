@@ -26,7 +26,7 @@ client.on(Events.MessageDelete, async (message) => {
     .setColor('#ff0000')
     .setDescription(message.content)
     .setFooter({
-      text: `Message ID: ${message.id}`,
+      text: `Message ID: ${message.id} | User ID: ${message.member.user.id}`,
     }).data;
 
   await loggingChannel.send({
@@ -61,7 +61,7 @@ client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
       },
     )
     .setFooter({
-      text: `Message ID: ${oldMessage.id}`,
+      text: `Message ID: ${oldMessage.id} | User ID: ${oldMessage.member.user.id}`,
     }).data;
 
   await loggingChannel.send({
@@ -83,18 +83,12 @@ client.on(Events.GuildMemberAdd, async (member) => {
       url: userURL(member.user.id),
     })
     .setColor('#00ff00')
-    .addFields(
-      {
-        name: 'Discord User Since',
-        value: time(member.user.createdAt, TimestampStyles.ShortDateTime),
-      },
-      {
-        name: 'User ID',
-        value: member.user.id,
-      },
-    )
+    .addFields({
+      name: 'Discord User Since',
+      value: time(member.user.createdAt, TimestampStyles.ShortDateTime),
+    })
     .setFooter({
-      text: `Member ID: ${member.id}`,
+      text: `Member ID: ${member.id} | User ID: ${member.user.id}`,
     }).data;
 
   await loggingChannel.send({
@@ -116,18 +110,12 @@ client.on(Events.GuildMemberRemove, async (member) => {
       url: userURL(member.user.id),
     })
     .setColor('#ff0000')
-    .addFields(
-      {
-        name: 'Member Since',
-        value: member.joinedAt ? time(member.joinedAt, TimestampStyles.ShortDateTime) : 'Unknown',
-      },
-      {
-        name: 'User ID',
-        value: member.user.id,
-      },
-    )
+    .addFields({
+      name: 'Member Since',
+      value: member.joinedAt ? time(member.joinedAt, TimestampStyles.ShortDateTime) : 'Unknown',
+    })
     .setFooter({
-      text: `Member ID: ${member.id}`,
+      text: `Member ID: ${member.id} | User ID: ${member.user.id}`,
     }).data;
 
   await loggingChannel.send({
