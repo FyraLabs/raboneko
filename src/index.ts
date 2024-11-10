@@ -63,3 +63,4 @@ import './modules/guildMemberAdd';
 import './modules/funAI';
 import './modules/cutefishInfo';
 import './modules/support';
+import './modules/logger';

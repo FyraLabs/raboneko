@@ -29,6 +29,10 @@ export const getGeneralChannel = async (): Promise<Channel> =>
   (await client.channels.fetch(process.env.GENERAL_CHANNEL_ID!)) ??
   throwError('General channel not found');
 
+export const getLoggingChannel = async (): Promise<Channel> =>
+  (await client.channels.fetch(process.env.LOGGING_CHANNEL_ID!)) ??
+  throwError('Logging channel not found');
+
 export const getRedisConnection = (): ConnectionOptions => ({
   host: process.env.REDIS_HOST!,
   port: Number.parseInt(process.env.REDIS_PORT!, 10),
@@ -40,3 +44,5 @@ export const containsWord = (msg: Message, word: string): boolean => {
   const matches = msg.content.match(new RegExp(`\\b${word}\\b`, 'i'));
   return matches != null && matches.length > 0;
 };
+
+export const userURL = (id: string) => `https://discord.com/users/${id}`;
