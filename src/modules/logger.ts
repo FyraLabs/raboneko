@@ -9,7 +9,7 @@ import { getLoggingChannel, userURL } from '../util';
 // - GuildMemberRemove
 
 client.on(Events.MessageDelete, async (message) => {
-  if (!message.member) return;
+  if (!message.member || message.author?.bot) return;
 
   const loggingChannel = await getLoggingChannel();
   if (!loggingChannel.isSendable()) {
@@ -24,7 +24,7 @@ client.on(Events.MessageDelete, async (message) => {
       url: userURL(message.member.user.id),
     })
     .setColor('#ff0000')
-    .setDescription(message.content)
+    .setDescription(message.content && message.content.length !== 0 ? message.content : 'Unknown')
     .setFooter({
       text: `Message ID: ${message.id} | User ID: ${message.member.user.id}`,
     }).data;
@@ -35,7 +35,7 @@ client.on(Events.MessageDelete, async (message) => {
 });
 
 client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
-  if (!oldMessage.member) return;
+  if (!oldMessage.member || oldMessage.author?.bot || newMessage.author?.bot) return;
 
   const loggingChannel = await getLoggingChannel();
   if (!loggingChannel.isSendable()) {
@@ -53,11 +53,13 @@ client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
     .addFields(
       {
         name: 'Old Content',
-        value: oldMessage.content ?? 'Unknown',
+        value:
+          oldMessage.content && oldMessage.content?.length !== 0 ? oldMessage.content : 'Unknown',
       },
       {
         name: 'New Content',
-        value: newMessage.content ?? 'Unknown',
+        value:
+          newMessage.content && newMessage.content.length !== 0 ? newMessage.content : 'Unknown',
       },
     )
     .setFooter({
