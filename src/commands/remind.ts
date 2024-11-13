@@ -11,7 +11,7 @@ import {
 import parse from 'parse-duration';
 import raboneko from '../client';
 import { client } from '../prisma';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, TextChannel } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, messageLink, TextChannel } from 'discord.js';
 import { reminderQueue } from '../scheduler';
 
 export const handleReminderEvent = async (reminderID: number): Promise<void> => {
@@ -145,16 +145,15 @@ export default class Remind extends SlashCommand {
         const time = new Date(Date.now() + delay);
         const msg = await ctx.sendFollowUp('Creating your reminder...');
 
-        const channel = (await raboneko.channels.cache.get(msg.channelID)!.fetch()) as TextChannel;
-        const message = await channel.messages.fetch(msg.id);
-
         const { id } = await client.reminder.create({
           data: {
             userID: ctx.user.id,
             channelID: ctx.channelID,
             content: reminder,
             time,
-            link: message.url,
+            link: ctx.guildID
+              ? messageLink(msg.channelID, msg.id, ctx.guildID)
+              : messageLink(msg.channelID, msg.id),
           },
         });
 
