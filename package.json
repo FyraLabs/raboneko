@@ -42,7 +42,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
-    "prisma": "^5.22.0",
+    "prisma": "^6.0.0",
     "slash-up": "^1.4.2",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.2.1",
