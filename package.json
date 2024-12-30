@@ -21,7 +21,7 @@
     "lint:fix": "pnpm run prettier:fix && pnpm run eslint:fix"
   },
   "dependencies": {
-    "@prisma/client": "^6.0.1",
+    "@prisma/client": "^6.1.0",
     "bullmq": "^5.34.4",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.13",
