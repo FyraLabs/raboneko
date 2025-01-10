@@ -10,5 +10,5 @@ client.on(Events.GuildMemberAdd, async (member) => {
   }
 
   await member.roles.add(process.env.MEMBER_ROLE_ID!);
-  await generalChannel.send(`Welcome~ ${member.displayName} :3`);
+  await generalChannel.send(`Welcome~ ${member} :3`);
 });
