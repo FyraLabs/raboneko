@@ -12,8 +12,8 @@ importers:
         specifier: ^6.5.0
         version: 6.5.0(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
       bullmq:
-        specifier: ^5.45.2
-        version: 5.45.2
+        specifier: ^5.47.2
+        version: 5.47.2
       cat-loggr:
         specifier: ^1.2.2
         version: 1.2.2
@@ -791,8 +791,8 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
-  bullmq@5.45.2:
-    resolution: {integrity: sha512-wHZfcD4z4aLolxREmwNNDSbfh7USeq2e3yu5W2VGkzHMUcrH0fzZuRuCMsjD0XKS9ViK1U854oM9yWR6ftPeDA==}
+  bullmq@5.47.2:
+    resolution: {integrity: sha512-JMI2uEV3YjohGTcy4Cqt/4LHEXcBA2BVS7x4XS7sv4qa5oLdsZh9p5fkwSWg6f8lqtcHbm3ceXkTFR0JC9gayw==}
 
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
@@ -1241,8 +1241,8 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
 
-  luxon@3.6.0:
-    resolution: {integrity: sha512-WE7p0p7W1xji9qxkLYsvcIxZyfP48GuFrWIBQZIsbjCyf65dG1rv4n83HcOyEyhvzxJCrUoObCRNFgRNIQ5KNA==}
+  luxon@3.6.1:
+    resolution: {integrity: sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==}
     engines: {node: '>=12'}
 
   magic-bytes.js@1.10.0:
@@ -2278,7 +2278,7 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
-  bullmq@5.45.2:
+  bullmq@5.47.2:
     dependencies:
       cron-parser: 4.9.0
       ioredis: 5.6.0
@@ -2338,7 +2338,7 @@ snapshots:
 
   cron-parser@4.9.0:
     dependencies:
-      luxon: 3.6.0
+      luxon: 3.6.1
 
   cross-spawn@7.0.5:
     dependencies:
@@ -2795,7 +2795,7 @@ snapshots:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
-  luxon@3.6.0: {}
+  luxon@3.6.1: {}
 
   magic-bytes.js@1.10.0: {}
 
