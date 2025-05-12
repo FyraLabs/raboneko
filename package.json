@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
-    "bullmq": "^5.49.1",
+    "bullmq": "^5.52.2",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.13",
     "discord-api-types": "^0.37.120",
