@@ -33,7 +33,7 @@
     "slash-create": "^6.4.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.2",
+    "@types/express": "^5.0.3",
     "@types/node": "^24.0.2",
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.34.0",
