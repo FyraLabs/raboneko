@@ -30,14 +30,14 @@ importers:
         specifier: ^16.5.0
         version: 16.5.0
       fastify:
-        specifier: ^5.3.3
-        version: 5.3.3
+        specifier: ^5.4.0
+        version: 5.4.0
       parse-duration:
         specifier: ^2.1.4
         version: 2.1.4
       slash-create:
         specifier: ^6.4.1
-        version: 6.4.1(fastify@5.3.3)
+        version: 6.4.1(fastify@5.4.0)
     devDependencies:
       '@types/express':
         specifier: ^5.0.2
@@ -71,7 +71,7 @@ importers:
         version: 6.9.0(typescript@5.8.3)
       slash-up:
         specifier: ^1.4.2
-        version: 1.4.2(fastify@5.3.3)
+        version: 1.4.2(fastify@5.4.0)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.15.30)(typescript@5.8.3)
@@ -301,8 +301,8 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fastify/error@4.1.0':
-    resolution: {integrity: sha512-KeFcciOr1eo/YvIXHP65S94jfEEqn1RxTRBT1aJaHxY5FK0/GDXYozsQMMWlZoHgi8i0s+YtrLsgj/JkUUjSkQ==}
+  '@fastify/error@4.2.0':
+    resolution: {integrity: sha512-RSo3sVDXfHskiBZKBPRgnQTtIqpi/7zhJOEmAxCiBcM7d0uwdGdxLlsCaLzGs8v8NnxIRlfG0N51p5yFaOentQ==}
 
   '@fastify/fast-json-stringify-compiler@5.0.3':
     resolution: {integrity: sha512-uik7yYHkLr6fxd8hJSZ8c+xF4WafPK+XzneQDPU+D10r5X19GW8lJcom2YijX2+qtFF1ENJlHXKFM9ouXNJYgQ==}
@@ -923,8 +923,8 @@ packages:
   fast-uri@3.0.6:
     resolution: {integrity: sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==}
 
-  fastify@5.3.3:
-    resolution: {integrity: sha512-nCBiBCw9q6jPx+JJNVgO8JVnTXeUyrGcyTKPQikRkA/PanrFcOIo4R+ZnLeOLPZPGgzjomqfVarzE0kYx7qWiQ==}
+  fastify@5.4.0:
+    resolution: {integrity: sha512-I4dVlUe+WNQAhKSyv15w+dwUh2EPiEl4X2lGYMmNSgF83WzTMAPKGdWEv5tPsCQOb+SOZwz8Vlta2vF+OeDgRw==}
 
   fastq@1.19.1:
     resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
@@ -1706,7 +1706,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fastify/error@4.1.0': {}
+  '@fastify/error@4.2.0': {}
 
   '@fastify/fast-json-stringify-compiler@5.0.3':
     dependencies:
@@ -2066,7 +2066,7 @@ snapshots:
 
   avvio@9.1.0:
     dependencies:
-      '@fastify/error': 4.1.0
+      '@fastify/error': 4.2.0
       fastq: 1.19.1
 
   balanced-match@1.0.2: {}
@@ -2391,10 +2391,10 @@ snapshots:
 
   fast-uri@3.0.6: {}
 
-  fastify@5.3.3:
+  fastify@5.4.0:
     dependencies:
       '@fastify/ajv-compiler': 4.0.2
-      '@fastify/error': 4.1.0
+      '@fastify/error': 4.2.0
       '@fastify/fast-json-stringify-compiler': 5.0.3
       '@fastify/proxy-addr': 5.0.0
       abstract-logging: 2.0.1
@@ -2760,16 +2760,16 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  slash-create@6.4.1(fastify@5.3.3):
+  slash-create@6.4.1(fastify@5.4.0):
     dependencies:
       eventemitter3: 5.0.1
       lodash.isequal: 4.5.0
       tweetnacl: 1.0.3
       undici: 5.29.0
     optionalDependencies:
-      fastify: 5.3.3
+      fastify: 5.4.0
 
-  slash-up@1.4.2(fastify@5.3.3):
+  slash-up@1.4.2(fastify@5.4.0):
     dependencies:
       '@esbuild-kit/cjs-loader': 2.4.4
       ansi-colors: 4.1.3
@@ -2780,7 +2780,7 @@ snapshots:
       enquirer: 2.4.1
       find-up: 5.0.0
       log-symbols: 4.1.0
-      slash-create: 6.4.1(fastify@5.3.3)
+      slash-create: 6.4.1(fastify@5.4.0)
       yargs: 17.7.2
     transitivePeerDependencies:
       - express
