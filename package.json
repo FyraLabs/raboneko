@@ -27,7 +27,7 @@
     "dayjs": "^1.11.13",
     "discord-api-types": "^0.38.13",
     "discord.js": "^14.20.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.0.0",
     "fastify": "^5.4.0",
     "parse-duration": "^2.1.4",
     "slash-create": "^6.4.2"
