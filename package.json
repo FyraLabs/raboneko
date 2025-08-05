@@ -36,7 +36,7 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.2.0",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
-    "@typescript-eslint/parser": "^8.36.0",
+    "@typescript-eslint/parser": "^8.38.0",
     "eslint": "^9.31.0",
     "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
     "eslint-plugin-node": "^11.1.0",
