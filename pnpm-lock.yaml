@@ -18,10 +18,10 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       dayjs:
-        specifier: ^1.11.13
-        version: 1.11.13
+        specifier: ^1.11.18
+        version: 1.11.18
       discord-api-types:
-        specifier: ^0.38.23
+        specifier: ^0.38.20
         version: 0.38.23
       discord.js:
         specifier: ^14.21.0
@@ -751,8 +751,8 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
-  dayjs@1.11.13:
-    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+  dayjs@1.11.18:
+    resolution: {integrity: sha512-zFBQ7WFRvVRhKcWoUh+ZA1g2HVgUbsZm9sbddh8EC5iv93sui8DVVz1Npvz+r6meo9VKfa8NyLWBsQK1VvIKPA==}
 
   debug@4.4.1:
     resolution: {integrity: sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==}
@@ -2212,7 +2212,7 @@ snapshots:
   cat-loggr@1.2.2:
     dependencies:
       chalk: 2.4.2
-      dayjs: 1.11.13
+      dayjs: 1.11.18
 
   chalk@2.4.2:
     dependencies:
@@ -2281,7 +2281,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  dayjs@1.11.13: {}
+  dayjs@1.11.18: {}
 
   debug@4.4.1:
     dependencies:
