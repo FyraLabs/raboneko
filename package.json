@@ -25,7 +25,7 @@
     "bullmq": "^5.61.0",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.18",
-    "discord-api-types": "^0.38.29",
+    "discord-api-types": "^0.38.30",
     "discord.js": "^14.23.2",
     "dotenv": "^17.2.3",
     "fastify": "^5.6.1",
