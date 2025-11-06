@@ -55,6 +55,7 @@ http
 
 import './modules/ping';
 import './modules/guildMemberAdd';
+import './modules/llm';
 import './modules/funAI';
 import './modules/cutefishInfo';
 import './modules/support';

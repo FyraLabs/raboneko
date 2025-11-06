@@ -29,6 +29,7 @@
     "discord.js": "^14.24.0",
     "dotenv": "^17.2.3",
     "fastify": "^5.6.1",
+    "openai": "^6.8.1",
     "parse-duration": "^2.1.4",
     "slash-create": "6.5.0"
   },
