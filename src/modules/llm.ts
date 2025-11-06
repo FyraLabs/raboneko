@@ -33,9 +33,15 @@ You MUST respond in 2000 characters or less. If you exceed this limit, you will 
 submit your response.
 `;
 
+const host = 'https://gateway.ai.cloudflare.com';
+const endpoint = `/v1/${process.env.CLOUDFLARE_ACCOUNT_ID}/${process.env.CLOUDFLARE_AI_GATEWAY_ID}/workers-ai/v1`;
 const llm = new OpenAI({
+  defaultHeaders: {
+    // Used for Cloudflare API Gateway authentication
+    'cf-aig-authorization': process.env.CLOUDFLARE_API_KEY,
+  },
   apiKey: process.env.CLOUDFLARE_API_KEY,
-  baseURL: `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`,
+  baseURL: host + endpoint,
 });
 
 function systemPrompt() {
@@ -60,7 +66,7 @@ async function buildMessageHistory(message: Message, maxDepth = 10) {
     history.unshift({
       role: author.id === me ? 'assistant' : 'user',
       username: username,
-      content: `${msg_content}`,
+      content: msg_content,
     });
 
     if (currentMessage.reference) {
@@ -85,57 +91,47 @@ async function buildMessageHistory(message: Message, maxDepth = 10) {
 }
 
 export async function LLMResponse(message: Message) {
-    const history = await buildMessageHistory(message);
-    const messages = [
-        systemPrompt(),
-        ...history.map((msg) => ({ role: msg.role, content: msg.content })),
-    ];
-    // await console.log(history);
+  const history = await buildMessageHistory(message);
+  const messages = [
+    systemPrompt(),
+    ...history.map((msg) => ({ role: msg.role, content: msg.content })),
+  ];
+  // await console.log(history);
 
-    if ('sendTyping' in message.channel) {
-        await message.channel.sendTyping();
+  if ('sendTyping' in message.channel) {
+    await message.channel.sendTyping();
+  }
+  //   await message.reply('This feature is coming soon! Nya~ :3');
+  try {
+    var replyText = '';
+    if (responses_api) {
+      let response = await llm.responses.create({
+        model: model,
+        instructions: DEFAULT_SYSTEM_PROMPT,
+        input: history,
+        max_output_tokens: 2000,
+        prompt_cache_key: `raboneko-discord-${message.author.id}`,
+      });
+
+      console.trace(response);
+
+      replyText = response.output_text;
+    } else {
+      let response = await llm.chat.completions.create({
+        model: model,
+        messages: messages,
+        max_completion_tokens: 2000,
+      });
+
+      console.trace(response);
+      replyText = response.choices[0].message.content!;
     }
-    //   await message.reply('This feature is coming soon! Nya~ :3');
-    try {
-        var replyText = '';
-        if (responses_api) {
-            let response = await llm.responses.create({
-                model: model,
-                instructions: DEFAULT_SYSTEM_PROMPT,
-                input: history,
-            });
 
-            console.debug(response);
-
-            replyText = response.output_text;
-        } else {
-            let response = await llm.chat.completions.create({
-                model: model,
-                messages: messages,
-            });
-
-            console.debug(response);
-            replyText = response.choices[0].message.content!;
-        }
-
-        await message.reply(
-            replyText?.trim().slice(0, 2000) ?? "Nya... I couldn't think of a response... >_<",
-        );
-    } catch (error) {
-        console.error('oh shit!', error);
-    }
+    await message.reply(
+      replyText?.trim().slice(0, 2000) ?? "Nya... I couldn't think of a response... >_<",
+    );
+  } catch (error) {
+    console.error('Raboneko LLM error:', error);
+    await message.reply(`Nya... I couldn't think of a response... >_<\n-# Error: ${(error as Error).message}`);
+  }
 }
-
-// client.on(Events.MessageCreate, async (message) => {
-//   if (message.author.id === message.client.user.id) return;
-//   const me = client.user?.id;
-//   if (!me || !message.mentions.has(me)) {
-//     return;
-//   }
-//   const authorName = message.author;
-//   const userMessage = message.cleanContent;
-//   console.log(`User message: ${userMessage}`);
-//   console.debug(`Author: ${authorName.tag} (${authorName.id})`);
-
-//   await LLMResponse(message);
-// });
