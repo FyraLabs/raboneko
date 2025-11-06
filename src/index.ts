@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import './env'
 import { GatewayServer } from 'slash-create';
 import { GatewayDispatchEvents } from 'discord.js';
 import path from 'path';
@@ -7,11 +7,6 @@ import client from './client';
 import './scheduler';
 import RaboSlashCreator from './creator';
 import * as http from 'http';
-
-let dotenvPath = path.join(process.cwd(), '.env');
-if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
-
-dotenv.config({ path: dotenvPath });
 
 const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 const creator = new RaboSlashCreator({
