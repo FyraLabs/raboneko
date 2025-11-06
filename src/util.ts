@@ -35,7 +35,15 @@ export const getLoggingChannel = async (): Promise<Channel> =>
 
 export const getRedisConnection = (): ConnectionOptions => ({
   host: process.env.REDIS_HOST!,
-  port: Number.parseInt(process.env.REDIS_PORT!, 10),
+  port: (() => {
+    const parsed = Number.parseInt(process.env.REDIS_PORT ?? '', 10);
+    if (Number.isNaN(parsed)) {
+      console.warn('REDIS_PORT is not a valid number; defaulting to 6379');
+      console.warn(`Expected a number but got: ${process.env.REDIS_PORT}`);
+      return 6379;
+    }
+    return parsed;
+  })(),
   db: process.env.REDIS_DB ? Number.parseInt(process.env.REDIS_DB!, 10) : 0,
   password: process.env.REDIS_PASSWORD,
 });
