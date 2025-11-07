@@ -2,8 +2,28 @@ import client from '../client';
 import { Events, Message } from 'discord.js';
 import OpenAI from 'openai';
 
+import { createWorkersAI } from 'workers-ai-provider';
+import { generateText } from 'ai';
+import { createAiGateway } from 'ai-gateway-provider';
+
+const AiGateway = createAiGateway({
+  accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+  gateway: process.env.CLOUDFLARE_AI_GATEWAY_ID!,
+  apiKey: process.env.CLOUDFLARE_API_KEY!,
+  options: {
+    cacheKey: 'raboneko-discord',
+  },
+});
+
+const WorkersAI = createWorkersAI({
+  apiKey: process.env.CLOUDFLARE_API_KEY!,
+  // gateway: AiGateway,
+  accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+});
+
 const model = '@cf/openai/gpt-oss-120b';
 const responses_api = true;
+const workersModel = WorkersAI(model);
 
 const DEFAULT_SYSTEM_PROMPT = `
 You are Raboneko, an experimental AI agent developed by Fyra Labs as a  successor to the original Raboneko, nya~!
@@ -108,34 +128,25 @@ export async function LLMResponse(message: Message) {
   //   await message.reply('This feature is coming soon! Nya~ :3');
   try {
     var replyText = '';
-    if (responses_api) {
-      let response = await llm.responses.create({
-        model: model,
-        instructions: DEFAULT_SYSTEM_PROMPT,
-        input: history,
-        max_output_tokens: 2000,
-        prompt_cache_key: `raboneko-discord-${message.author.id}`,
-      });
 
-      console.trace(response);
+    const response = await generateText({
+      model: workersModel,
+      system: DEFAULT_SYSTEM_PROMPT,
+      messages: messages,
+    });
 
-      replyText = response.output_text;
-    } else {
-      let response = await llm.chat.completions.create({
-        model: model,
-        messages: messages,
-        max_completion_tokens: 2000,
-      });
+    console.trace('LLM response:', response);
+    console.debug('LLM response text:', response.content);
 
-      console.trace(response);
-      replyText = response.choices[0].message.content!;
-    }
+    replyText = response.text;
 
     await message.reply(
       replyText?.trim().slice(0, 2000) ?? "Nya... I couldn't think of a response... >_<",
     );
   } catch (error) {
     console.error('Raboneko LLM error:', error);
-    await message.reply(`Nya... I couldn't think of a response... >_<\n-# Error: ${(error as Error).message}`);
+    await message.reply(
+      `Nya... I couldn't think of a response... >_<\n-# Error: ${(error as Error).message}`,
+    );
   }
 }
