@@ -13,6 +13,7 @@ import {
   UserContent,
 } from 'ai';
 import { createAiGateway } from 'ai-gateway-provider';
+import { toolSet } from '../llm_tools/tools';
 
 const AiGateway = createAiGateway({
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
@@ -28,15 +29,23 @@ const WorkersAI = createWorkersAI({
   gateway: AiGateway,
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
 });
-const default_model = '@cf/meta/llama-4-scout-17b-16e-instruct';
-
+//const default_model = '@cf/meta/llama-4-scout-17b-16e-instruct';
+// for whatever reason,
+// Hermes 2 Pro with Mistral 7B fine-tuned seems to work
+// much better here, with both instruction following and tool use
+// compared to Llama 4 Scout (Can't call functions properly)
+// or Mistral 7B base (bad instruction following)
+// or even Llama 3.3 Instruct (Only uses tools, doesn't follow instructions at all)
+const default_model = '@hf/nousresearch/hermes-2-pro-mistral-7b';
 const model = () => {
   const modelName = process.env.CLOUDFLARE_AI_MODEL || default_model;
   if (process.env.CLOUDFLARE_AI_MODEL) {
-    console.log(`Using Cloudflare AI model: ${modelName}`);
+    console.log({ message: 'Using Cloudflare AI model', modelName });
   }
   return modelName;
 };
+
+const prepend_system_prompt = process.env.RABONEKO_PREPEND_SYSTEM_PROMPT === 'true' || false;
 
 // const model = '@cf/meta/llama-4-scout-17b-16e-instruct';
 // TODO:  provider "workersai.chat" is currently not supported
@@ -203,7 +212,7 @@ export class Image {
 async function pullImagePart(imgpart: ImagePart): Promise<ImagePart> {
   const image = imgpart.image;
   if (!image.toString().startsWith('data:')) {
-    console.debug('Pulling image part:', imgpart);
+    console.debug({ message: 'Pulling image part', imgpart });
     // get data buffer from image URL
     const img = new Image(image.toString());
     const dataUri = await img.toBase64Data();
@@ -307,7 +316,7 @@ async function buildMessageHistory(message: Message, maxDepth = 10) {
         currentMessage = referencedMessage;
         depth++;
       } catch (error) {
-        console.log('Could not fetch referenced message');
+        console.log({ message: 'Could not fetch referenced message', error });
         break;
       }
     } else {
@@ -348,14 +357,14 @@ export async function LLMResponse(message: Message) {
 
     // map messages by running pullImagePart on every ImagePart found
     const messages: Array<ModelMessage> = [
-      // systemPrompt(),
+      ...(prepend_system_prompt ? [systemPrompt()] : []),
       ...(await Promise.all(
         history.map(async (msg) => {
           if (msg.role === 'user') {
             const userMsg = msg.content as Array<TextPart | ImagePart>;
             const newContent: Array<TextPart | ImagePart> = [];
             if (userMsg.find((part) => part.type === 'image')) {
-              console.debug('Processing user message with images:', userMsg);
+              console.debug({ message: 'Processing user message with images', userMsg });
             }
             for (const part of userMsg) {
               if (part.type === 'image') {
@@ -383,28 +392,67 @@ export async function LLMResponse(message: Message) {
         }),
       )),
     ];
-
+    console.log({ message: 'Creating toolSet', userId: message.author.id });
+    const tools = toolSet(
+      message.channelId,
+      message.author.id,
+      message.guildId ?? undefined,
+      message.id,
+    );
     // console.trace('LLM messages:', JSON.stringify(messages, null, 2));
+
+    console.log({ message: 'Available tools', tools: Object.keys(tools) });
 
     const response = await generateText({
       model: workersModel,
       system: DEFAULT_SYSTEM_PROMPT,
       messages,
-      
+      tools,
     });
 
     // return new Response(response.text)
 
-    console.trace('LLM response:', response);
-    console.debug('LLM response text:', response.text);
+    console.log({
+      message: 'LLM response debug',
+      responseText: response.text,
+      toolCalls: response.toolCalls,
+      toolResults: response.toolResults,
+      steps: response.steps?.length || 0,
+      finishReason: response.finishReason,
+    });
 
     replyText = response.text;
+
+    // If there were tool calls, append their results to the response
+    if (response.toolResults && response.toolResults.length > 0) {
+      for (const toolResult of response.toolResults) {
+        console.log({ message: 'Tool result', toolResult });
+        if (toolResult.output && typeof toolResult.output === 'object') {
+          const result = toolResult.output as any;
+          if (result.success && result.message) {
+            // If there's no text response, use just the tool message
+            // Otherwise append it
+            if (!replyText || replyText.trim().length === 0) {
+              replyText = `okie dokie! ${result.message}`;
+            } else {
+              replyText += `\n\n${result.message}`;
+            }
+          } else if (!result.success && result.error) {
+            if (!replyText || replyText.trim().length === 0) {
+              replyText = `nya... there was an error: ${result.error}`;
+            } else {
+              replyText += `\n\nnya... there was an error: ${result.error}`;
+            }
+          }
+        }
+      }
+    }
 
     await message.reply(
       replyText?.trim().slice(0, 2000) ?? "nya... I couldn't think of a response... >_<",
     );
   } catch (error) {
-    console.error('Raboneko LLM error:', error);
+    console.error({ message: 'Raboneko LLM error', error });
     await message.reply(`nya... my brain melted... >~<\n-# Error: ${(error as Error).message}`);
   }
 }
