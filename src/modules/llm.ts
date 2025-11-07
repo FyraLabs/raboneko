@@ -17,13 +17,24 @@ const AiGateway = createAiGateway({
 
 const WorkersAI = createWorkersAI({
   apiKey: process.env.CLOUDFLARE_API_KEY!,
-  // gateway: AiGateway,
+  gateway: AiGateway,
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
 });
 
-const model = '@cf/openai/gpt-oss-120b';
-const responses_api = true;
-const workersModel = WorkersAI(model);
+
+const model = () => {
+  if (process.env.CLOUDFLARE_AI_MODEL) {
+    console.log('Using Cloudflare AI model:', process.env.CLOUDFLARE_AI_MODEL);
+    return process.env.CLOUDFLARE_AI_MODEL;
+  } else {
+    return '@cf/meta/llama-4-scout-17b-16e-instruct';
+  }
+}
+
+// const model = '@cf/meta/llama-4-scout-17b-16e-instruct';
+// TODO:  provider "workersai.chat" is currently not supported
+// const workersModel = AiGateway(WorkersAI(model));
+const workersModel = WorkersAI(model());
 
 const DEFAULT_SYSTEM_PROMPT = `
 You are Raboneko, an experimental AI agent developed by Fyra Labs as a  successor to the original Raboneko, nya~!
@@ -132,11 +143,13 @@ export async function LLMResponse(message: Message) {
     const response = await generateText({
       model: workersModel,
       system: DEFAULT_SYSTEM_PROMPT,
-      messages: messages,
+      messages: history,
     });
 
+    // return new Response(response.text)
+
     console.trace('LLM response:', response);
-    console.debug('LLM response text:', response.content);
+    console.debug('LLM response text:', response.text);
 
     replyText = response.text;
 
