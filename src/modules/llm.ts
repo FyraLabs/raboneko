@@ -384,7 +384,7 @@ export async function LLMResponse(message: Message) {
       )),
     ];
 
-    console.trace('LLM messages:', JSON.stringify(messages, null, 2));
+    // console.trace('LLM messages:', JSON.stringify(messages, null, 2));
 
     const response = await generateText({
       model: workersModel,
