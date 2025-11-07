@@ -348,7 +348,7 @@ export async function LLMResponse(message: Message) {
 
     // map messages by running pullImagePart on every ImagePart found
     const messages: Array<ModelMessage> = [
-      systemPrompt(),
+      // systemPrompt(),
       ...(await Promise.all(
         history.map(async (msg) => {
           if (msg.role === 'user') {
@@ -390,6 +390,7 @@ export async function LLMResponse(message: Message) {
       model: workersModel,
       system: DEFAULT_SYSTEM_PROMPT,
       messages,
+      
     });
 
     // return new Response(response.text)
