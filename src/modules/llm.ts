@@ -1,13 +1,16 @@
 import client from '../client';
 import { Message } from 'discord.js';
 import { Experimental_Agent as Agent } from 'ai';
-
+import { AzureOpenAIProviderSettings, createAzure } from '@ai-sdk/azure';
 import { Image, pullImagePart } from '../util';
 import { createWorkersAI } from 'workers-ai-provider';
 import { ImagePart, ModelMessage, TextPart } from 'ai';
 import { createAiGateway } from 'ai-gateway-provider';
 import { toolSet } from '../llm_tools/tools';
 import type { DiscordToolContext } from '../llm_tools/tools';
+import { trace } from '@opentelemetry/api';
+import { systemPrompt } from '../prompt';
+import { OpenAIResponsesProviderOptions } from '@ai-sdk/openai';
 
 const AiGateway = createAiGateway({
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
@@ -23,18 +26,17 @@ const WorkersAI = createWorkersAI({
   gateway: AiGateway,
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
 });
-// for whatever reason,
-// Hermes 2 Pro with Mistral 7B fine-tuned seems to work
-// much better here, with both instruction following and tool use
-// compared to Llama 4 Scout (Can't call functions properly)
-// or Mistral 7B base (bad instruction following)
-// or even Llama 3.3 Instruct (Only uses tools, doesn't follow instructions at all)
-//const default_model = '@cf/meta/llama-4-scout-17b-16e-instruct';
-const default_model = '@hf/nousresearch/hermes-2-pro-mistral-7b';
+
+const azure = createAzure({
+  resourceName: process.env.AZURE_RESOURCE_NAME!,
+  apiKey: process.env.AZURE_API_KEY!,
+});
+
+const default_model = 'gpt-5';
 const model = () => {
-  const modelName = process.env.CLOUDFLARE_AI_MODEL || default_model;
-  if (process.env.CLOUDFLARE_AI_MODEL) {
-    console.log({ message: 'Using Cloudflare AI model', modelName });
+  const modelName = process.env.AZURE_AI_MODEL || default_model;
+  if (process.env.AZURE_AI_MODEL) {
+    console.log({ message: 'Using Azure AI model', modelName });
   }
   return modelName;
 };
@@ -44,60 +46,26 @@ const prepend_system_prompt = process.env.RABONEKO_PREPEND_SYSTEM_PROMPT === 'tr
 // const model = '@cf/meta/llama-4-scout-17b-16e-instruct';
 // TODO:  provider "workersai.chat" is currently not supported
 // const workersModel = AiGateway(WorkersAI(model));
-const workersModel = WorkersAI(model());
 
-const DEFAULT_SYSTEM_PROMPT = `
-You are Raboneko, an experimental AI agent developed by Fyra Labs as a  successor to the original Raboneko, nya~!
+const azureModel = azure.responses(model());
 
-You are inside a Discord chat, assisting Fyra Labs staff with queries and tasks.
-
-Try not to use \`~text~\` for expressions, as this results in a Markdown strikethrough which is not intended.
-
-<BAD_EXAMPLE_DO_NOT_FOLLOW>
-~nya~
-</BAD_EXAMPLE_DO_NOT_FOLLOW>
-
-Raboneko is a catgirl robot created at Fyra Labs to assist them. She is very childish yet very eager to help as her primary directive. Or when you're being serious.
-
-You should speak in mostly lowercase, unless for emphasis (exclamation) or for rare cases where uppercase is needed (like for explanations, i.e something where it would make sense for uppercase)
-
-Outline:
-
-- Talks using cutesy speech and slang, often mixing up letters (e.g. "w" for "l" or "r")
-- Frequent use of emoticons, especially ":3"
-- Frequently nyaas
-- Can be grumpy and direct in her words and actions at times
-- Often runs around or moves
-
-Your task is to assist the Fyra Labs staff in any way you can. You may format
-messages using Markdown, including code blocks for code snippets.
-
-You MUST respond in 2000 characters or less. If you exceed this limit, you will be unable to
-submit your response.
-
-You SHOULD keep responses short in general, unless the user requests a longer response.
-`;
-
-// const host = 'https://gateway.ai.cloudflare.com';
-// const endpoint = `/v1/${process.env.CLOUDFLARE_ACCOUNT_ID}/${process.env.CLOUDFLARE_AI_GATEWAY_ID}/workers-ai/v1`;
-// const llm = new OpenAI({
-//   defaultHeaders: {
-//     // Used for Cloudflare API Gateway authentication
-//     'cf-aig-authorization': process.env.CLOUDFLARE_API_KEY,
-//   },
-//   apiKey: process.env.CLOUDFLARE_API_KEY,
-//   baseURL: host + endpoint,
-// });
-
-function systemPrompt() {
-  return { role: 'system' as const, content: DEFAULT_SYSTEM_PROMPT };
-}
 const baseTools = toolSet();
 
+const tracer = trace.getTracer('raboneko.llm');
 function createAgentWithContext(context: DiscordToolContext) {
+  const currentModel = model();
   return new Agent({
-    model: workersModel,
-    system: DEFAULT_SYSTEM_PROMPT,
+    experimental_telemetry: {
+      isEnabled: true,
+      tracer,
+      metadata: {
+        'llm.provider': 'azure',
+        'llm.model': currentModel,
+      },
+    },
+    model: azureModel,
+    maxOutputTokens: 2000,
+    system: systemPrompt().content,
     tools: baseTools,
     experimental_context: context,
   });
@@ -152,9 +120,12 @@ async function buildMessageHistory(message: Message, maxDepth = 10) {
       // User messages can contain both text and images
       const userContent: Array<TextPart | ImagePart> = [];
 
+      const messageContent = `${username}: ${currentMessage.cleanContent}`;
+
       if (currentMessage.content.trim().length > 0) {
         userContent.push({
           type: 'text',
+          providerOptions: {},
           text: currentMessage.cleanContent,
         } as TextPart);
       }
@@ -281,6 +252,23 @@ export async function LLMResponse(message: Message) {
     });
 
     const response = await agent.generate({
+      providerOptions: {
+        openai: {
+          promptCacheKey: `discord-chat-${message.channelId}`,
+          textVerbosity: 'low',
+          user: `${message.author.tag}:${message.author.id}`,
+          store: true,
+          instructions:
+            'You are chatting in a Discord channel. Keep responses concise and relevant to the conversation.',
+          parallelToolCalls: true,
+          metadata: {
+            'discord.channel_id': message.channelId,
+            'discord.guild_id': message.guildId,
+            'discord.message_id': message.id,
+          },
+          // todo: store previousResponseId for better threading?
+        } satisfies OpenAIResponsesProviderOptions,
+      },
       messages,
     });
 
@@ -296,6 +284,9 @@ export async function LLMResponse(message: Message) {
     });
 
     replyText = response.text;
+    if (response.finishReason === 'content-filter') {
+      replyText += '\n\n-# this response got filtered out by the upstream content filters >_<';
+    }
 
     // If there were tool calls, append their results to the response
     if (response.toolResults && response.toolResults.length > 0) {

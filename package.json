@@ -22,7 +22,15 @@
     "lint:fix": "pnpm run prettier:fix && pnpm run eslint:fix"
   },
   "dependencies": {
+    "@ai-sdk/azure": "^2.0.66",
+    "@ai-sdk/openai": "^2.0.64",
+    "@azure/monitor-opentelemetry-exporter": "1.0.0-beta.32",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/sdk-logs": "^0.208.0",
+    "@opentelemetry/sdk-metrics": "^2.2.0",
+    "@opentelemetry/sdk-trace-base": "^2.2.0",
     "@prisma/client": "^6.17.1",
+    "@vercel/otel": "^2.1.0",
     "ai": "^5.0.89",
     "ai-gateway-provider": "^2.0.1",
     "bullmq": "^5.61.2",

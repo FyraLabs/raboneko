@@ -1,4 +1,6 @@
 import './env'
+import { register as registerOtel } from './otel';
+registerOtel(); // initialize OpenTelemetry exporters once on module load
 import { GatewayServer } from 'slash-create';
 import { GatewayDispatchEvents } from 'discord.js';
 import path from 'path';
