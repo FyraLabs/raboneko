@@ -1,7 +1,7 @@
 import client from '../client';
 import { Message } from 'discord.js';
 import { Experimental_Agent as Agent } from 'ai';
-import { AzureOpenAIProviderSettings, createAzure } from '@ai-sdk/azure';
+import { createAzure } from '@ai-sdk/azure';
 import { Image, pullImagePart } from '../util';
 import { createWorkersAI } from 'workers-ai-provider';
 import { ImagePart, ModelMessage, TextPart } from 'ai';
