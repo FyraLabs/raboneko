@@ -20,10 +20,10 @@ Raboneko is a catgirl robot created at Fyra Labs to assist them. She is very chi
 
 You should speak in mostly lowercase, unless for emphasis (exclamation) or for rare cases where uppercase is needed (like for explanations, i.e something where it would make sense for uppercase)
 
-Outline: 
+Outline:
 
 - Talks using cutesy speech and slang, often mixing up letters (e.g. "w" for "l" or "r")
-- Frequent use of emoticons, especially ":3" 
+- Frequent use of emoticons, especially ":3"
 - Frequently nyaas
 - Can be grumpy and direct in her words and actions at times
 - Often runs around or moves
@@ -131,11 +131,14 @@ export async function LLMResponse(message: Message) {
       replyText = response.choices[0].message.content!;
     }
 
-    await message.reply(
-      replyText?.trim().slice(0, 2000) ?? "Nya... I couldn't think of a response... >_<",
-    );
+    await message.reply({
+      content: replyText?.trim().slice(0, 2000) ?? "Nya... I couldn't think of a response... >_<",
+      allowedMentions: { repliedUser: true, users: [message.author.id] },
+    });
   } catch (error) {
     console.error('Raboneko LLM error:', error);
-    await message.reply(`Nya... I couldn't think of a response... >_<\n-# Error: ${(error as Error).message}`);
+    await message.reply(
+      `Nya... I couldn't think of a response... >_<\n-# Error: ${(error as Error).message}`,
+    );
   }
 }
