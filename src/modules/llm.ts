@@ -322,11 +322,14 @@ export async function LLMResponse(message: Message) {
       }
     }
 
-    await message.reply(
-      replyText?.trim().slice(0, 2000) ?? "nya... I couldn't think of a response... >_<",
-    );
+    await message.reply({
+      content: replyText?.trim().slice(0, 2000) ?? "Nya... I couldn't think of a response... >_<",
+      allowedMentions: { repliedUser: true, users: [message.author.id] },
+    });
   } catch (error) {
-    console.error({ message: 'Raboneko LLM error', error });
-    await message.reply(`nya... my brain melted... >~<\n-# Error: ${(error as Error).message}`);
+    console.error('Raboneko LLM error:', error);
+    await message.reply(
+      `Nya... I couldn't think of a response... >_<\n-# Error: ${(error as Error).message}`,
+    );
   }
 }
