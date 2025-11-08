@@ -1,19 +1,13 @@
 import client from '../client';
-import { Events, Message } from 'discord.js';
-import OpenAI from 'openai';
+import { Message } from 'discord.js';
+import { Experimental_Agent as Agent } from 'ai';
 
+import { Image, pullImagePart } from '../util';
 import { createWorkersAI } from 'workers-ai-provider';
-import {
-  AssistantContent,
-  FilePart,
-  generateText,
-  ImagePart,
-  ModelMessage,
-  TextPart,
-  UserContent,
-} from 'ai';
+import { ImagePart, ModelMessage, TextPart } from 'ai';
 import { createAiGateway } from 'ai-gateway-provider';
 import { toolSet } from '../llm_tools/tools';
+import type { DiscordToolContext } from '../llm_tools/tools';
 
 const AiGateway = createAiGateway({
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
@@ -29,13 +23,13 @@ const WorkersAI = createWorkersAI({
   gateway: AiGateway,
   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
 });
-//const default_model = '@cf/meta/llama-4-scout-17b-16e-instruct';
 // for whatever reason,
 // Hermes 2 Pro with Mistral 7B fine-tuned seems to work
 // much better here, with both instruction following and tool use
 // compared to Llama 4 Scout (Can't call functions properly)
 // or Mistral 7B base (bad instruction following)
 // or even Llama 3.3 Instruct (Only uses tools, doesn't follow instructions at all)
+//const default_model = '@cf/meta/llama-4-scout-17b-16e-instruct';
 const default_model = '@hf/nousresearch/hermes-2-pro-mistral-7b';
 const model = () => {
   const modelName = process.env.CLOUDFLARE_AI_MODEL || default_model;
@@ -98,137 +92,15 @@ You SHOULD keep responses short in general, unless the user requests a longer re
 function systemPrompt() {
   return { role: 'system' as const, content: DEFAULT_SYSTEM_PROMPT };
 }
+const baseTools = toolSet();
 
-export class Image {
-  private dataUri?: string;
-  private dataUriPromise?: Promise<string>;
-
-  public constructor(public readonly url: string) {}
-
-  public static fromUrl(url: string): Image {
-    return new Image(url);
-  }
-
-  private static inferMimeType(url: string): string | undefined {
-    try {
-      const { pathname } = new URL(url);
-      const extension = pathname.split('.').pop()?.toLowerCase();
-      switch (extension) {
-        case 'png':
-          return 'image/png';
-        case 'jpg':
-        case 'jpeg':
-          return 'image/jpeg';
-        case 'gif':
-          return 'image/gif';
-        case 'webp':
-          return 'image/webp';
-        case 'svg':
-          return 'image/svg+xml';
-        case 'bmp':
-          return 'image/bmp';
-        case 'tiff':
-        case 'tif':
-          return 'image/tiff';
-        default:
-          return undefined;
-      }
-    } catch {
-      return undefined;
-    }
-  }
-
-  private static resolveMimeType(
-    headerContentType: string | null | undefined,
-    url: string,
-  ): string {
-    const candidates = [headerContentType?.split(';')[0]?.trim(), Image.inferMimeType(url)];
-
-    for (const type of candidates) {
-      if (!type) {
-        continue;
-      }
-      const normalized = type.toLowerCase();
-      if (normalized.startsWith('image/')) {
-        return normalized;
-      }
-    }
-
-    throw new Error(`Unsupported or missing image MIME type for URL: ${url}`);
-  }
-
-  /*
-   * Downloads the image from the provided URL, caches it, and exposes a data URI.
-   * Subsequent calls reuse the cached data URI or an in-flight fetch.
-   * @return A promise that resolves to the cached data URI for the image
-   */
-  public async toBase64Data(): Promise<string> {
-    if (this.dataUri) {
-      return this.dataUri;
-    }
-
-    if (this.dataUriPromise) {
-      return this.dataUriPromise;
-    }
-
-    const fetchPromise = (async () => {
-      const response = await fetch(this.url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch image from URL: ${this.url}`);
-      }
-
-      const headerContentType = response.headers.get('content-type');
-      const contentType = Image.resolveMimeType(headerContentType, this.url);
-      const buffer = await response.arrayBuffer();
-      const base64String = Buffer.from(buffer).toString('base64');
-      return `data:${contentType};base64,${base64String}`;
-    })();
-
-    this.dataUriPromise = fetchPromise;
-
-    try {
-      const dataUri = await fetchPromise;
-      this.dataUri = dataUri;
-      return dataUri;
-    } finally {
-      this.dataUriPromise = undefined;
-    }
-  }
-
-  public async toArrayBuffer(): Promise<ArrayBuffer> {
-    const response = await fetch(this.url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image from URL: ${this.url}`);
-    }
-    const arrayBuffer = await response.arrayBuffer();
-    return arrayBuffer;
-  }
-}
-/*
-  Converts an ImagePart with a URL to an ImagePart with a data URI by downloading the image.
-  @param imgpart The ImagePart with a URL to convert
-  @return A promise that resolves to a new ImagePart with a data URI
-*/
-async function pullImagePart(imgpart: ImagePart): Promise<ImagePart> {
-  const image = imgpart.image;
-  if (!image.toString().startsWith('data:')) {
-    console.debug({ message: 'Pulling image part', imgpart });
-    // get data buffer from image URL
-    const img = new Image(image.toString());
-    const dataUri = await img.toBase64Data();
-    const buffer = await img.toArrayBuffer();
-    return {
-      type: 'image',
-      image: new URL(dataUri),
-      providerOptions: {
-        // workersai: {
-        //   image_url: dataUri,
-        // },
-      },
-    } as ImagePart;
-  } else {
-    return imgpart;
-  }
+function createAgentWithContext(context: DiscordToolContext) {
+  return new Agent({
+    model: workersModel,
+    system: DEFAULT_SYSTEM_PROMPT,
+    tools: baseTools,
+    experimental_context: context,
+  });
 }
 
 // recursively resolve a Discord reply thread, and return it as an OpenAI thread
@@ -392,22 +264,24 @@ export async function LLMResponse(message: Message) {
         }),
       )),
     ];
-    console.log({ message: 'Creating toolSet', userId: message.author.id });
-    const tools = toolSet(
-      message.channelId,
-      message.author.id,
-      message.guildId ?? undefined,
-      message.id,
-    );
-    // console.trace('LLM messages:', JSON.stringify(messages, null, 2));
+    const discordContext: DiscordToolContext = {
+      channelId: message.channelId,
+      userId: message.author.id,
+      guildId: message.guildId ?? undefined,
+      messageId: message.id,
+    };
 
-    console.log({ message: 'Available tools', tools: Object.keys(tools) });
+    const agent = createAgentWithContext(discordContext);
 
-    const response = await generateText({
-      model: workersModel,
-      system: DEFAULT_SYSTEM_PROMPT,
+    console.log({
+      message: 'Dispatching Raboneko agent',
+      userId: discordContext.userId,
+      channelId: discordContext.channelId,
+      tools: Object.keys(agent.tools),
+    });
+
+    const response = await agent.generate({
       messages,
-      tools,
     });
 
     // return new Response(response.text)

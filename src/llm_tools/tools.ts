@@ -5,12 +5,14 @@ import { client } from '../prisma';
 import { reminderQueue } from '../scheduler';
 import { messageLink } from 'discord.js';
 
-export function toolSet(
-  channelID: string,
-  userId: string,
-  guildID?: string,
-  messageID?: string,
-): ToolSet {
+export interface DiscordToolContext {
+  channelId: string;
+  userId: string;
+  guildId?: string;
+  messageId?: string;
+}
+
+export function toolSet(): ToolSet {
   const reminderTool = tool({
     description: 'Set a reminder for the user at a specified time with a message.',
     inputSchema: z.object({
@@ -21,15 +23,16 @@ export function toolSet(
         ),
       message: z.string().describe('The content of the reminder message.'),
     }),
-    execute: async (args) => {
-      console.debug({
-        message: '=== REMINDER TOOL EXECUTING ===',
-        args,
-        userId,
-        channelID,
-        guildID,
-        messageID,
-      });
+    execute: async (args, options) => {
+      const context = options?.experimental_context as DiscordToolContext | undefined;
+      if (!context?.channelId || !context?.userId) {
+        return {
+          success: false,
+          error: 'Missing Discord context for reminder tool execution.',
+        };
+      }
+
+      const { channelId, guildId, messageId, userId } = context;
 
       try {
         // Parse the time duration
@@ -45,18 +48,17 @@ export function toolSet(
         const reminderTime = new Date(Date.now() + delay);
 
         // Create the message link
-        const link =
-          guildID && messageID
-            ? messageLink(channelID, messageID, guildID)
-            : messageID
-              ? messageLink(channelID, messageID)
-              : `https://discord.com/channels/${guildID || '@me'}/${channelID}`;
+        const link = messageId
+          ? guildId
+            ? messageLink(channelId, messageId, guildId)
+            : messageLink(channelId, messageId)
+          : `https://discord.com/channels/${guildId || '@me'}/${channelId}`;
 
         // Create the reminder in the database
         const reminder = await client.reminder.create({
           data: {
             userID: userId,
-            channelID: channelID,
+            channelID: channelId,
             content: args.message,
             time: reminderTime,
             link: link,
@@ -82,7 +84,7 @@ export function toolSet(
     },
   });
 
-  console.log('Tool created:', {
+  console.debug('Tool created:', {
     description: reminderTool.description,
     hasExecute: !!reminderTool.execute,
     hasInputSchema: !!reminderTool.inputSchema,
