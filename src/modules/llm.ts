@@ -286,7 +286,7 @@ export async function LLMResponse(message: Message) {
 
     // return new Response(response.text)
 
-    console.log({
+    console.debug({
       message: 'LLM response debug',
       responseText: response.text,
       toolCalls: response.toolCalls,
@@ -300,7 +300,7 @@ export async function LLMResponse(message: Message) {
     // If there were tool calls, append their results to the response
     if (response.toolResults && response.toolResults.length > 0) {
       for (const toolResult of response.toolResults) {
-        console.log({ message: 'Tool result', toolResult });
+        console.debug({ message: 'Tool result', toolResult });
         if (toolResult.output && typeof toolResult.output === 'object') {
           const result = toolResult.output as any;
           if (result.success && result.message) {
