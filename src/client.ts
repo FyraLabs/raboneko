@@ -7,7 +7,7 @@ export default new Client({
     Flags.Guilds,
     Flags.GuildMembers,
     Flags.GuildModeration,
-    Flags.GuildEmojisAndStickers,
+    Flags.GuildExpressions,
     Flags.GuildIntegrations,
     Flags.GuildWebhooks,
     Flags.GuildInvites,
