@@ -4,7 +4,7 @@ import parse from 'parse-duration';
 import { client } from '../prisma';
 import { reminderQueue } from '../scheduler';
 import { messageLink } from 'discord.js';
-import { azure } from '@ai-sdk/azure';
+import { azure } from '../modules/llm';
 
 export interface DiscordToolContext {
   channelId: string;

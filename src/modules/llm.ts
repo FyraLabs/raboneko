@@ -3,31 +3,31 @@ import { Message } from 'discord.js';
 import { Experimental_Agent as Agent } from 'ai';
 import { createAzure } from '@ai-sdk/azure';
 import { Image, pullImagePart } from '../util';
-import { createWorkersAI } from 'workers-ai-provider';
+// import { createWorkersAI } from 'workers-ai-provider';
 import { ImagePart, ModelMessage, TextPart } from 'ai';
-import { createAiGateway } from 'ai-gateway-provider';
+// import { createAiGateway } from 'ai-gateway-provider';
 import { toolSet } from '../llm_tools/tools';
 import type { DiscordToolContext } from '../llm_tools/tools';
 import { trace } from '@opentelemetry/api';
 import { systemPrompt } from '../prompt';
 import { OpenAIResponsesProviderOptions } from '@ai-sdk/openai';
 
-const AiGateway = createAiGateway({
-  accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
-  gateway: process.env.CLOUDFLARE_AI_GATEWAY_ID!,
-  apiKey: process.env.CLOUDFLARE_API_KEY!,
-  options: {
-    cacheKey: 'raboneko-discord',
-  },
-});
+// const AiGateway = createAiGateway({
+//   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+//   gateway: process.env.CLOUDFLARE_AI_GATEWAY_ID!,
+//   apiKey: process.env.CLOUDFLARE_API_KEY!,
+//   options: {
+//     cacheKey: 'raboneko-discord',
+//   },
+// });
 
-const WorkersAI = createWorkersAI({
-  apiKey: process.env.CLOUDFLARE_API_KEY!,
-  gateway: AiGateway,
-  accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
-});
+// const WorkersAI = createWorkersAI({
+//   apiKey: process.env.CLOUDFLARE_API_KEY!,
+//   gateway: AiGateway,
+//   accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
+// });
 
-const azure = createAzure({
+export const azure = createAzure({
   resourceName: process.env.AZURE_RESOURCE_NAME!,
   apiKey: process.env.AZURE_API_KEY!,
 });
@@ -125,8 +125,7 @@ async function buildMessageHistory(message: Message, maxDepth = 10) {
       if (currentMessage.content.trim().length > 0) {
         userContent.push({
           type: 'text',
-          providerOptions: {},
-          text: currentMessage.cleanContent,
+          text: messageContent,
         } as TextPart);
       }
 
@@ -182,23 +181,9 @@ export async function LLMResponse(message: Message) {
   //   await message.reply('This feature is coming soon! Nya~ :3');
   try {
     var replyText = '';
+
     // Get the last message content, and for each ImagePart we call pullImagePart
     // to download the image and convert it to a data URI
-
-    const lastMessage = history[history.length - 1];
-    const processedContent: Array<TextPart | ImagePart> = [];
-    for (const part of lastMessage.content as Array<TextPart | ImagePart>) {
-      if (part.type === 'image') {
-        const imgpart = part as ImagePart;
-        // const resolvedPart = await pullImagePart(imgpart);
-        const resolvedPart = imgpart;
-        processedContent.push(resolvedPart);
-      } else {
-        processedContent.push(part);
-      }
-    }
-
-    // map messages by running pullImagePart on every ImagePart found
     const messages: Array<ModelMessage> = [
       ...(prepend_system_prompt ? [systemPrompt()] : []),
       ...(await Promise.all(
@@ -215,12 +200,6 @@ export async function LLMResponse(message: Message) {
                 // pull image part
                 const resolvedPart = await pullImagePart(imgpart);
                 newContent.push(resolvedPart);
-
-                // Find the corresponding TextPart and append "[Image Attached]"
-                const textPart = userMsg.find((p) => p.type === 'text') as TextPart | undefined;
-                if (textPart) {
-                  textPart.text += '\n[Image Attached]';
-                }
               } else {
                 newContent.push(part);
               }
