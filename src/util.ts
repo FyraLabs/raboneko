@@ -173,7 +173,6 @@ export async function pullImagePart(imgpart: ImagePart): Promise<ImagePart> {
     // get data buffer from image URL
     const img = new Image(image.toString());
     const dataUri = await img.toBase64Data();
-    const buffer = await img.toArrayBuffer();
     return {
       type: 'image',
       image: new URL(dataUri),
