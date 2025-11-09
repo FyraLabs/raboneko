@@ -1,6 +1,4 @@
-import './env'
-import { register as registerOtel } from './otel';
-registerOtel(); // initialize OpenTelemetry exporters once on module load
+import dotenv from 'dotenv';
 import { GatewayServer } from 'slash-create';
 import { GatewayDispatchEvents } from 'discord.js';
 import path from 'path';
@@ -9,6 +7,11 @@ import client from './client';
 import './scheduler';
 import RaboSlashCreator from './creator';
 import * as http from 'http';
+
+let dotenvPath = path.join(process.cwd(), '.env');
+if (path.parse(process.cwd()).name === 'dist') dotenvPath = path.join(process.cwd(), '..', '.env');
+
+dotenv.config({ path: dotenvPath });
 
 const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
 const creator = new RaboSlashCreator({
@@ -57,7 +60,6 @@ http
 
 import './modules/ping';
 import './modules/guildMemberAdd';
-import './modules/llm';
 import './modules/funAI';
 import './modules/cutefishInfo';
 import './modules/support';
