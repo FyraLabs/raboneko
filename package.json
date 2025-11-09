@@ -7,6 +7,7 @@
     "node": ">=19.7.0"
   },
   "scripts": {
+    "prisma-migrate": "prisma migrate dev",
     "sync": "slash-up sync",
     "sync:dev": "slash-up sync -e development",
     "start": "cd dist && node index.js",
@@ -21,7 +22,17 @@
     "lint:fix": "pnpm run prettier:fix && pnpm run eslint:fix"
   },
   "dependencies": {
+    "@ai-sdk/azure": "^2.0.66",
+    "@ai-sdk/openai": "^2.0.64",
+    "@azure/monitor-opentelemetry-exporter": "1.0.0-beta.32",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/sdk-logs": "^0.208.0",
+    "@opentelemetry/sdk-metrics": "^2.2.0",
+    "@opentelemetry/sdk-trace-base": "^2.2.0",
     "@prisma/client": "^6.17.1",
+    "@vercel/otel": "^2.1.0",
+    "ai": "^5.0.89",
+    "ai-gateway-provider": "^2.0.1",
     "bullmq": "^5.61.2",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.18",
@@ -29,9 +40,10 @@
     "discord.js": "^14.24.0",
     "dotenv": "^17.2.3",
     "fastify": "^5.6.1",
-    "openai": "^6.8.1",
     "parse-duration": "^2.1.4",
-    "slash-create": "6.5.0"
+    "slash-create": "6.5.0",
+    "workers-ai-provider": "^2.0.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/express": "^5.0.5",
