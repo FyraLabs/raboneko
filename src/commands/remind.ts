@@ -244,7 +244,9 @@ export default class Remind extends SlashCommand {
         ],
       },
       async (ctx) => {
-        const delay = parse(Array.isArray(ctx.values.duration) ? ctx.values.duration[0] : ctx.values.duration);
+        const delay = parse(
+          Array.isArray(ctx.values.duration) ? ctx.values.duration[0] : ctx.values.duration,
+        );
         if (typeof delay !== 'number') {
           await ctx.sendFollowUp(
             'The time you input is invalid! The format must be something along the lines of `1h30m25s`.',
