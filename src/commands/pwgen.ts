@@ -13,11 +13,9 @@ function pwgen(length = 32, special_chars = true, numerals = true, capitals = tr
 
   let password = '';
 
-  for (let i = 0; i < length; i++) {
-    const byte = Crypto.getRandomValues(new Uint8Array(1))[0];
-    password += chars[byte % chars.length];
-  }
-
+  password = Array.from(Crypto.randomBytes(length))
+    .map((byte) => chars[byte % chars.length])
+    .join('');
   return password;
 }
 
