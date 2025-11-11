@@ -24,9 +24,7 @@ RUN pnpx prisma generate
 RUN pnpm run build
 
 # Upload Sentry sourcemaps (Sentry Auth Token needed)
-ARG SENTRY_AUTH_TOKEN
-ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
-RUN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then pnpm run sentry:sourcemaps; fi
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then pnpm run sentry:sourcemaps; fi
 
 ## producation runner
 FROM node:lts-alpine as prod-runner
