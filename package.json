@@ -18,10 +18,12 @@
     "prettier:fix": "prettier ./src --write",
     "eslint:fix": "eslint ./src/**/*.ts --fix",
     "lint": "pnpm run prettier:check && pnpm run eslint:check && pnpm run check",
-    "lint:fix": "pnpm run prettier:fix && pnpm run eslint:fix"
+    "lint:fix": "pnpm run prettier:fix && pnpm run eslint:fix",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org fyralabs --project raboneko ./dist && sentry-cli sourcemaps upload --org fyralabs --project raboneko ./dist"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
+    "@sentry/cli": "^2.58.0",
     "@sentry/node": "^10.24.0",
     "bullmq": "^5.63.0",
     "cat-loggr": "^1.2.2",
