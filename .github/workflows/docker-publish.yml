@@ -83,7 +83,7 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
           secrets: |
-            ${{ github.event_name != 'pull_request' && format('SENTRY_AUTH_TOKEN={}', secrets.SENTRY_AUTH_TOKEN) || '' }}
+            ${{ github.event_name != 'pull_request' && format('SENTRY_AUTH_TOKEN={0}', secrets.SENTRY_AUTH_TOKEN) || '' }}
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
