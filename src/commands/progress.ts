@@ -165,11 +165,15 @@ export const generateFinalReport = async (): Promise<void> => {
     },
   });
 
+  
   const grouped = groupLogs(logs);
   const fields = await generateFields(grouped);
+  if (fields.length === 0) {
+    return;
+  }
   const embed = new EmbedBuilder()
     .addFields(fields)
-    .setDescription(fields.length > 0 ? null : '*No progress this week.*');
+    .setDescription(fields.length > 0 ? null : '*Cannot generate report, no progress this week.*')
 
   const announcementsChannel = await getAnnoucementsChannel();
 
