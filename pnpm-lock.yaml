@@ -15,8 +15,8 @@ importers:
         specifier: ^10.27.0
         version: 10.27.0
       bullmq:
-        specifier: ^5.64.1
-        version: 5.64.1
+        specifier: ^5.65.0
+        version: 5.65.0
       cat-loggr:
         specifier: ^1.2.2
         version: 1.2.2
@@ -942,8 +942,8 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
-  bullmq@5.64.1:
-    resolution: {integrity: sha512-Tg4ORit8bQ1xLwcQrEfcDpG50pS30Onuz1ZA4rPLbL9QEsOaBbvFQMSEvXSgMnvRZRqDggJoSBGz9tck+1PixQ==}
+  bullmq@5.65.0:
+    resolution: {integrity: sha512-fyOcyf2ad4zrNmE18vdF/ie7DrW0TwhLt5e0DkqDxbRpDNiUdYqgp2QZJW2ntnUN08T2mDMC4deUUhF2UOAmeQ==}
 
   c12@3.1.0:
     resolution: {integrity: sha512-uWoS8OU1MEIsOv8p/5a82c3H31LsWVR5qiyXVfBNOzfffjUWtPnhAb4BYI2uG2HfGmZmFjCtui5XNWaps+iFuw==}
@@ -2884,7 +2884,7 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
-  bullmq@5.64.1:
+  bullmq@5.65.0:
     dependencies:
       cron-parser: 4.9.0
       ioredis: 5.8.2
