@@ -24,7 +24,7 @@
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "@sentry/node": "^10.24.0",
-    "bullmq": "^5.65.0",
+    "bullmq": "^5.65.1",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.19",
     "discord-api-types": "^0.38.35",
