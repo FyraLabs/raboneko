@@ -2,7 +2,7 @@
 FROM node:lts as build-runner
 
 # Add git
-RUN apk add git
+RUN apt update && apt install git
 
 # Set temp directory
 WORKDIR /tmp/app
@@ -30,7 +30,7 @@ RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${
 FROM node:lts as prod-runner
 
 # Add git
-RUN apk add git
+RUN apt update && apt install git
 
 # Set work directory
 WORKDIR /app
