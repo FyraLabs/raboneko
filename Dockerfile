@@ -1,5 +1,5 @@
 ## build runner
-FROM node:lts-alpine as build-runner
+FROM node:lts as build-runner
 
 # Add git
 RUN apk add git
@@ -27,7 +27,7 @@ RUN pnpm run build
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then pnpm run sentry:sourcemaps; fi
 
 ## producation runner
-FROM node:lts-alpine as prod-runner
+FROM node:lts as prod-runner
 
 # Add git
 RUN apk add git
