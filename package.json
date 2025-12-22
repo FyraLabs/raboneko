@@ -35,7 +35,7 @@
     "slash-create": "^6.7.0"
   },
   "devDependencies": {
-    "@sentry/cli": "^2.58.2",
+    "@sentry/cli": "^3.0.1",
     "@types/express": "^5.0.6",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
