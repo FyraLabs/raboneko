@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
-    "@sentry/node": "^10.24.0",
+    "@sentry/node": "^10.32.1",
     "bullmq": "^5.66.2",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.19",
