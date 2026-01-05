@@ -38,7 +38,7 @@
     "@sentry/cli": "^3.0.1",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/eslint-plugin": "^8.51.0",
     "@typescript-eslint/parser": "^8.51.0",
     "eslint": "^9.39.1",
     "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
