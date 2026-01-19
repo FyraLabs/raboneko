@@ -44,7 +44,7 @@
     "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.5.4",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.0",
     "prisma": "^7.2.0",
     "slash-up": "^1.4.2",
     "ts-node": "^10.9.2",
