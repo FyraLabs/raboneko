@@ -42,7 +42,7 @@ COPY --from=build-runner /tmp/app/prisma /app/prisma
 
 # Install dependencies
 RUN npm install -g bun
-RUN bun install --only=production
+RUN bun install --production
 RUN bunx prisma@6.19.0 generate
 
 # Move build files
