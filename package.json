@@ -22,7 +22,7 @@
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org fyralabs --project raboneko ./dist && sentry-cli sourcemaps upload --org fyralabs --project raboneko ./dist"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
+    "@prisma/client": "^7.3.0",
     "@sentry/node": "^10.36.0",
     "bullmq": "^5.66.5",
     "cat-loggr": "^1.2.2",
