@@ -11,8 +11,8 @@ WORKDIR /tmp/app
 COPY package.json .
 
 # Install dependencies
-RUN npm install -g pnpm
-RUN pnpm install
+RUN npm install -g bun
+RUN bun install
 
 # Move source files
 COPY prisma ./prisma
@@ -20,11 +20,11 @@ COPY src ./src
 COPY tsconfig.json   .
 
 # Build project
-RUN pnpx prisma@6.19.0 generate
-RUN pnpm run build
+RUN bunx prisma@6.19.0 generate
+RUN bun run build
 
 # Upload Sentry sourcemaps (Sentry Auth Token needed)
-RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then pnpm run sentry:sourcemaps; fi
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then bun run sentry:sourcemaps; fi
 
 ## producation runner
 FROM node:lts as prod-runner
@@ -41,9 +41,9 @@ COPY --from=build-runner /tmp/app/package.json /app/package.json
 COPY --from=build-runner /tmp/app/prisma /app/prisma
 
 # Install dependencies
-RUN npm install -g pnpm
-RUN pnpm install --only=production
-RUN pnpx prisma@6.19.0 generate
+RUN npm install -g bun
+RUN bun install --only=production
+RUN bunx prisma@6.19.0 generate
 
 # Move build files
 COPY --from=build-runner /tmp/app/dist /app/dist
