@@ -4,7 +4,7 @@
   "repository": "https://github.com/Snazzah/slash-create-template/tree/typescript",
   "logo": "https://slash-create.js.org/static/logo-nomargin.png",
   "scripts": {
-    "postdeploy": "npx slash-up sync"
+    "postdeploy": "bunx slash-up sync"
   },
   "env": {
     "DISCORD_APP_ID": {
