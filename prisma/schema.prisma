@@ -7,11 +7,6 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model ProgressLog {
   id Int @id @default(autoincrement())
   userID String
