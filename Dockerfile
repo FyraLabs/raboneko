@@ -1,5 +1,5 @@
 ## build runner
-FROM node:lts as build-runner
+FROM node:lts AS build-runner
 
 # Add git
 RUN apt update && apt install git
@@ -27,7 +27,7 @@ RUN bun run build
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then bun run sentry:sourcemaps; fi
 
 ## producation runner
-FROM node:lts as prod-runner
+FROM node:lts AS prod-runner
 
 # Add git
 RUN apt update && apt install git
