@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { ProgressLog } from './generated/prisma/client';
+import { ProgressLog } from '@prisma/client';
 import { client } from '../prisma';
 import bot from '../client';
 import {
