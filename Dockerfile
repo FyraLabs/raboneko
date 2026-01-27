@@ -20,7 +20,7 @@ COPY src ./src
 COPY tsconfig.json   .
 
 # Build project
-RUN bunx prisma@6.19.0 generate
+RUN bunx prisma@7.3.0 generate
 RUN bun run build
 
 # Upload Sentry sourcemaps (Sentry Auth Token needed)
@@ -43,7 +43,7 @@ COPY --from=build-runner /tmp/app/prisma /app/prisma
 # Install dependencies
 RUN npm install -g bun
 RUN bun install --production
-RUN bunx prisma@6.19.0 generate
+RUN bunx prisma@7.3.0 generate
 
 # Move build files
 COPY --from=build-runner /tmp/app/dist /app/dist
