@@ -3,9 +3,6 @@
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
 
-# Add git
-RUN apt update && apt install git
-
 # install dependencies into temp directory
 # this will cache them and speed up future builds
 FROM base AS install
