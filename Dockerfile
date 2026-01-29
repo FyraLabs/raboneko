@@ -33,8 +33,8 @@ COPY . .
 FROM base AS release
 COPY --from=install /usr/src/app/prisma prisma
 COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /usr/src/app/src/index.ts .
-COPY --from=prerelease /usr/src/app/src/package.json .
+COPY --from=prerelease /usr/src/app/src src
+COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
 USER bun
