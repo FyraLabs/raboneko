@@ -36,7 +36,7 @@ COPY . .
 FROM base AS release
 COPY --from=install /usr/src/app/prisma prisma
 COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=install /usr/src/app/dist dist
+COPY --from=install dist ./dist
 COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
