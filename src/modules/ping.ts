@@ -13,6 +13,10 @@ const mentionedResponses = [
   'hai!',
   'gmeow~',
   '*runs away with krane*',
+  'beep!',
+  'boop!',
+  'mreow~ :3',
+  'hiiiiii',
 ];
 
 client.on(Events.MessageCreate, async (message) => {
