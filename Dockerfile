@@ -12,7 +12,7 @@ RUN cd /temp/dev && bun install --frozen-lockfile
 
 # Move source files
 COPY prisma ./prisma
-COPY src ./usr/src/app
+COPY src ./src
 COPY tsconfig.json   .
 
 # Generate Prisma files
