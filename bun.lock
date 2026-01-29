@@ -14,7 +14,7 @@
         "discord-api-types": "^0.38.37",
         "discord.js": "^14.25.1",
         "dotenv": "^17.2.3",
-        "fastify": "^5.6.2",
+        "fastify": "^5.7.2",
         "parse-duration": "^2.1.5",
         "slash-create": "^6.7.1",
       },
@@ -552,7 +552,7 @@
 
     "fast-uri": ["fast-uri@3.1.0", "", {}, "sha512-iPeeDKJSWf4IEOasVVrknXpaBV0IApz/gp7S2bb7Z4Lljbl2MGJRqInZiUrQwV16cpzw/D3S5j5Julj/gT52AA=="],
 
-    "fastify": ["fastify@5.6.2", "", { "dependencies": { "@fastify/ajv-compiler": "4.0.5", "@fastify/error": "4.2.0", "@fastify/fast-json-stringify-compiler": "5.0.3", "@fastify/proxy-addr": "5.1.0", "abstract-logging": "2.0.1", "avvio": "9.1.0", "fast-json-stringify": "6.1.1", "find-my-way": "9.3.0", "light-my-request": "6.6.0", "pino": "10.1.0", "process-warning": "5.0.0", "rfdc": "1.4.1", "secure-json-parse": "4.1.0", "semver": "7.7.3", "toad-cache": "3.7.0" } }, "sha512-dPugdGnsvYkBlENLhCgX8yhyGCsCPrpA8lFWbTNU428l+YOnLgYHR69hzV8HWPC79n536EqzqQtvhtdaCE0dKg=="],
+    "fastify": ["fastify@5.7.2", "", { "dependencies": { "@fastify/ajv-compiler": "^4.0.5", "@fastify/error": "^4.0.0", "@fastify/fast-json-stringify-compiler": "^5.0.0", "@fastify/proxy-addr": "^5.0.0", "abstract-logging": "^2.0.1", "avvio": "^9.0.0", "fast-json-stringify": "^6.0.0", "find-my-way": "^9.0.0", "light-my-request": "^6.0.0", "pino": "^10.1.0", "process-warning": "^5.0.0", "rfdc": "^1.3.1", "secure-json-parse": "^4.0.0", "semver": "^7.6.0", "toad-cache": "^3.7.0" } }, "sha512-dBJolW+hm6N/yJVf6J5E1BxOBNkuXNl405nrfeR8SpvGWG3aCC2XDHyiFBdow8Win1kj7sjawQc257JlYY6M/A=="],
 
     "fastq": ["fastq@1.19.1", "", { "dependencies": { "reusify": "1.1.0" } }, "sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ=="],
 
@@ -1002,6 +1002,8 @@
 
     "proper-lockfile/signal-exit": ["signal-exit@3.0.7", "", {}, "sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ=="],
 
+    "slash-create/fastify": ["fastify@5.6.2", "", { "dependencies": { "@fastify/ajv-compiler": "4.0.5", "@fastify/error": "4.2.0", "@fastify/fast-json-stringify-compiler": "5.0.3", "@fastify/proxy-addr": "5.1.0", "abstract-logging": "2.0.1", "avvio": "9.1.0", "fast-json-stringify": "6.1.1", "find-my-way": "9.3.0", "light-my-request": "6.6.0", "pino": "10.1.0", "process-warning": "5.0.0", "rfdc": "1.4.1", "secure-json-parse": "4.1.0", "semver": "7.7.3", "toad-cache": "3.7.0" } }, "sha512-dPugdGnsvYkBlENLhCgX8yhyGCsCPrpA8lFWbTNU428l+YOnLgYHR69hzV8HWPC79n536EqzqQtvhtdaCE0dKg=="],
+
     "slash-create/undici": ["undici@5.29.0", "", { "dependencies": { "@fastify/busboy": "2.1.1" } }, "sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg=="],
 
     "slash-up/dotenv": ["dotenv@16.6.1", "", {}, "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow=="],
@@ -1023,6 +1025,8 @@
     "cat-loggr/chalk/supports-color": ["supports-color@5.5.0", "", { "dependencies": { "has-flag": "3.0.0" } }, "sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow=="],
 
     "fast-json-stringify/ajv/json-schema-traverse": ["json-schema-traverse@1.0.0", "", {}, "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug=="],
+
+    "slash-create/fastify/semver": ["semver@7.7.3", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q=="],
 
     "cat-loggr/chalk/ansi-styles/color-convert": ["color-convert@1.9.3", "", { "dependencies": { "color-name": "1.1.3" } }, "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg=="],
 
