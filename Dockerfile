@@ -1,52 +1,45 @@
-## build runner
-FROM node:lts AS build-runner
+# use the official Bun image
+# see all versions at https://hub.docker.com/r/oven/bun/tags
+FROM oven/bun:1 AS base
+WORKDIR /usr/src/app
 
 # Add git
 RUN apt update && apt install git
 
-# Set temp directory
-WORKDIR /tmp/app
-
-# Move package.json
-COPY package.json .
-
-# Install dependencies
-RUN npm install -g bun
-RUN bun install
+# install dependencies into temp directory
+# this will cache them and speed up future builds
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lock /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
 # Move source files
 COPY prisma ./prisma
-COPY src ./src
+COPY src ./usr/src/app
 COPY tsconfig.json   .
 
-# Build project
-RUN bunx prisma@6.19.0 generate
-RUN bun run build
+# Generate Prisma files
+RUN bunx prisma generate
 
-# Upload Sentry sourcemaps (Sentry Auth Token needed)
-RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then bun run sentry:sourcemaps; fi
+# install with --production (exclude devDependencies)
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
-## producation runner
-FROM node:lts AS prod-runner
+# copy node_modules from temp directory
+# then copy all (non-ignored) project files into the image
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
 
-# Add git
-RUN apt update && apt install git
+# copy production dependencies and source code into final image
+FROM base AS release
+COPY --from=install /usr/src/app/prisma prisma
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=prerelease /usr/src/app/index.ts .
+COPY --from=prerelease /usr/src/app/package.json .
 
-# Set work directory
-WORKDIR /app
-
-# Copy package.json from build-runner
-COPY --from=build-runner /tmp/app/package.json /app/package.json
-# Copy prisma from build-runner
-COPY --from=build-runner /tmp/app/prisma /app/prisma
-
-# Install dependencies
-RUN npm install -g bun
-RUN bun install --production
-RUN bunx prisma@6.19.0 generate
-
-# Move build files
-COPY --from=build-runner /tmp/app/dist /app/dist
-
-# Start bot
-CMD [ "node", "dist/index.js" ]
+# run the app
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "index.ts" ]
