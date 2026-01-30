@@ -31,6 +31,7 @@ COPY . .
 
 # copy production dependencies and source code into final image
 FROM base AS release
+COPY --from=install /usr/src/app/prisma.config.ts prisma.config.ts
 COPY --from=install /usr/src/app/prisma prisma
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=install /usr/src/app/src src
