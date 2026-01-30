@@ -11,13 +11,13 @@ COPY package.json bun.lock /temp/dev/
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # Move source files
-COPY prisma.config.ts ./prisma.config.ts
 COPY prisma ./prisma
 COPY src ./src
 COPY tsconfig.json   .
 
 # Generate Prisma files
 RUN bunx prisma generate
+COPY prisma.config.ts ./prisma.config.ts
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
