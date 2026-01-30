@@ -24,7 +24,7 @@ RUN bunx prisma@7.3.0 generate
 RUN bun run build
 
 # Upload Sentry sourcemaps (Sentry Auth Token needed)
-RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then bun run sentry:sourcemaps; fi
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [ ! -z ${SENTRY_AUTH_TOKEN} ]; then bun run sentry:sourcemaps; fi
 
 ## producation runner
 FROM node:lts AS prod-runner
