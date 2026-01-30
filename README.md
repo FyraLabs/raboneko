@@ -6,6 +6,5 @@ Fyra Labs' neko assistant.
 
 ```sh
 bunx slash-up sync
-bun build
 bun start
 ```
