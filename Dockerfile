@@ -19,7 +19,7 @@ COPY tsconfig.json   .
 RUN bunx prisma generate
 
 # Upload Sentry sourcemaps (Sentry Auth Token needed)
-RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [[ ! -z ${SENTRY_AUTH_TOKEN} ]]; then bun run sentry:sourcemaps; fi
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN if [ ! -z ${SENTRY_AUTH_TOKEN} ]; then bun run sentry:sourcemaps; fi
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
