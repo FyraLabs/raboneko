@@ -11,6 +11,7 @@ COPY package.json bun.lock /temp/dev/
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # Move source files
+COPY prisma.config.ts ./prisma.config.ts
 COPY prisma ./prisma
 COPY src ./src
 COPY tsconfig.json   .
