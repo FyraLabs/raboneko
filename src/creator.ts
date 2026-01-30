@@ -29,7 +29,7 @@ export default class RaboSlashCreator extends SlashCreator {
     commandPath: string,
     customExtensions: string[] = [],
   ): Promise<Array<SlashCommand<this>>> {
-    const extensions = ['.js', '.cjs', ...customExtensions];
+    const extensions = ['.ts', '.js', '.cjs', ...customExtensions];
     const paths = (await getFiles(commandPath)).filter((file) =>
       extensions.includes(path.extname(file)),
     );
