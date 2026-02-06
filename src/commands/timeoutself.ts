@@ -35,7 +35,7 @@ export class TimeoutSelf extends SlashCommand {
 
     await member.timeout(delay, 'Self-timeout via Raboneko');
     await ctx.sendFollowUp(
-      `You have been self-timedout for <t:${Math.trunc(time.getTime() / 1000)}:R> `,
+      `You have been self-timedout for ${ctx.options.duration}. I'll see you again in <t:${Math.trunc(time.getTime() / 1000)}:R>~`,
     );
   }
 }
