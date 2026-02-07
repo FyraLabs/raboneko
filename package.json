@@ -23,7 +23,7 @@
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
     "@sentry/node": "^10.38.0",
-    "bullmq": "^5.67.2",
+    "bullmq": "^5.67.3",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.19",
     "discord-api-types": "^0.38.38",
