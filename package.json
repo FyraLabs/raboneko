@@ -28,7 +28,7 @@
     "dayjs": "^1.11.19",
     "discord-api-types": "^0.38.38",
     "discord.js": "^14.25.1",
-    "fastify": "^5.7.2",
+    "fastify": "^5.7.4",
     "parse-duration": "^2.1.5",
     "prisma": "^7.3.0",
     "slash-create": "^6.7.1"
