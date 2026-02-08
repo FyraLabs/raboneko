@@ -5,6 +5,8 @@ Fyra Labs' neko assistant.
 ## Installation
 
 ```sh
-bunx slash-up sync
+bun ci
+bun generate
+bun sync
 bun start
 ```
