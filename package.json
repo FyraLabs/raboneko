@@ -9,6 +9,7 @@
   "scripts": {
     "sync": "slash-up sync",
     "sync:dev": "slash-up sync -e development",
+    "generate": "prisma generate",
     "start": "cd src && bun run ./index.js",
     "dev": "bun --watch --no-clear-screen run ./src/index.js",
     "check": "tsc --noEmit",
