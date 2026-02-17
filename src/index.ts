@@ -56,7 +56,6 @@ http
 import './modules/ping';
 import './modules/guildMemberAdd';
 import './modules/funAI';
-import './modules/cutefishInfo';
 import './modules/support';
 import './modules/logger';
 // import './modules/tex'; disabled for now
