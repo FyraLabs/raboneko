@@ -7,12 +7,6 @@ client.on(Events.MessageCreate, async (message) => {
 
   const content = message.content.trim();
 
-  // TODO: Generate one-liner
-
-  await message.startThread({
-    name: `${message.author.displayName} - ${new Date().toDateString()}`,
-  });
-
   await prismaClient.wrap.create({
     data: {
       userID: message.author.id,
@@ -20,6 +14,13 @@ client.on(Events.MessageCreate, async (message) => {
       wrapMessageID: message.id,
     },
   });
+
+  // TODO: Generate one-liner
+  const thread = await message.startThread({
+    name: `${message.author.displayName} - ${new Date().toDateString()}`,
+  });
+
+  await thread.send(`Heya~ Thanks for sharing your wrap, great work! :3`);
 });
 
 client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
