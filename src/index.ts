@@ -59,5 +59,5 @@ import './modules/funAI';
 import './modules/cutefishInfo';
 import './modules/support';
 import './modules/logger';
-import './modules/tex';
+// import './modules/tex'; disabled for now
 import './modules/wraps';
