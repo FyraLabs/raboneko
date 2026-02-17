@@ -22,6 +22,15 @@ model ProgressLog {
   logMessageID String? @unique
 }
 
+model Wrap {
+  id Int @id @default(autoincrement())
+  userID String
+  createdAt DateTime @default(now())
+  content String
+  // The Discord ID of the wrap message sent
+  wrapMessageID String @unique
+}
+
 model Reminder {
   id Int @id @default(autoincrement())
   userID String
