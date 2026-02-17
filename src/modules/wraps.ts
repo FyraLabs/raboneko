@@ -21,3 +21,26 @@ client.on(Events.MessageCreate, async (message) => {
     },
   });
 });
+
+client.on(Events.MessageUpdate, async (oldMessage, newMessage) => {
+  if (newMessage.channelId !== process.env.WRAPS_CHANNEL_ID || newMessage.author.bot) return;
+
+  await prismaClient.wrap.update({
+    where: {
+      wrapMessageID: newMessage.id,
+    },
+    data: {
+      content: newMessage.content,
+    },
+  });
+});
+
+client.on(Events.MessageDelete, async (message) => {
+  if (message.channelId !== process.env.WRAPS_CHANNEL_ID || message.author?.bot) return;
+
+  await prismaClient.wrap.delete({
+    where: {
+      wrapMessageID: message.id,
+    },
+  });
+});
