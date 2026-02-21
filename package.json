@@ -21,7 +21,7 @@
     "lint:fix": "bun run prettier:fix && bun run eslint:fix"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.0",
     "@sentry/node": "^10.38.0",
     "bullmq": "^5.69.4",
