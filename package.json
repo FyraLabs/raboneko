@@ -41,7 +41,7 @@
     "@types/node": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.55.0",
-    "eslint": "^10.0.0",
+    "eslint": "^10.0.1",
     "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.5.5",
