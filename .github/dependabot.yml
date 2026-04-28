@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      prisma:
+        patterns: ["prisma*", "@prisma*]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
