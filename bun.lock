@@ -16,7 +16,7 @@
         "fastify": "^5.7.4",
         "parse-duration": "^2.1.5",
         "prisma": "^7.8.0",
-        "slash-create": "^6.8.0",
+        "slash-create": "^6.8.1",
       },
       "devDependencies": {
         "@sentry/cli": "^3.2.1",
@@ -799,7 +799,7 @@
 
     "signal-exit": ["signal-exit@4.1.0", "", {}, "sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw=="],
 
-    "slash-create": ["slash-create@6.8.0", "", { "dependencies": { "eventemitter3": "^5.0.1", "lodash.isequal": "^4.5.0", "tweetnacl": "^1.0.3", "undici": "^5.28.4" }, "peerDependencies": { "express": "^4", "fastify": "^3 || ^4" }, "optionalPeers": ["express", "fastify"] }, "sha512-hhdnDQlt8O1SPCuEDjTZgVK231ZjyXxmD9HwaRReqnSh+pEb7An3MVRSpWAxtVNP4KDKD5PgOzB/V5hChYOQ6Q=="],
+    "slash-create": ["slash-create@6.8.1", "", { "dependencies": { "eventemitter3": "^5.0.1", "lodash.isequal": "^4.5.0", "tweetnacl": "^1.0.3", "undici": "^5.28.4" }, "peerDependencies": { "express": "^4", "fastify": "^3 || ^4" }, "optionalPeers": ["express", "fastify"] }, "sha512-5TeRw2xVHPkvO1O+J3bK/9LvU/t65mTqSId0rZHn14EuPBwZIA/f5+lajALTM1BuPt1+INC48MH/eqiVEogLBw=="],
 
     "slash-up": ["slash-up@1.4.2", "", { "dependencies": { "@esbuild-kit/cjs-loader": "2.4.4", "ansi-colors": "4.1.3", "common-tags": "1.8.2", "cross-spawn": "7.0.6", "degit": "2.8.4", "dotenv": "16.6.1", "enquirer": "2.4.1", "find-up": "5.0.0", "log-symbols": "4.1.0", "slash-create": "6.7.1", "yargs": "17.7.2" }, "bin": { "slash-up": "lib/bin.js" } }, "sha512-Ppm+sJ8eA+sZK58aQu4Pmlpbyo/LvIaQDCO5dp0zWnHS4dmAHgsrgWhJocNePkqbXGtPHLSOL7+BFwwKWHitfg=="],
 
