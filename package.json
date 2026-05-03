@@ -30,7 +30,7 @@
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.19",
     "discord-api-types": "^0.38.47",
-    "discord.js": "^14.26.3",
+    "discord.js": "^14.26.4",
     "fastify": "^5.8.5",
     "mediabunny": "^1.43.1",
     "onnxruntime-web": "1.22.0",
