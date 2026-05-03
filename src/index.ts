@@ -60,3 +60,4 @@ import './modules/support';
 import './modules/logger';
 // import './modules/tex'; disabled for now
 import './modules/wraps';
+import './modules/voiceTranscribe';
