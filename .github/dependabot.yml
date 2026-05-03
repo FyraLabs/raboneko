@@ -5,8 +5,14 @@ updates:
     schedule:
       interval: "weekly"
     groups:
+      discord:
+        patterns: ["*discord*", "slash-*"]
+      eslint:
+        patterns: ["eslint*", "@typescript-eslint*"]
       prisma:
         patterns: ["prisma*", "@prisma*"]
+      sentry:
+        patterns: ["@sentry*"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
