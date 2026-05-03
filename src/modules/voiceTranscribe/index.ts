@@ -1,9 +1,13 @@
 import { EmbedBuilder, Events, MessageFlags } from 'discord.js';
 import client from '../../client';
 import { fetchAttachmentToPcm16k } from './discordAudio';
-import { transcribePcm16k } from './moonshine';
+import { preloadTranscriber, transcribePcm16k } from './moonshine';
 
 let queue: Promise<void> = Promise.resolve();
+
+void preloadTranscriber().catch((err) => {
+  console.warn('[voiceTranscribe] Preload failed.', err);
+});
 
 function runSerialized<T>(fn: () => Promise<T>): Promise<T> {
   const next = queue.then(fn, fn);
