@@ -11,7 +11,7 @@ const SAMPLE_RATE = 16000;
 const CHUNK_SECONDS = 10;
 const CHUNK_SIZE = SAMPLE_RATE * CHUNK_SECONDS;
 
-const model = new MoonshineModel('model/tiny', 'float');
+const model = new MoonshineModel('model/base');
 let loadPromise: Promise<void> | undefined;
 
 async function ensureLoaded(): Promise<void> {
