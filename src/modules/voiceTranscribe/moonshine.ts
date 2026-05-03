@@ -7,6 +7,10 @@ const onnxRuntimeWebRoot = path.dirname(require.resolve('onnxruntime-web/package
 
 Settings.BASE_ASSET_PATH.ONNX_RUNTIME = `${path.join(onnxRuntimeWebRoot, 'dist')}/`;
 
+const SAMPLE_RATE = 16000;
+const CHUNK_SECONDS = 10;
+const CHUNK_SIZE = SAMPLE_RATE * CHUNK_SECONDS;
+
 const model = new MoonshineModel('model/tiny', 'float');
 let loadPromise: Promise<void> | undefined;
 
@@ -17,5 +21,15 @@ async function ensureLoaded(): Promise<void> {
 
 export async function transcribePcm16k(audio: Float32Array): Promise<string> {
   await ensureLoaded();
-  return (await model.generate(audio)) ?? '';
+
+  const parts: string[] = [];
+  for (let offset = 0; offset < audio.length; offset += CHUNK_SIZE) {
+    const chunk = audio.subarray(offset, offset + CHUNK_SIZE);
+    const text = ((await model.generate(chunk)) ?? '').trim();
+    if (text.length > 0) {
+      parts.push(text);
+    }
+  }
+
+  return parts.join(' ');
 }
