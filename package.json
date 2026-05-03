@@ -26,7 +26,7 @@
     "@prisma/client": "^7.8.0",
     "@ricky0123/vad-web": "^0.0.30",
     "@sentry/node": "^10.50.0",
-    "bullmq": "^5.76.2",
+    "bullmq": "^5.76.5",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.19",
     "discord-api-types": "^0.38.47",
