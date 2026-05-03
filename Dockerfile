@@ -32,11 +32,11 @@ COPY . .
 
 # copy production dependencies and source code into final image
 FROM base AS release
-COPY --from=install /usr/src/app/prisma.config.ts prisma.config.ts
-COPY --from=install /usr/src/app/prisma prisma
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=install /usr/src/app/src src
-COPY --from=prerelease /usr/src/app/package.json .
+COPY --from=install --chown=bun:bun /usr/src/app/prisma.config.ts prisma.config.ts
+COPY --from=install --chown=bun:bun /usr/src/app/prisma prisma
+COPY --from=install --chown=bun:bun /temp/prod/node_modules node_modules
+COPY --from=install --chown=bun:bun /usr/src/app/src src
+COPY --from=prerelease --chown=bun:bun /usr/src/app/package.json .
 
 # run the app
 USER bun
