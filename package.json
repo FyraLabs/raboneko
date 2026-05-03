@@ -51,7 +51,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.3",
     "slash-up": "^1.4.2",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "trustedDependencies": [
     "@seydx/node-av-darwin-arm64",
