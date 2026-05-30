@@ -25,7 +25,7 @@
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@ricky0123/vad-web": "^0.0.30",
-    "@sentry/bun": "^10.53.1",
+    "@sentry/bun": "^10.55.0",
     "bullmq": "^5.77.1",
     "cat-loggr": "^1.2.2",
     "dayjs": "^1.11.20",
