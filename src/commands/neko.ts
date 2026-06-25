@@ -2,6 +2,7 @@ import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 's
 import client from '../client';
 
 const headpatResponses = ['nya!', '*purrrr*', 'mew~', 'Hehe, thanks!', 'more headpats, pwease~'];
+const headpatFailThreshold = 0.3;
 
 export class Ping extends SlashCommand {
   public constructor(creator: SlashCreator) {
@@ -21,11 +22,27 @@ export class Headpat extends SlashCommand {
     super(creator, {
       name: 'headpat',
       description: 'Give me headpats!',
+      options: [
+        {
+          type: CommandOptionType.USER,
+          name: 'user',
+          description: 'The user to headpat',
+          required: false,
+        }
+      ]
     });
   }
 
   public async run(ctx: CommandContext): Promise<void> {
-    await ctx.sendFollowUp(headpatResponses[Math.floor(Math.random() * headpatResponses.length)]);
+    if (!ctx.options.user) {
+      await ctx.sendFollowUp(headpatResponses[Math.floor(Math.random() * headpatResponses.length)]);
+    } else {
+      if (Math.random() < headpatFailThreshold) {
+        await ctx.sendFollowUp(`nyoo, <@${ctx.options.user}> doesn't need headpat nyow~`);
+      } else {
+        await ctx.send(`<@${ctx.options.user}>, *${"pat".padStart(Math.floor(Math.random() * 3) * 3, 'pat')}*`);
+      }
+    }
   }
 }
 
