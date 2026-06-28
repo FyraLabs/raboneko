@@ -2,7 +2,7 @@ import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 's
 import client from '../client';
 
 const headpatResponses = ['nya!', '*purrrr*', 'mew~', 'Hehe, thanks!', 'more headpats, pwease~'];
-const headpatFailThreshold = 0.3;
+const headpatFailThreshold = 0.1;
 
 export class Ping extends SlashCommand {
   public constructor(creator: SlashCreator) {
