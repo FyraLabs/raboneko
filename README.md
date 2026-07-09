@@ -5,8 +5,8 @@ Fyra Labs' neko assistant.
 ## Installation
 
 ```sh
-bun ci
-bun generate
-bun sync
-bun start
+deno ci
+deno task generate
+deno task sync
+deno task start
 ```
