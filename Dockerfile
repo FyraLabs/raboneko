@@ -7,10 +7,15 @@ COPY deno.json deno.lock package.json* ./
 RUN deno ci --prod
 
 # Move source files
-COPY . .
+COPY prisma ./prisma
+COPY src ./src
+COPY tsconfig.json .
 
 # Generate Prisma files
 RUN deno task generate
+
+# Copy remaining files
+COPY . .
 
 # Production stage
 FROM denoland/deno:latest
