@@ -36,8 +36,7 @@ export default class RaboSlashCreator extends SlashCreator {
     const commands: any[] = [];
     for (const filePath of paths) {
       try {
-        // commands.push(require(filePath));
-        const mod = require(filePath);
+        const mod = await import(filePath);
         if (mod.prototype instanceof SlashCommand) {
           commands.push(mod);
         } else {
