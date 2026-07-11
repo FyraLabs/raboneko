@@ -1,4 +1,4 @@
-import client from '../client';
+import client from '../client.ts';
 import { ChannelType, Events } from 'discord.js';
 
 const cannedResponses = new Map([

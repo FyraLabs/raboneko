@@ -1,6 +1,6 @@
-import client from '../client';
+import client from '../client.ts';
 import { Events } from 'discord.js';
-import { getGeneralChannel } from '../util';
+import { getGeneralChannel } from '../util.ts';
 
 client.on(Events.GuildMemberAdd, async (member) => {
   const generalChannel = await getGeneralChannel();

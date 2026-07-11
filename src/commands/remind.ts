@@ -9,10 +9,10 @@ import {
   TextInputStyle,
 } from 'slash-create';
 import parse from 'parse-duration';
-import raboneko from '../client';
-import { client } from '../prisma';
+import raboneko from '../client.ts';
+import { client } from '../prisma.ts';
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, messageLink, TextChannel } from 'discord.js';
-import { reminderQueue } from '../scheduler';
+import { reminderQueue } from '../scheduler.ts';
 
 export const handleReminderEvent = async (reminderID: number): Promise<void> => {
   const reminder = await client.reminder.findUnique({

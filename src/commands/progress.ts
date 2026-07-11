@@ -1,15 +1,15 @@
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import isoWeek from 'dayjs/plugin/isoWeek';
-import { ProgressLog } from '../generated/prisma/client';
-import { client } from '../prisma';
-import bot from '../client';
+import utc from 'dayjs/plugin/utc.js';
+import isoWeek from 'dayjs/plugin/isoWeek.js';
+import { ProgressLog } from '../generated/prisma/client.ts';
+import { client } from '../prisma.ts';
+import bot from '../client.ts';
 import {
   enumStringsToChoice,
   getAnnoucementsChannel,
   getPrimaryGuild,
   getUpdatesChannel,
-} from '../util';
+} from '../util.ts';
 import { EmbedBuilder, RESTError, RESTJSONErrorCodes } from 'discord.js';
 import {
   AutocompleteContext,

@@ -1,6 +1,6 @@
-import client from '../client';
+import client from '../client.ts';
 import { Events } from 'discord.js';
-import { client as prismaClient } from '../prisma';
+import { client as prismaClient } from '../prisma.ts';
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.channelId !== process.env.WRAPS_CHANNEL_ID || message.author.bot) return;

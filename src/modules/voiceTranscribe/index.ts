@@ -1,7 +1,7 @@
 import { EmbedBuilder, Events, MessageFlags } from 'discord.js';
-import client from '../../client';
-import { fetchAttachmentToPcm16k } from './discordAudio';
-import { preloadTranscriber, transcribePcm16k } from './moonshine';
+import client from '../../client.ts';
+import { fetchAttachmentToPcm16k } from './discordAudio.ts';
+import { preloadTranscriber, transcribePcm16k } from './moonshine.ts';
 
 let queue: Promise<void> = Promise.resolve();
 

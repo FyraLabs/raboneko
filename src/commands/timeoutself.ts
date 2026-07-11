@@ -1,6 +1,6 @@
 import parse from 'parse-duration';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import client from '../client';
+import client from '../client.ts';
 
 export class TimeoutSelf extends SlashCommand {
   public constructor(creator: SlashCreator) {

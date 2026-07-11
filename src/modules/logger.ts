@@ -1,6 +1,6 @@
-import client from '../client';
+import client from '../client.ts';
 import { EmbedBuilder, Events, time, TimestampStyles } from 'discord.js';
-import { getLoggingChannel, userURL } from '../util';
+import { getLoggingChannel, userURL } from '../util.ts';
 
 // Right now we log the following for moderation purposes:
 // - MessageDelete

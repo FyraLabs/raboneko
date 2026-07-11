@@ -1,6 +1,6 @@
-import client from '../client';
+import client from '../client.ts';
 import { Events } from 'discord.js';
-import { containsWord } from '../util';
+import { containsWord } from '../util.ts';
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.id === message.client.user.id) return;

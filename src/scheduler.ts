@@ -1,7 +1,7 @@
 import { Queue, Worker } from 'bullmq';
-import { generateFinalReport } from './commands/progress';
-import { getRedisConnection } from './util';
-import { handleReminderEvent } from './commands/remind';
+import { generateFinalReport } from './commands/progress.ts';
+import { getRedisConnection } from './util.ts';
+import { handleReminderEvent } from './commands/remind.ts';
 
 const reportQueue = new Queue('report', {
   connection: getRedisConnection(),

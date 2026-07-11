@@ -1,5 +1,5 @@
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import client from '../client';
+import client from '../client.ts';
 
 const headpatResponses = ['nya!', '*purrrr*', 'mew~', 'Hehe, thanks!', 'more headpats, pwease~'];
 const headpatFailThreshold = 0.1;

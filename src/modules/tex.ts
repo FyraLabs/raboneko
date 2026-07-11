@@ -1,5 +1,5 @@
 import { $ } from 'deno';
-import client from '../client';
+import client from '../client.ts';
 import { Events } from 'discord.js';
 
 client.on(Events.MessageCreate, async (message) => {

@@ -1,5 +1,5 @@
 import { Channel, Guild } from 'discord.js';
-import client from './client';
+import client from './client.ts';
 import { ConnectionOptions } from 'bullmq';
 import { ApplicationCommandOptionChoice } from 'slash-create';
 import { Message } from 'discord.js';
