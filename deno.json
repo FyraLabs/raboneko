@@ -3,9 +3,8 @@
     "sync": "slash-up sync",
     "sync:dev": "slash-up sync -e development",
     "generate": "prisma generate",
-    "start": "cd src && deno run ./index.js",
-    "dev": "deno watch --no-clear-screen ./src/index.js",
-    "check": "tsc --noEmit",
+    "start": "deno run -P --unsafe-proto src/index.ts",
+    "dev": "deno watch -P --unsafe-proto --watch --no-clear-screen src/index.ts",
     "prettier:check": "prettier ./src --check",
     "eslint:check": "eslint ./src/**/*.ts",
     "prettier:fix": "prettier ./src --write",
@@ -16,6 +15,16 @@
   "imports": {
     "@prisma/adapter-pg": "npm:@prisma/adapter-pg@^7.8.0",
     "@prisma/client": "npm:@prisma/client@^7.8.0",
+    "@std/dotenv": "jsr:@std/dotenv@^0.225.7",
     "prisma": "npm:prisma@^7.8.0"
   },
+  "permissions": {
+    "default": {
+      "env": true,
+      "net": true,
+      "read": true,
+      "ffi": true,
+      "sys": true,
+    }
+  }
 }
