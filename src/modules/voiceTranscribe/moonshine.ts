@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { MoonshineModel, Settings } from '@moonshine-ai/moonshine-js';
 import { NonRealTimeVAD } from '@ricky0123/vad-web';
 
-const require = createRequire(__filename);
+const require = createRequire(import.meta.filename);
 const onnxRuntimeWebRoot = path.dirname(require.resolve('onnxruntime-web/package.json'));
 const vadOnnxRuntimeWebRoot = path.dirname(
   require.resolve('@ricky0123/vad-web/node_modules/onnxruntime-web/package.json'),

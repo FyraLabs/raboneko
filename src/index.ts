@@ -1,8 +1,10 @@
+import "jsr:@std/dotenv/load";
+
 import path from 'path';
 import './sentry.ts';
 import { GatewayServer } from 'slash-create';
 import { GatewayDispatchEvents } from 'discord.js';
-import CatLoggr from 'cat-loggr/ts.js';
+import CatLoggr from 'npm:cat-loggr';
 import client from './client.ts';
 import './scheduler.ts';
 import RaboSlashCreator from './creator.ts';
@@ -46,7 +48,7 @@ http
         client.ws.on(GatewayDispatchEvents.InteractionCreate, handler),
       ),
     )
-    .registerCommandsIn(path.join(__dirname, 'commands'));
+    .registerCommandsIn(path.join(import.meta.dirname, 'commands'));
 
   await creator.syncCommands();
 
@@ -60,4 +62,4 @@ import './modules/support.ts';
 import './modules/logger.ts';
 // import './modules/tex'; disabled for now
 import './modules/wraps.ts';
-import './modules/voiceTranscribe/index.ts';
+// import './modules/voiceTranscribe/index.ts'; disabled in Deno (FIXME)
