@@ -3,7 +3,7 @@ ENV DENO_DIR=/deno-dir
 WORKDIR /app
 
 # Copy files and install dependencies
-COPY deno.lock package.json* ./
+COPY deno.json deno.lock package.json* ./
 RUN deno ci --prod
 
 # Move source files
