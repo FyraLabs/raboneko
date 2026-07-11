@@ -3233,6 +3233,11 @@
     "https://deno.land/x/dotenv@v3.2.0/util.ts": "693730877b13f8ead2b79b2aa31e2a0652862f7dc0c5f6d2f313f4d39c7b7670"
   },
   "workspace": {
+    "dependencies": [
+      "npm:@prisma/adapter-pg@^7.8.0",
+      "npm:@prisma/client@^7.8.0",
+      "npm:prisma@^7.8.0"
+    ],
     "packageJson": {
       "dependencies": [
         "npm:@moonshine-ai/moonshine-js@~0.1.29",
