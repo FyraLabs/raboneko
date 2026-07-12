@@ -1,9 +1,9 @@
-import client from '../client.ts';
-import { ChannelType, Events } from 'discord.js';
+import client from "../client.ts";
+import { ChannelType, Events } from "discord.js";
 
 const cannedResponses = new Map([
   [
-    'Ultramarine Linux',
+    "Ultramarine Linux",
     `Hewwo! If you haven't already, please make sure to provide the following:
 * Version and edition of Ultramrine (ex. Ultramarine 40 KDE)
 * Any relavant hardware details, especially if using a port of Ultramarine (ex. Chromebooks)
@@ -28,7 +28,7 @@ client.on(Events.ThreadCreate, async (thread) => {
   }
 
   const entry = Array.from(cannedResponses.entries()).find(([tag]) =>
-    thread.appliedTags.includes(tag),
+    thread.appliedTags.includes(tag)
   );
   if (!entry) return;
 

@@ -1,4 +1,4 @@
-import { polyfillWebCodecsApi } from 'webcodecs-polyfill';
+import { polyfillWebCodecsApi } from "webcodecs-polyfill";
 import {
   BufferSource,
   Conversion,
@@ -8,7 +8,7 @@ import {
   Output,
   WavOutputFormat,
   WEBM,
-} from 'mediabunny';
+} from "mediabunny";
 
 const TARGET_RATE = 16000;
 
@@ -30,19 +30,19 @@ async function decodeAudio(buffer: ArrayBuffer): Promise<Float32Array> {
         format: new WavOutputFormat(),
         target: new NullTarget(),
       }),
-      tracks: 'primary',
+      tracks: "primary",
       video: { discard: true },
       audio: {
-        codec: 'pcm-f32',
+        codec: "pcm-f32",
         numberOfChannels: 1,
         sampleRate: TARGET_RATE,
-        sampleFormat: 'f32',
+        sampleFormat: "f32",
         forceTranscode: true,
         process(sample) {
           const chunk = new Float32Array(
-            sample.allocationSize({ format: 'f32', planeIndex: 0 }) / 4,
+            sample.allocationSize({ format: "f32", planeIndex: 0 }) / 4,
           );
-          sample.copyTo(chunk, { format: 'f32', planeIndex: 0 });
+          sample.copyTo(chunk, { format: "f32", planeIndex: 0 });
           chunks.push(chunk);
           totalLength += chunk.length;
           return sample;
@@ -51,13 +51,13 @@ async function decodeAudio(buffer: ArrayBuffer): Promise<Float32Array> {
     });
 
     if (!conversion.isValid) {
-      throw new Error('Voice attachment has no convertible audio track.');
+      throw new Error("Voice attachment has no convertible audio track.");
     }
 
     await conversion.execute();
 
     if (totalLength === 0) {
-      throw new Error('Decoded PCM is empty.');
+      throw new Error("Decoded PCM is empty.");
     }
 
     const audio = new Float32Array(totalLength);
@@ -73,7 +73,9 @@ async function decodeAudio(buffer: ArrayBuffer): Promise<Float32Array> {
   }
 }
 
-export async function fetchAttachmentToPcm16k(url: string): Promise<Float32Array> {
+export async function fetchAttachmentToPcm16k(
+  url: string,
+): Promise<Float32Array> {
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Failed to download attachment (${res.status})`);

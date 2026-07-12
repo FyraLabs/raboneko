@@ -1,12 +1,12 @@
-import client from '../client.ts';
-import { Events } from 'discord.js';
-import { getGeneralChannel } from '../util.ts';
+import client from "../client.ts";
+import { Events } from "discord.js";
+import { getGeneralChannel } from "../util.ts";
 
 client.on(Events.GuildMemberAdd, async (member) => {
   const generalChannel = await getGeneralChannel();
 
   if (!generalChannel.isSendable()) {
-    throw new Error('General channel is not a text channel.');
+    throw new Error("General channel is not a text channel.");
   }
 
   await member.roles.add(process.env.MEMBER_ROLE_ID!);

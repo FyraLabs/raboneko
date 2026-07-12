@@ -24,7 +24,7 @@
       "net": true,
       "read": true,
       "ffi": true,
-      "sys": true,
+      "sys": true
     }
   }
 }

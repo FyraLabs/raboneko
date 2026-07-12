@@ -1,16 +1,16 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js';
-import isoWeek from 'dayjs/plugin/isoWeek.js';
-import { ProgressLog } from '../generated/prisma/client.ts';
-import { client } from '../prisma.ts';
-import bot from '../client.ts';
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc.js";
+import isoWeek from "dayjs/plugin/isoWeek.js";
+import { ProgressLog } from "../generated/prisma/client.ts";
+import { client } from "../prisma.ts";
+import bot from "../client.ts";
 import {
   enumStringsToChoice,
   getAnnoucementsChannel,
   getPrimaryGuild,
   getUpdatesChannel,
-} from '../util.ts';
-import { EmbedBuilder, RESTError, RESTJSONErrorCodes } from 'discord.js';
+} from "../util.ts";
+import { EmbedBuilder, RESTError, RESTJSONErrorCodes } from "discord.js";
 import {
   AutocompleteContext,
   CommandContext,
@@ -18,7 +18,7 @@ import {
   Member,
   SlashCommand,
   SlashCreator,
-} from 'slash-create';
+} from "slash-create";
 
 dayjs.extend(isoWeek);
 dayjs.extend(utc);
@@ -36,15 +36,15 @@ enum Product {
 }
 
 const productToString = new Map<Product, string>([
-  [Product.TAUOS, 'tauOS'],
-  [Product.HOMEPAGE, 'Homepage'],
-  [Product.PHOTON_BROWSER, 'photonBrowser'],
-  [Product.INTERNAL, 'InternalTools'],
-  [Product.RABONEKO, 'Raboneko (me :3)'],
-  [Product.ANDAMAN, 'Andaman'],
-  [Product.TERRA, 'Terra'],
-  [Product.OTHER, 'Other'],
-  [Product.ULTRAMARINE, 'Ultramarine'],
+  [Product.TAUOS, "tauOS"],
+  [Product.HOMEPAGE, "Homepage"],
+  [Product.PHOTON_BROWSER, "photonBrowser"],
+  [Product.INTERNAL, "InternalTools"],
+  [Product.RABONEKO, "Raboneko (me :3)"],
+  [Product.ANDAMAN, "Andaman"],
+  [Product.TERRA, "Terra"],
+  [Product.OTHER, "Other"],
+  [Product.ULTRAMARINE, "Ultramarine"],
 ]);
 
 const _stringToProduct = new Map<string, Product>(
@@ -62,13 +62,13 @@ enum LogType {
 }
 
 const logTypeToString = new Map<LogType, string>([
-  [LogType.MILESTONE, 'Milestone'],
-  [LogType.BLOCKER, 'Blocker'],
-  [LogType.RELEASE, 'Release'],
-  [LogType.FEATURE, 'Feature'],
-  [LogType.IMPROVEMENT, 'Improvement'],
-  [LogType.BUG_FIX, 'Bug Fix'],
-  [LogType.OTHER, 'Other'],
+  [LogType.MILESTONE, "Milestone"],
+  [LogType.BLOCKER, "Blocker"],
+  [LogType.RELEASE, "Release"],
+  [LogType.FEATURE, "Feature"],
+  [LogType.IMPROVEMENT, "Improvement"],
+  [LogType.BUG_FIX, "Bug Fix"],
+  [LogType.OTHER, "Other"],
 ]);
 
 const _stringToLogType = new Map<string, LogType>(
@@ -76,13 +76,13 @@ const _stringToLogType = new Map<string, LogType>(
 );
 
 const logTypeToEmoji = new Map<LogType, string>([
-  [LogType.MILESTONE, ':bookmark:'],
-  [LogType.BLOCKER, ':octagonal_sign:'],
-  [LogType.RELEASE, ':rocket:'],
-  [LogType.FEATURE, ':sparkles:'],
-  [LogType.IMPROVEMENT, ':hammer:'],
-  [LogType.BUG_FIX, ':bug:'],
-  [LogType.OTHER, ':notepad_spiral:'],
+  [LogType.MILESTONE, ":bookmark:"],
+  [LogType.BLOCKER, ":octagonal_sign:"],
+  [LogType.RELEASE, ":rocket:"],
+  [LogType.FEATURE, ":sparkles:"],
+  [LogType.IMPROVEMENT, ":hammer:"],
+  [LogType.BUG_FIX, ":bug:"],
+  [LogType.OTHER, ":notepad_spiral:"],
 ]);
 
 const groupLogs = (logs: ProgressLog[]): Record<string, ProgressLog[]> =>
@@ -101,12 +101,16 @@ const groupLogs = (logs: ProgressLog[]): Record<string, ProgressLog[]> =>
     {} as Record<string, ProgressLog[]>,
   );
 
-const partitionStringsByLength = (strings: string[], maxLength: number): string[][] => {
+const partitionStringsByLength = (
+  strings: string[],
+  maxLength: number,
+): string[][] => {
   const final: string[][] = [[]];
   let sub = final[0];
 
   strings.forEach((string) => {
-    const lengthAfterPush = sub.reduce((acc, curr) => acc + curr.length, 0) + string.length;
+    const lengthAfterPush = sub.reduce((acc, curr) => acc + curr.length, 0) +
+      string.length;
     if (lengthAfterPush <= maxLength) {
       sub.push(string);
     } else {
@@ -146,15 +150,15 @@ const generateFields = (
 
       return paritioned.map((parition, i) => ({
         name: i != 0 ? `${product} (continued)` : product,
-        value: parition.join('\n'),
+        value: parition.join("\n"),
       }));
     }),
   ).then((fields) => fields.flat());
 
 export const generateFinalReport = async (): Promise<void> => {
   const lastWeek = dayjs.utc().isoWeekday(-1);
-  const startOfWeek = lastWeek.startOf('isoWeek');
-  const endOfWeek = lastWeek.endOf('isoWeek');
+  const startOfWeek = lastWeek.startOf("isoWeek");
+  const endOfWeek = lastWeek.endOf("isoWeek");
 
   const logs = await client.progressLog.findMany({
     where: {
@@ -165,7 +169,6 @@ export const generateFinalReport = async (): Promise<void> => {
     },
   });
 
-  
   const grouped = groupLogs(logs);
   const fields = await generateFields(grouped);
   if (fields.length === 0) {
@@ -173,19 +176,27 @@ export const generateFinalReport = async (): Promise<void> => {
   }
   const embed = new EmbedBuilder()
     .addFields(fields)
-    .setDescription(fields.length > 0 ? null : '*Cannot generate report, no progress this week.*')
+    .setDescription(
+      fields.length > 0
+        ? null
+        : "*Cannot generate report, no progress this week.*",
+    );
 
   const announcementsChannel = await getAnnoucementsChannel();
 
   if (!announcementsChannel.isSendable()) {
-    throw new Error('Announcements channel is not a text channel.');
+    throw new Error("Announcements channel is not a text channel.");
   }
 
-  let content = `Here is the final report for the week of ${startOfWeek.format(
-    'MMMM D, YYYY',
-  )} to ${endOfWeek.format('MMMM D, YYYY')}. Great work everyone!`;
-  if (Math.random() < 0.05)
-    content = "New face filters on Instagram today. This one's my favorite so far. Nice job team!";
+  let content = `Here is the final report for the week of ${
+    startOfWeek.format(
+      "MMMM D, YYYY",
+    )
+  } to ${endOfWeek.format("MMMM D, YYYY")}. Great work everyone!`;
+  if (Math.random() < 0.05) {
+    content =
+      "New face filters on Instagram today. This one's my favorite so far. Nice job team!";
+  }
   await announcementsChannel.send({
     content,
     embeds: [embed.data],
@@ -195,51 +206,51 @@ export const generateFinalReport = async (): Promise<void> => {
 export default class Progress extends SlashCommand {
   public constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'progress',
-      description: 'Track progress for Fyra projects, per week',
+      name: "progress",
+      description: "Track progress for Fyra projects, per week",
       dmPermission: false,
       options: [
         {
           type: CommandOptionType.SUB_COMMAND,
-          name: 'create',
-          description: 'Create a progress log',
+          name: "create",
+          description: "Create a progress log",
           options: [
             {
               type: CommandOptionType.STRING,
-              name: 'product',
-              description: 'The product the log is for',
+              name: "product",
+              description: "The product the log is for",
               choices: enumStringsToChoice(productToString),
               required: true,
             },
             {
               type: CommandOptionType.STRING,
-              name: 'type',
-              description: 'The type of progress log',
+              name: "type",
+              description: "The type of progress log",
               choices: enumStringsToChoice(logTypeToString),
               required: true,
             },
             {
               type: CommandOptionType.STRING,
-              name: 'summary',
-              description: 'The summary of your progress',
+              name: "summary",
+              description: "The summary of your progress",
               required: true,
             },
           ],
         },
         {
           type: CommandOptionType.SUB_COMMAND,
-          name: 'report',
-          description: 'Generate a progress report',
+          name: "report",
+          description: "Generate a progress report",
         },
         {
           type: CommandOptionType.SUB_COMMAND,
-          name: 'delete',
-          description: 'Delete a progress log',
+          name: "delete",
+          description: "Delete a progress log",
           options: [
             {
               type: CommandOptionType.INTEGER,
-              name: 'log',
-              description: 'The the log to delete',
+              name: "log",
+              description: "The the log to delete",
               required: true,
               autocomplete: true,
             },
@@ -251,7 +262,9 @@ export default class Progress extends SlashCommand {
 
   private async create(ctx: CommandContext): Promise<void> {
     if (!(ctx.member instanceof Member)) {
-      await ctx.sendFollowUp("Sorry, I couldn't understand your request for some reason >_<");
+      await ctx.sendFollowUp(
+        "Sorry, I couldn't understand your request for some reason >_<",
+      );
       return;
     }
 
@@ -270,8 +283,8 @@ export default class Progress extends SlashCommand {
     });
 
     const embed = new EmbedBuilder()
-      .setTitle('Progress Log Submitted')
-      .setColor('#00ff00')
+      .setTitle("Progress Log Submitted")
+      .setColor("#00ff00")
       .setFooter({
         text: `ID: #${log.id.toString()}`,
       })
@@ -281,8 +294,8 @@ export default class Progress extends SlashCommand {
       })
       .setDescription(options.summary)
       .setFields([
-        { name: 'Product', value: productToString.get(product)!, inline: true },
-        { name: 'Type', value: logTypeToString.get(type)!, inline: true },
+        { name: "Product", value: productToString.get(product)!, inline: true },
+        { name: "Type", value: logTypeToString.get(type)!, inline: true },
       ]).data;
 
     await ctx.sendFollowUp({
@@ -294,11 +307,11 @@ export default class Progress extends SlashCommand {
     const updatesChannel = await getUpdatesChannel();
 
     if (!updatesChannel.isSendable()) {
-      throw new Error('Updates channel is not a text channel.');
+      throw new Error("Updates channel is not a text channel.");
     }
 
     const updateMessage = await updatesChannel.send({
-      content: 'Yay, a progress log just got submitted~',
+      content: "Yay, a progress log just got submitted~",
       embeds: [embed],
     });
 
@@ -339,7 +352,7 @@ export default class Progress extends SlashCommand {
       const updatesChannel = await getUpdatesChannel();
 
       if (!updatesChannel.isTextBased()) {
-        throw new Error('Updates channel is not a text channel.');
+        throw new Error("Updates channel is not a text channel.");
       }
 
       try {
@@ -360,8 +373,8 @@ export default class Progress extends SlashCommand {
   private async report(ctx: CommandContext): Promise<void> {
     await ctx.defer();
 
-    const startOfWeek = dayjs().utc().startOf('isoWeek');
-    const endOfWeek = dayjs().utc().endOf('isoWeek');
+    const startOfWeek = dayjs().utc().startOf("isoWeek");
+    const endOfWeek = dayjs().utc().endOf("isoWeek");
 
     const logs = await client.progressLog.findMany({
       where: {
@@ -376,7 +389,8 @@ export default class Progress extends SlashCommand {
     const fields = await generateFields(grouped);
     const embed = new EmbedBuilder()
       .addFields(fields)
-      .setDescription(fields.length > 0 ? null : '*No progress this week.*').data;
+      .setDescription(fields.length > 0 ? null : "*No progress this week.*")
+      .data;
 
     await ctx.editOriginal({
       content: "Here's a summary of the current week. Great progress so far~",
@@ -386,13 +400,13 @@ export default class Progress extends SlashCommand {
 
   public async autocomplete(ctx: AutocompleteContext): Promise<void> {
     switch (ctx.subcommands[0]) {
-      case 'delete': {
-        if (ctx.focused !== 'log') return;
+      case "delete": {
+        if (ctx.focused !== "log") return;
 
         const value = ctx.options.delete.log as string;
 
-        const startOfWeek = dayjs().utc().startOf('isoWeek');
-        const endOfWeek = dayjs().utc().endOf('isoWeek');
+        const startOfWeek = dayjs().utc().startOf("isoWeek");
+        const endOfWeek = dayjs().utc().endOf("isoWeek");
 
         const reminders = await client.progressLog.findMany({
           where: {
@@ -402,12 +416,14 @@ export default class Progress extends SlashCommand {
             },
           },
           orderBy: {
-            createdAt: 'asc',
+            createdAt: "asc",
           },
         });
 
         const filtered = reminders.filter((r) => r.summary.startsWith(value));
-        await ctx.sendResults(filtered?.map((t) => ({ name: t.summary, value: t.id })) || []);
+        await ctx.sendResults(
+          filtered?.map((t) => ({ name: t.summary, value: t.id })) || [],
+        );
 
         break;
       }
@@ -416,13 +432,13 @@ export default class Progress extends SlashCommand {
 
   public async run(ctx: CommandContext): Promise<void> {
     switch (ctx.subcommands[0]) {
-      case 'create':
+      case "create":
         await this.create(ctx);
         break;
-      case 'report':
+      case "report":
         await this.report(ctx);
         break;
-      case 'delete':
+      case "delete":
         await this.delete(ctx);
         break;
     }

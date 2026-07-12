@@ -7,14 +7,22 @@ import {
   SlashCommand,
   SlashCreator,
   TextInputStyle,
-} from 'slash-create';
-import parse from 'parse-duration';
-import raboneko from '../client.ts';
-import { client } from '../prisma.ts';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, messageLink, TextChannel } from 'discord.js';
-import { reminderQueue } from '../scheduler.ts';
+} from "slash-create";
+import parse from "parse-duration";
+import raboneko from "../client.ts";
+import { client } from "../prisma.ts";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  messageLink,
+  TextChannel,
+} from "discord.js";
+import { reminderQueue } from "../scheduler.ts";
 
-export const handleReminderEvent = async (reminderID: number): Promise<void> => {
+export const handleReminderEvent = async (
+  reminderID: number,
+): Promise<void> => {
   const reminder = await client.reminder.findUnique({
     where: {
       id: reminderID,
@@ -25,19 +33,21 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
 
   const buttonRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
-      .setLabel('Go to original message')
+      .setLabel("Go to original message")
       .setStyle(ButtonStyle.Link)
       .setURL(reminder.link),
     new ButtonBuilder()
-      .setCustomId('snooze')
-      .setLabel('Snooze')
+      .setCustomId("snooze")
+      .setLabel("Snooze")
       .setStyle(ButtonStyle.Secondary)
-      .setEmoji('🛌'),
+      .setEmoji("🛌"),
   );
 
-  const channel = (await raboneko.channels.fetch(reminder.channelID)) as TextChannel;
+  const channel =
+    (await raboneko.channels.fetch(reminder.channelID)) as TextChannel;
   const message = await channel.send({
-    content: `Gmeow <@${reminder.userID}>! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okie? :3`,
+    content:
+      `Gmeow <@${reminder.userID}>! Just wanted to remind you to \`${reminder.content}\`, nya~ Don't forget to take care of it, okie? :3`,
     components: [buttonRow],
   });
 
@@ -54,43 +64,43 @@ export const handleReminderEvent = async (reminderID: number): Promise<void> => 
 export default class Remind extends SlashCommand {
   public constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'remind',
-      description: 'All in one command to manage your reminders!',
+      name: "remind",
+      description: "All in one command to manage your reminders!",
       dmPermission: false,
       options: [
         {
           type: CommandOptionType.SUB_COMMAND,
-          name: 'create',
-          description: 'Create a reminder',
+          name: "create",
+          description: "Create a reminder",
           options: [
             {
               type: CommandOptionType.STRING,
-              name: 'time',
-              description: 'The time to remind you in',
+              name: "time",
+              description: "The time to remind you in",
               required: true,
             },
             {
               type: CommandOptionType.STRING,
-              name: 'reminder',
-              description: 'What to remind you of',
+              name: "reminder",
+              description: "What to remind you of",
               required: false,
             },
           ],
         },
         {
           type: CommandOptionType.SUB_COMMAND,
-          name: 'list',
-          description: 'List your running reminders',
+          name: "list",
+          description: "List your running reminders",
         },
         {
           type: CommandOptionType.SUB_COMMAND,
-          name: 'delete',
-          description: 'Delete a reminder',
+          name: "delete",
+          description: "Delete a reminder",
           options: [
             {
               type: CommandOptionType.INTEGER,
-              name: 'reminder',
-              description: 'Reminder to delete',
+              name: "reminder",
+              description: "Reminder to delete",
               required: true,
               autocomplete: true,
             },
@@ -99,13 +109,13 @@ export default class Remind extends SlashCommand {
       ],
     });
 
-    creator.registerGlobalComponent('snooze', this.snoozeHandler);
+    creator.registerGlobalComponent("snooze", this.snoozeHandler);
   }
 
   public async autocomplete(ctx: AutocompleteContext): Promise<void> {
     switch (ctx.subcommands[0]) {
-      case 'delete': {
-        if (ctx.focused !== 'reminder') return;
+      case "delete": {
+        if (ctx.focused !== "reminder") return;
 
         const value = ctx.options.delete.reminder as string;
 
@@ -117,12 +127,14 @@ export default class Remind extends SlashCommand {
             },
           },
           orderBy: {
-            time: 'asc',
+            time: "asc",
           },
         });
 
         const filtered = reminders.filter((r) => r.content.startsWith(value));
-        await ctx.sendResults(filtered?.map((t) => ({ name: t.content, value: t.id })) || []);
+        await ctx.sendResults(
+          filtered?.map((t) => ({ name: t.content, value: t.id })) || [],
+        );
 
         break;
       }
@@ -132,18 +144,18 @@ export default class Remind extends SlashCommand {
   public async run(ctx: CommandContext): Promise<void> {
     // Good grief, what a terrible way to do this.
     switch (ctx.subcommands[0]) {
-      case 'create': {
+      case "create": {
         const options = ctx.options[ctx.subcommands[0]];
-        const reminder = options.reminder ?? '...';
+        const reminder = options.reminder ?? "...";
         const delay = parse(options.time);
-        if (typeof delay !== 'number') {
+        if (typeof delay !== "number") {
           await ctx.sendFollowUp(
-            'The time you input is invalid! The format must be something along the lines of `1h30m25s`.',
+            "The time you input is invalid! The format must be something along the lines of `1h30m25s`.",
           );
           return;
         }
         const time = new Date(Date.now() + delay);
-        const msg = await ctx.sendFollowUp('Creating your reminder...');
+        const msg = await ctx.sendFollowUp("Creating your reminder...");
 
         const { id } = await client.reminder.create({
           data: {
@@ -157,16 +169,18 @@ export default class Remind extends SlashCommand {
           },
         });
 
-        await reminderQueue.add('reminder', { id }, { delay });
+        await reminderQueue.add("reminder", { id }, { delay });
 
         await msg.edit(
-          `Alrightie ${ctx.user.mention}, I'll remind you in <t:${Math.trunc(
-            time.getTime() / 1000,
-          )}:R> to \`${reminder}\`~`,
+          `Alrightie ${ctx.user.mention}, I'll remind you in <t:${
+            Math.trunc(
+              time.getTime() / 1000,
+            )
+          }:R> to \`${reminder}\`~`,
         );
         break;
       }
-      case 'list': {
+      case "list": {
         const reminders = await client.reminder.findMany({
           where: {
             userID: ctx.user.id,
@@ -175,26 +189,30 @@ export default class Remind extends SlashCommand {
             },
           },
           orderBy: {
-            time: 'asc',
+            time: "asc",
           },
         });
 
         if (reminders.length === 0) {
-          await ctx.sendFollowUp("Nyu have no reminders, looks like someone's all caught up :3");
+          await ctx.sendFollowUp(
+            "Nyu have no reminders, looks like someone's all caught up :3",
+          );
           return;
         }
 
         let content = "Here's your reminders!\n";
         for (const reminder of reminders) {
-          content += `- ${reminder.content}: [link](${reminder.link}) (<t:${Math.trunc(
-            reminder.time.getTime() / 1000,
-          )}:R>)\n`;
+          content += `- ${reminder.content}: [link](${reminder.link}) (<t:${
+            Math.trunc(
+              reminder.time.getTime() / 1000,
+            )
+          }:R>)\n`;
         }
 
         await ctx.sendFollowUp(content);
         break;
       }
-      case 'delete': {
+      case "delete": {
         const options = ctx.options[ctx.subcommands[0]];
         const reminder = await client.reminder.delete({
           where: {
@@ -217,7 +235,7 @@ export default class Remind extends SlashCommand {
 
     if (ctx.user.id !== reminder.userID) {
       await ctx.sendFollowUp({
-        content: 'This snooze button is not for you, sorry!',
+        content: "This snooze button is not for you, sorry!",
         ephemeral: true,
       });
       return;
@@ -225,18 +243,18 @@ export default class Remind extends SlashCommand {
 
     await ctx.sendModal(
       {
-        title: 'Reschedule this reminder?',
+        title: "Reschedule this reminder?",
         components: [
           {
             type: ComponentType.ACTION_ROW,
             components: [
               {
                 type: ComponentType.TEXT_INPUT,
-                custom_id: 'duration',
-                label: 'Duration',
+                custom_id: "duration",
+                label: "Duration",
                 style: TextInputStyle.SHORT,
                 max_length: 20,
-                placeholder: '5m',
+                placeholder: "5m",
                 required: true,
               },
             ],
@@ -245,23 +263,27 @@ export default class Remind extends SlashCommand {
       },
       async (ctx) => {
         const delay = parse(
-          Array.isArray(ctx.values.duration) ? ctx.values.duration[0] : ctx.values.duration,
+          Array.isArray(ctx.values.duration)
+            ? ctx.values.duration[0]
+            : ctx.values.duration,
         );
-        if (typeof delay !== 'number') {
+        if (typeof delay !== "number") {
           await ctx.sendFollowUp(
-            'The time you input is invalid! The format must be something along the lines of `1h30m25s`.',
+            "The time you input is invalid! The format must be something along the lines of `1h30m25s`.",
           );
           return;
         }
 
         const time = new Date(Date.now() + delay);
-        await reminderQueue.add('reminder', { id: reminder.id }, { delay });
+        await reminderQueue.add("reminder", { id: reminder.id }, { delay });
 
         await ctx.editParent({
           components: [],
-          content: `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${Math.trunc(
-            time.getTime() / 1000,
-          )}:R> to \`${reminder.content}\`~`,
+          content: `Alrightie ${ctx.user.mention}, I'll re-remind you in <t:${
+            Math.trunc(
+              time.getTime() / 1000,
+            )
+          }:R> to \`${reminder.content}\`~`,
         });
       },
     );

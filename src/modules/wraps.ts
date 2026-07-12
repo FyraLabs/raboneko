@@ -1,9 +1,11 @@
-import client from '../client.ts';
-import { Events } from 'discord.js';
-import { client as prismaClient } from '../prisma.ts';
+import client from "../client.ts";
+import { Events } from "discord.js";
+import { client as prismaClient } from "../prisma.ts";
 
 client.on(Events.MessageCreate, async (message) => {
-  if (message.channelId !== process.env.WRAPS_CHANNEL_ID || message.author.bot) return;
+  if (
+    message.channelId !== process.env.WRAPS_CHANNEL_ID || message.author.bot
+  ) return;
 
   const content = message.content.trim();
 
@@ -24,7 +26,10 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 client.on(Events.MessageUpdate, async (_oldMessage, newMessage) => {
-  if (newMessage.channelId !== process.env.WRAPS_CHANNEL_ID || newMessage.author.bot) return;
+  if (
+    newMessage.channelId !== process.env.WRAPS_CHANNEL_ID ||
+    newMessage.author.bot
+  ) return;
 
   await prismaClient.wrap.update({
     where: {
@@ -37,7 +42,9 @@ client.on(Events.MessageUpdate, async (_oldMessage, newMessage) => {
 });
 
 client.on(Events.MessageDelete, async (message) => {
-  if (message.channelId !== process.env.WRAPS_CHANNEL_ID || message.author?.bot) return;
+  if (
+    message.channelId !== process.env.WRAPS_CHANNEL_ID || message.author?.bot
+  ) return;
 
   await prismaClient.wrap.delete({
     where: {

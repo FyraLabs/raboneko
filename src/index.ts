@@ -1,16 +1,18 @@
 import "@std/dotenv/load";
 
-import path from 'path';
-import './sentry.ts';
-import { GatewayServer } from 'slash-create';
-import { GatewayDispatchEvents } from 'discord.js';
-import CatLoggr from 'cat-loggr';
-import client from './client.ts';
-import './scheduler.ts';
-import RaboSlashCreator from './creator.ts';
-import * as http from 'http';
+import path from "path";
+import "./sentry.ts";
+import { GatewayServer } from "slash-create";
+import { GatewayDispatchEvents } from "discord.js";
+import CatLoggr from "cat-loggr";
+import client from "./client.ts";
+import "./scheduler.ts";
+import RaboSlashCreator from "./creator.ts";
+import * as http from "http";
 
-const logger = new CatLoggr().setLevel(process.env.COMMANDS_DEBUG === 'true' ? 'debug' : 'info');
+const logger = new CatLoggr().setLevel(
+  process.env.COMMANDS_DEBUG === "true" ? "debug" : "info",
+);
 const creator = new RaboSlashCreator({
   applicationID: process.env.DISCORD_APP_ID!,
   publicKey: process.env.DISCORD_PUBLIC_KEY!,
@@ -18,20 +20,21 @@ const creator = new RaboSlashCreator({
   client,
 });
 
-creator.on('debug', (message) => logger.log(message));
-creator.on('warn', (message) => logger.warn(message));
-creator.on('error', (error) => logger.error(error));
-creator.on('synced', () => logger.info('Commands synced!'));
-creator.on('commandRun', (command, _, ctx) =>
+creator.on("debug", (message) => logger.log(message));
+creator.on("warn", (message) => logger.warn(message));
+creator.on("error", (error) => logger.error(error));
+creator.on("synced", () => logger.info("Commands synced!"));
+creator.on("commandRun", (command, _, ctx) =>
   logger.info(
     `${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`,
-  ),
+  ));
+creator.on(
+  "commandRegister",
+  (command) => logger.info(`Registered command ${command.commandName}`),
 );
-creator.on('commandRegister', (command) =>
-  logger.info(`Registered command ${command.commandName}`),
-);
-creator.on('commandError', (command, error) =>
-  logger.error(`Command ${command.commandName}:`, error),
+creator.on(
+  "commandError",
+  (command, error) => logger.error(`Command ${command.commandName}:`, error),
 );
 
 http
@@ -45,21 +48,21 @@ http
   await creator
     .withServer(
       new GatewayServer((handler) =>
-        client.ws.on(GatewayDispatchEvents.InteractionCreate, handler),
+        client.ws.on(GatewayDispatchEvents.InteractionCreate, handler)
       ),
     )
-    .registerCommandsIn(path.join(import.meta.dirname, 'commands'));
+    .registerCommandsIn(path.join(import.meta.dirname, "commands"));
 
   await creator.syncCommands();
 
   await client.login(process.env.DISCORD_BOT_TOKEN);
 })();
 
-import './modules/ping.ts';
-import './modules/guildMemberAdd.ts';
-import './modules/funAI.ts';
-import './modules/support.ts';
-import './modules/logger.ts';
+import "./modules/ping.ts";
+import "./modules/guildMemberAdd.ts";
+import "./modules/funAI.ts";
+import "./modules/support.ts";
+import "./modules/logger.ts";
 // import './modules/tex'; disabled for now
-import './modules/wraps.ts';
+import "./modules/wraps.ts";
 // import './modules/voiceTranscribe/index.ts'; disabled in Deno (FIXME)

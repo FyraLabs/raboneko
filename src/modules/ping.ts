@@ -1,22 +1,22 @@
-import client from '../client.ts';
-import { Events } from 'discord.js';
+import client from "../client.ts";
+import { Events } from "discord.js";
 
 const mentionedResponses = [
-  'nyes?',
-  'hewwo~',
-  'oww, that was loud >_<',
-  'your friendly robot neko, at your service :3',
-  'nya?!',
-  'huh?',
-  '*runs with toast in mouth*',
-  'how are nyu?',
-  'hai!',
-  'gmeow~',
-  '*runs away with krane*',
-  'beep!',
-  'boop!',
-  'mreow~ :3',
-  'hiiiiii',
+  "nyes?",
+  "hewwo~",
+  "oww, that was loud >_<",
+  "your friendly robot neko, at your service :3",
+  "nya?!",
+  "huh?",
+  "*runs with toast in mouth*",
+  "how are nyu?",
+  "hai!",
+  "gmeow~",
+  "*runs away with krane*",
+  "beep!",
+  "boop!",
+  "mreow~ :3",
+  "hiiiiii",
 ];
 
 client.on(Events.MessageCreate, async (message) => {
@@ -26,5 +26,7 @@ client.on(Events.MessageCreate, async (message) => {
   if (!me || !message.mentions.has(me)) {
     return;
   }
-  await message.reply(mentionedResponses[Math.floor(Math.random() * mentionedResponses.length)]);
+  await message.reply(
+    mentionedResponses[Math.floor(Math.random() * mentionedResponses.length)],
+  );
 });
