@@ -1,6 +1,7 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@std/dotenv@*": "0.225.7",
     "jsr:@std/dotenv@~0.225.7": "0.225.7",
     "npm:@moonshine-ai/moonshine-js@~0.1.29": "0.1.29",
     "npm:@prisma/adapter-pg@^7.8.0": "7.8.0",

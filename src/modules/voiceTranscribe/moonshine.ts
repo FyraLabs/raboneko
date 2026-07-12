@@ -32,7 +32,7 @@ async function readArrayBuffer(filePath: string): Promise<ArrayBuffer> {
   return arrayBuffer;
 }
 
-async function ensureVadLoaded(): Promise<NonRealTimeVAD> {
+function ensureVadLoaded(): Promise<NonRealTimeVAD> {
   vadPromise ??= NonRealTimeVAD.new({
     modelURL: vadModelPath,
     modelFetcher: readArrayBuffer,

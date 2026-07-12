@@ -1,10 +1,10 @@
-import "jsr:@std/dotenv/load";
+import "@std/dotenv/load";
 
 import path from 'path';
 import './sentry.ts';
 import { GatewayServer } from 'slash-create';
 import { GatewayDispatchEvents } from 'discord.js';
-import CatLoggr from 'npm:cat-loggr';
+import CatLoggr from 'cat-loggr';
 import client from './client.ts';
 import './scheduler.ts';
 import RaboSlashCreator from './creator.ts';
