@@ -1,4 +1,4 @@
-declare module '@moonshine-ai/moonshine-js' {
+declare module "@moonshine-ai/moonshine-js" {
   export const Settings: {
     BASE_ASSET_PATH: {
       MOONSHINE: string;

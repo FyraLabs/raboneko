@@ -1,8 +1,8 @@
-import { Client, IntentsBitField } from 'discord.js';
+import { Client, IntentsBitField } from "discord.js";
 
 const { Flags } = IntentsBitField;
 export default new Client({
-  allowedMentions: { repliedUser: true, parse: ['users'] },
+  allowedMentions: { repliedUser: true, parse: ["users"] },
   intents: [
     Flags.Guilds,
     Flags.GuildMembers,

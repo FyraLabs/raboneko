@@ -1,6 +1,6 @@
-import { SlashCommand, SlashCreator } from 'slash-create';
-import path from 'path';
-import { lstat, readdir } from 'fs/promises';
+import { SlashCommand, SlashCreator } from "slash-create";
+import path from "path";
+import { lstat, readdir } from "fs/promises";
 
 // This is vendored from slash-create's command loading implementation, which is
 // not exported. We use this for our own command loader.
@@ -29,27 +29,32 @@ export default class RaboSlashCreator extends SlashCreator {
     commandPath: string,
     customExtensions: string[] = [],
   ): Promise<Array<SlashCommand<this>>> {
-    const extensions = ['.ts', '.js', '.cjs', ...customExtensions];
+    const extensions = [".ts", ".js", ".cjs", ...customExtensions];
     const paths = (await getFiles(commandPath)).filter((file) =>
-      extensions.includes(path.extname(file)),
+      extensions.includes(path.extname(file))
     );
-    const commands: any[] = [];
+    const commands: SlashCommand[] = [];
     for (const filePath of paths) {
       try {
-        // commands.push(require(filePath));
-        const mod = require(filePath);
+        const mod = await import(filePath);
         if (mod.prototype instanceof SlashCommand) {
           commands.push(mod);
         } else {
-          for (const cmd of Object.values(mod).filter(
-            (v) =>
-              typeof v === 'function' && 'prototype' in v && v.prototype instanceof SlashCommand,
-          )) {
+          for (
+            const cmd of Object.values(mod).filter(
+              (v) =>
+                typeof v === "function" && "prototype" in v &&
+                v.prototype instanceof SlashCommand,
+            )
+          ) {
             commands.push(cmd);
           }
         }
       } catch (e) {
-        this.emit('error', new Error(`Failed to load command ${filePath}: ${e}`));
+        this.emit(
+          "error",
+          new Error(`Failed to load command ${filePath}: ${e}`),
+        );
       }
     }
     return this.registerCommands(commands, true);
