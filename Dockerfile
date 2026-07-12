@@ -1,44 +1,30 @@
-# use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 AS base
-WORKDIR /usr/src/app
+FROM denoland/deno:latest AS builder
+ENV DENO_DIR=/deno-dir
+WORKDIR /app
 
-# install dependencies into temp directory
-# this will cache them and speed up future builds
-FROM base AS install
-RUN mkdir -p /temp/dev
-COPY package.json bun.lock /temp/dev/
-RUN cd /temp/dev && bun install --frozen-lockfile
+# Copy files and install dependencies
+COPY deno.json deno.lock package.json* ./
+RUN deno ci --prod
 
 # Move source files
 COPY prisma ./prisma
 COPY src ./src
-COPY tsconfig.json   .
+COPY tsconfig.json .
 
 # Generate Prisma files
-RUN bunx prisma generate
-COPY prisma.config.ts ./prisma.config.ts
+RUN deno task generate
 
-# install with --production (exclude devDependencies)
-RUN mkdir -p /temp/prod
-COPY package.json bun.lock /temp/prod/
-RUN cd /temp/prod && bun install --frozen-lockfile --production
-
-# copy node_modules from temp directory
-# then copy all (non-ignored) project files into the image
-FROM base AS prerelease
-COPY --from=install /temp/dev/node_modules node_modules
+# Copy remaining files
 COPY . .
 
-# copy production dependencies and source code into final image
-FROM base AS release
-COPY --from=install --chown=bun:bun /usr/src/app/prisma.config.ts prisma.config.ts
-COPY --from=install --chown=bun:bun /usr/src/app/prisma prisma
-COPY --from=install --chown=bun:bun /temp/prod/node_modules node_modules
-COPY --from=install --chown=bun:bun /usr/src/app/src src
-COPY --from=prerelease --chown=bun:bun /usr/src/app/package.json .
+# Production stage
+FROM denoland/deno:latest
+ENV DENO_DIR=/deno-dir
+WORKDIR /app
+COPY --from=builder /app .
+COPY --from=builder /deno-dir /deno-dir
 
-# run the app
-USER bun
+# Run Raboneko
+USER deno
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "src/index.ts" ]
+ENTRYPOINT [ "deno", "run", "--allow-net", "src/index.ts" ]

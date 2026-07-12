@@ -5,6 +5,7 @@ generator client {
   provider = "prisma-client"
   // Generate my Client and Project types
   output   = "../src/generated/prisma"
+  runtime  = "deno"
 }
 
 datasource db {

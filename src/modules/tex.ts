@@ -1,4 +1,4 @@
-import { $ } from 'bun';
+import { $ } from 'deno';
 import client from '../client';
 import { Events } from 'discord.js';
 
