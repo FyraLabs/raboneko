@@ -3,15 +3,25 @@
 // funnily enough, this is a real password generator,
 // we just called it /cute because bottoms tend to be very
 // good human password generators IRL
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import Crypto from 'crypto';
-function pwgen(length = 32, special_chars = true, numerals = true, capitals = true): string {
-  let chars = 'abcdefghijklmnopqrstuvwxyz';
-  if (capitals) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  if (numerals) chars += '0123456789';
-  if (special_chars) chars += '!@#$%^&*()-_=+[]{}|;:,.<>?';
+import {
+  CommandContext,
+  CommandOptionType,
+  SlashCommand,
+  SlashCreator,
+} from "slash-create";
+import Crypto from "crypto";
+function pwgen(
+  length = 32,
+  special_chars = true,
+  numerals = true,
+  capitals = true,
+): string {
+  let chars = "abcdefghijklmnopqrstuvwxyz";
+  if (capitals) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (numerals) chars += "0123456789";
+  if (special_chars) chars += "!@#$%^&*()-_=+[]{}|;:,.<>?";
 
-  let password = '';
+  let password = "";
 
   for (let i = 0; i < length; i += 1) {
     const index = Crypto.randomInt(0, chars.length);
@@ -24,34 +34,34 @@ function pwgen(length = 32, special_chars = true, numerals = true, capitals = tr
 export class Pwgen extends SlashCommand {
   public constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'cute',
-      description: 'Generates a password',
+      name: "cute",
+      description: "Generates a password",
       deferEphemeral: true,
       options: [
         {
           type: CommandOptionType.INTEGER,
-          name: 'length',
-          description: 'Length of the password',
+          name: "length",
+          description: "Length of the password",
           required: false,
           min_value: 4,
           max_value: 128,
         },
         {
           type: CommandOptionType.BOOLEAN,
-          name: 'special_chars',
-          description: 'Include special characters',
+          name: "special_chars",
+          description: "Include special characters",
           required: false,
         },
         {
           type: CommandOptionType.BOOLEAN,
-          name: 'numerals',
-          description: 'Include numerals',
+          name: "numerals",
+          description: "Include numerals",
           required: false,
         },
         {
           type: CommandOptionType.BOOLEAN,
-          name: 'capitals',
-          description: 'Include capital letters',
+          name: "capitals",
+          description: "Include capital letters",
           required: false,
         },
       ],

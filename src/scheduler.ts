@@ -1,20 +1,20 @@
-import { Queue, Worker } from 'bullmq';
-import { generateFinalReport } from './commands/progress';
-import { getRedisConnection } from './util';
-import { handleReminderEvent } from './commands/remind';
+import { Queue, Worker } from "bullmq";
+import { generateFinalReport } from "./commands/progress.ts";
+import { getRedisConnection } from "./util.ts";
+import { handleReminderEvent } from "./commands/remind.ts";
 
-const reportQueue = new Queue('report', {
+const reportQueue = new Queue("report", {
   connection: getRedisConnection(),
 });
 
-export const reminderQueue = new Queue('reminder', {
+export const reminderQueue = new Queue("reminder", {
   connection: getRedisConnection(),
 });
 
 const _report = new Worker(
-  'report',
+  "report",
   async (job) => {
-    if (job.name === 'generateFinalReport') {
+    if (job.name === "generateFinalReport") {
       await generateFinalReport();
     }
   },
@@ -24,9 +24,9 @@ const _report = new Worker(
 );
 
 const _reminder = new Worker(
-  'reminder',
-  async (job) => {
-    if (job.name === 'reminder') {
+  "reminder",
+  (job) => {
+    if (job.name === "reminder") {
       handleReminderEvent(job.data.id);
     }
   },
@@ -37,11 +37,11 @@ const _reminder = new Worker(
 
 (async () => {
   await reportQueue.add(
-    'generateFinalReport',
+    "generateFinalReport",
     {},
     {
       repeat: {
-        pattern: '10 0 * * 1',
+        pattern: "10 0 * * 1",
         utc: true,
       },
     },
