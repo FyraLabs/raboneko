@@ -1,24 +1,18 @@
 import { EmbedBuilder, Events, MessageFlags } from "discord.js";
 import client from "../../client.ts";
-import { fetchAttachmentToPcm16k } from "./discordAudio.ts";
-import { preloadTranscriber, transcribePcm16k } from "./moonshine.ts";
+import { fetchAttachment, MAX_AUDIO_BYTES } from "./discordAudio.ts";
+import { isTranscriberConfigured, transcribeAudio } from "./azure.ts";
 
-let queue: Promise<void> = Promise.resolve();
-
-void preloadTranscriber().catch((err) => {
-  console.warn("[voiceTranscribe] Preload failed.", err);
-});
-
-function runSerialized<T>(fn: () => Promise<T>): Promise<T> {
-  const next = queue.then(fn, fn);
-  queue = next.then(
-    () => undefined,
-    () => undefined,
+if (!isTranscriberConfigured()) {
+  console.warn(
+    "[voiceTranscribe] AZURE_RESOURCE_NAME/AZURE_API_KEY are unset, voice transcription is disabled.",
   );
-  return next;
 }
 
-client.on(Events.MessageCreate, (message) => {
+client.on(Events.MessageCreate, async (message) => {
+  if (!isTranscriberConfigured()) {
+    return;
+  }
   if (message.author.bot) {
     return;
   }
@@ -29,33 +23,28 @@ client.on(Events.MessageCreate, (message) => {
   if (!attachment) {
     return;
   }
+  if (attachment.size > MAX_AUDIO_BYTES) {
+    return;
+  }
 
-  void runSerialized(async () => {
-    try {
-      const pcm = await fetchAttachmentToPcm16k(attachment.url);
-      const raw = (await transcribePcm16k(pcm)).trim();
-      const text = raw.length > 0 ? raw : "_(empty transcript)_";
-      const description = text.length > 4096
-        ? `${text.slice(0, 4093)}...`
-        : text;
-      const embed = new EmbedBuilder().setDescription(description).setFooter({
-        text:
-          "This is an automated transcription. It may not 100% reflect the original intent.",
-      }).data;
-      await message.reply({
-        embeds: [embed],
-        allowedMentions: { repliedUser: false },
-      });
-    } catch (err) {
-      console.error("[voiceTranscribe]", err);
-      try {
-        await message.reply({
-          content: "Could not transcribe this voice message.",
-          allowedMentions: { repliedUser: false },
-        });
-      } catch {
-        /* ignore */
-      }
-    }
-  });
+  try {
+    const audio = await fetchAttachment(attachment.url);
+    const raw = (await transcribeAudio(audio)).trim();
+    const text = raw.length > 0 ? raw : "_(empty transcript)_";
+    const description = text.length > 4096 ? `${text.slice(0, 4093)}...` : text;
+    const embed = new EmbedBuilder().setDescription(description).setFooter({
+      text:
+        "This is an automated transcription. It may not 100% reflect the original intent.",
+    }).data;
+    await message.reply({
+      embeds: [embed],
+      allowedMentions: { repliedUser: false },
+    });
+  } catch (err) {
+    console.error("[voiceTranscribe]", err);
+    await message.reply({
+      content: "Could not transcribe this voice message.",
+      allowedMentions: { repliedUser: false },
+    });
+  }
 });

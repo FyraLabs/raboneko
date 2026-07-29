@@ -65,4 +65,4 @@ import "./modules/support.ts";
 import "./modules/logger.ts";
 // import './modules/tex'; disabled for now
 import "./modules/wraps.ts";
-// import './modules/voiceTranscribe/index.ts'; disabled in Deno (FIXME)
+import "./modules/voiceTranscribe/index.ts";
