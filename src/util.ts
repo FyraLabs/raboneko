@@ -48,8 +48,8 @@ export const containsWord = (msg: Message, word: string): boolean => {
 export const userURL = (id: string) => `https://discord.com/users/${id}`;
 
 export const enum TemperatureUnit {
-  Celsius = 'C',
-  Fahrenheit = 'F',
+  Celsius = 'ºC',
+  Fahrenheit = 'ºF',
   Kelvin = 'K',
 }
 
