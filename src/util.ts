@@ -53,6 +53,18 @@ export const enum TemperatureUnit {
   Kelvin = 'K',
 }
 
+export const formatTemperatureUnit = (unit: TemperatureUnit, long = false): string => {
+  if (!long) return unit;
+  switch (unit) {
+    case TemperatureUnit.Celsius:
+      return 'Celsius';
+    case TemperatureUnit.Fahrenheit:
+      return 'Fahrenheit';
+    case TemperatureUnit.Kelvin:
+      return 'Kelvin';
+  }
+};
+
 export const convertFromCelsius = (celsius: number, to: TemperatureUnit): number => {
   switch (to) {
     case TemperatureUnit.Celsius:

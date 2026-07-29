@@ -1,6 +1,6 @@
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 // DENOFICATION: post-denofication, changes this to `../util.ts` because deno requires the extension
-import { convertFromCelsius, convertToCelsius, TemperatureUnit } from '../util';
+import { convertFromCelsius, convertToCelsius, formatTemperatureUnit, TemperatureUnit } from '../util';
 
 const unitChoices = [
   { name: 'Celsius', value: TemperatureUnit.Celsius },
@@ -55,7 +55,9 @@ export class Temperature extends SlashCommand {
     }
 
     if (to === from) {
-      await ctx.sendFollowUp(`Nyu~ it's already in ${to}! Did you think I wouldn't notice? :3`);
+      await ctx.sendFollowUp(
+        `Nyu~ it's already in ${formatTemperatureUnit(to, true)}! Did you think I wouldn't notice? :3`,
+      );
       return;
     }
 
