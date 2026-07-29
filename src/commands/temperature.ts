@@ -72,6 +72,6 @@ export class Temperature extends SlashCommand {
     // Avoid floating point artifacts like 32.00000000000001
     const prettyResult = Number.isInteger(result) ? result : parseFloat(result.toFixed(2));
 
-    await ctx.send(`${value}${from} is ${prettyResult}°${to}`);
+    await ctx.send(`${value}${from} is ${prettyResult}${to}`);
   }
 }
