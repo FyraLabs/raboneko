@@ -25,7 +25,7 @@ export default class RaboSlashCreator extends SlashCreator {
   // are just simple text responses. So, override the command loading
   // implementation to check if there is either a default export or multiple
   // exports, and load them based on that.
-  public async registerCommandsIn(
+  public override async registerCommandsIn(
     commandPath: string,
     customExtensions: string[] = [],
   ): Promise<Array<SlashCommand<this>>> {
@@ -33,7 +33,7 @@ export default class RaboSlashCreator extends SlashCreator {
     const paths = (await getFiles(commandPath)).filter((file) =>
       extensions.includes(path.extname(file))
     );
-    const commands: SlashCommand[] = [];
+    const commands: unknown[] = [];
     for (const filePath of paths) {
       try {
         const mod = await import(filePath);

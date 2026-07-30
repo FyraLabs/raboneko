@@ -4,6 +4,7 @@ import path from "path";
 import "./sentry.ts";
 import { GatewayServer } from "slash-create";
 import { GatewayDispatchEvents } from "discord.js";
+// @ts-types="./cat-loggr.d.ts"
 import CatLoggr from "cat-loggr";
 import client from "./client.ts";
 import "./scheduler.ts";
@@ -51,7 +52,7 @@ http
         client.ws.on(GatewayDispatchEvents.InteractionCreate, handler)
       ),
     )
-    .registerCommandsIn(path.join(import.meta.dirname, "commands"));
+    .registerCommandsIn(path.join(import.meta.dirname!, "commands"));
 
   await creator.syncCommands();
 
@@ -63,6 +64,5 @@ import "./modules/guildMemberAdd.ts";
 import "./modules/funAI.ts";
 import "./modules/support.ts";
 import "./modules/logger.ts";
-// import './modules/tex'; disabled for now
 import "./modules/wraps.ts";
 import "./modules/voiceTranscribe/index.ts";

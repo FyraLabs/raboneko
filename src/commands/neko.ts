@@ -23,7 +23,7 @@ export class Ping extends SlashCommand {
     });
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     await ctx.sendFollowUp(
       `Pong! ^._.^, my latency to Discord is \`${client.ws.ping}ms\`!`,
     );
@@ -46,7 +46,7 @@ export class Headpat extends SlashCommand {
     });
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     if (!ctx.options.user) {
       await ctx.sendFollowUp(
         headpatResponses[Math.floor(Math.random() * headpatResponses.length)],
@@ -83,7 +83,7 @@ export class Hr extends SlashCommand {
     });
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     await ctx.sendFollowUp(
       "Thank nyu for reporting this issue! After extensive investigation, we've detewminyed that you should go seek thewapy. nya~",
     );

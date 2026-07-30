@@ -67,7 +67,7 @@ export class Pwgen extends SlashCommand {
       ],
     });
   }
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     const length = ctx.options.length ?? 32;
     const special_chars = ctx.options.special_chars ?? true;
     const numerals = ctx.options.numerals ?? true;

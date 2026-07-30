@@ -3,8 +3,8 @@ import { transcribe } from "ai";
 
 const azure = createAzure({
   useDeploymentBasedUrls: true,
-  apiVersion: '2025-04-01-preview',
-})
+  apiVersion: "2025-04-01-preview",
+});
 
 // Azure deployment name, which does not have to match the underlying model id.
 const DEPLOYMENT = process.env.AZURE_TRANSCRIPTION_DEPLOYMENT ??

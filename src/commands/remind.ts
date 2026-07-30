@@ -112,7 +112,7 @@ export default class Remind extends SlashCommand {
     creator.registerGlobalComponent("snooze", this.snoozeHandler);
   }
 
-  public async autocomplete(ctx: AutocompleteContext): Promise<void> {
+  public override async autocomplete(ctx: AutocompleteContext): Promise<void> {
     switch (ctx.subcommands[0]) {
       case "delete": {
         if (ctx.focused !== "reminder") return;
@@ -141,7 +141,7 @@ export default class Remind extends SlashCommand {
     }
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     // Good grief, what a terrible way to do this.
     switch (ctx.subcommands[0]) {
       case "create": {
@@ -262,10 +262,13 @@ export default class Remind extends SlashCommand {
         ],
       },
       async (ctx) => {
+        const duration = ctx.values.duration;
         const delay = parse(
-          Array.isArray(ctx.values.duration)
-            ? ctx.values.duration[0]
-            : ctx.values.duration,
+          Array.isArray(duration)
+            ? duration[0]
+            : typeof duration === "string"
+            ? duration
+            : undefined,
         );
         if (typeof delay !== "number") {
           await ctx.sendFollowUp(

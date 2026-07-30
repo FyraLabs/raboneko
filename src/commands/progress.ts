@@ -398,7 +398,7 @@ export default class Progress extends SlashCommand {
     });
   }
 
-  public async autocomplete(ctx: AutocompleteContext): Promise<void> {
+  public override async autocomplete(ctx: AutocompleteContext): Promise<void> {
     switch (ctx.subcommands[0]) {
       case "delete": {
         if (ctx.focused !== "log") return;
@@ -430,7 +430,7 @@ export default class Progress extends SlashCommand {
     }
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     switch (ctx.subcommands[0]) {
       case "create":
         await this.create(ctx);

@@ -25,7 +25,7 @@ export class TimeoutSelf extends SlashCommand {
     });
   }
 
-  public async run(ctx: CommandContext): Promise<void> {
+  public override async run(ctx: CommandContext): Promise<void> {
     const delay = parse(ctx.options.duration);
     if (typeof delay !== "number") {
       await ctx.sendFollowUp(

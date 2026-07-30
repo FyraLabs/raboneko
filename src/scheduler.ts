@@ -25,9 +25,9 @@ const _report = new Worker(
 
 const _reminder = new Worker(
   "reminder",
-  (job) => {
+  async (job) => {
     if (job.name === "reminder") {
-      handleReminderEvent(job.data.id);
+      await handleReminderEvent(job.data.id);
     }
   },
   {
