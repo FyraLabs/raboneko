@@ -5,7 +5,7 @@
     "sync:dev": "slash-up sync -e development",
     "generate": "prisma generate",
     "start": "deno run -P --unsafe-proto src/index.ts",
-    "dev": "deno watch -P --unsafe-proto --watch --no-clear-screen src/index.ts",
+    "dev": "deno watch -P --unsafe-proto --watch --no-clear-screen src/index.ts"
   },
   "imports": {
     "@ai-sdk/azure": "npm:@ai-sdk/azure@^4.0.21",

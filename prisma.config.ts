@@ -1,3 +1,4 @@
+import "@std/dotenv/load";
 import { defineConfig, env } from "prisma/config";
 
 // ./prisma.config.ts
