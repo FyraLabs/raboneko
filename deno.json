@@ -34,7 +34,8 @@
       "read": true,
       "write": true,
       "ffi": true,
-      "sys": true
+      "sys": true,
+      "run": true
     }
   },
   "allowScripts": [
