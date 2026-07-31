@@ -26,4 +26,4 @@ COPY --from=builder /deno-dir /deno-dir
 # Run Raboneko
 USER deno
 EXPOSE 3000/tcp
-ENTRYPOINT [ "deno", "run", "--allow-net", "src/index.ts" ]
+ENTRYPOINT [ "deno", "task", "start" ]
