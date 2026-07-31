@@ -35,5 +35,9 @@
       "ffi": true,
       "sys": true
     }
-  }
+  },
+  "allowScripts": [
+    "npm:@prisma/engines@",
+    "npm:prisma"
+  ]
 }
