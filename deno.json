@@ -32,6 +32,7 @@
       "env": true,
       "net": true,
       "read": true,
+      "write": true,
       "ffi": true,
       "sys": true
     }
