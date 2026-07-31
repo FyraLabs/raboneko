@@ -27,4 +27,4 @@ RUN chown -R deno node_modules
 # Run Raboneko
 USER deno
 EXPOSE 3000/tcp
-ENTRYPOINT [ "deno", "run", "--allow-net", "src/index.ts" ]
+ENTRYPOINT [ "deno", "task", "start" ]
