@@ -22,6 +22,7 @@ ENV DENO_DIR=/deno-dir
 WORKDIR /app
 COPY --from=builder /app .
 COPY --from=builder /deno-dir /deno-dir
+RUN chown -R deno node_modules
 
 # Run Raboneko
 USER deno
