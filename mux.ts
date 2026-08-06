@@ -8,12 +8,17 @@ import {
   Conversion,
   EncodedAudioPacketSource,
   EncodedPacket,
-  FilePathTarget,
   Input,
+  MATROSKA,
+  MkvOutputFormat,
   Output,
   WavOutputFormat,
   WebMOutputFormat,
 } from "mediabunny";
+
+import "@std/dotenv/load";
+import { mistral, MistralTranscriptionModelOptions } from "@ai-sdk/mistral";
+import { transcribe } from "ai";
 
 import { decodeCborSequence } from "@std/cbor";
 import { YapEntry } from "./src/yap.ts";
@@ -35,6 +40,9 @@ const muxStream = async (
   const streamPackets = packets.filter((packet) => packet.ssrc === id);
   streamPackets.sort((a, b) => a.sequence - b.sequence);
   const startRtpTimestamp = streamPackets[0].rtpTimestamp;
+  // The muxed timeline is anchored to the first packet, so that packet's
+  // `received` is where this stream starts within the recording as a whole.
+  const startSecond = streamPackets[0].received / 1000;
 
   const packetSource = new EncodedAudioPacketSource("opus");
   output.addAudioTrack(packetSource);
@@ -87,6 +95,8 @@ const muxStream = async (
   packetSource.close();
 
   await output.finalize();
+
+  return startSecond;
 };
 
 function opusPacketDuration(packet: Uint8Array): number {
@@ -113,22 +123,55 @@ function opusPacketDuration(packet: Uint8Array): number {
   return frameSize * frameCount;
 }
 
+const transcribeStream = async (audio: Uint8Array, startSecond: number) => {
+  const { text, segments, language } = await transcribe({
+    model: mistral.transcription("voxtral-mini-latest"),
+    audio,
+    providerOptions: {
+      mistral: {
+        timestampGranularities: ["segment"],
+      } satisfies MistralTranscriptionModelOptions,
+    },
+  });
+
+  return {
+    text,
+    language,
+    // Segment timings come back relative to the stream, so shift them onto the
+    // recording's timeline.
+    segments: segments.map((segment) => ({
+      ...segment,
+      startSecond: segment.startSecond + startSecond,
+      endSecond: segment.endSecond + startSecond,
+    })),
+  };
+};
+
 for (const [i, stream] of streams.entries()) {
   const output = new Output({
-    format: new WebMOutputFormat(),
+    format: new MkvOutputFormat(),
     target: new BufferTarget(),
   });
 
-  await muxStream(stream.ssrc, output);
+  const startSecond = await muxStream(stream.ssrc, output);
 
   const input = new Input({
-    formats: ALL_FORMATS,
+    formats: [MATROSKA],
     source: new BufferSource(output.target.buffer!),
   });
   const wav = new Output({
     format: new WavOutputFormat(),
-    target: new FilePathTarget(`output-${i}.wav`),
+    target: new BufferTarget(),
   });
-  const conversion = await Conversion.init({ input, output: wav });
+  const conversion = await Conversion.init({
+    input,
+    output: wav,
+  });
   await conversion.execute();
+
+  const wavBuffer = new Uint8Array(wav.target.buffer!);
+  await Deno.writeFile(`output-${i}.wav`, wavBuffer);
+
+  const transcript = await transcribeStream(wavBuffer, startSecond);
+  console.log(stream.userId, startSecond, transcript.segments);
 }

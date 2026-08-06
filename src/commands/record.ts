@@ -12,20 +12,21 @@ import { CborSequenceEncoderStream } from "@std/cbor";
 import { Guild, VoiceState } from "discord.js";
 import { CommandOptionType } from "slash-create/web";
 import { YapEntry } from "../yap.ts";
+import { bucket, s3 } from "../s3.ts";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
 class Recorder {
-  guild: Guild;
-  channelId: string;
-  connection: VoiceConnection | null = null;
-  writer: WritableStreamDefaultWriter<YapEntry> | null = null;
-  startTimestamp: number | null = null;
+  private connection: VoiceConnection | null = null;
+  private writer: WritableStreamDefaultWriter<YapEntry> | null = null;
+  private startTimestamp: number | null = null;
 
-  userSet = new Set();
+  public fileName: string | null = null;
 
-  constructor(guild: Guild, channelId: string) {
-    this.guild = guild;
-    this.channelId = channelId;
-  }
+  private userSet = new Set();
+  private ssrcSet = new Set();
+
+  constructor(private guild: Guild, private channelId: string) {}
 
   private handleSpeakingStart = async (userId: string) => {
     if (this.userSet.has(userId)) {
@@ -34,7 +35,6 @@ class Recorder {
 
     this.userSet.add(userId);
 
-    const ssrcs = new Set();
     const stream = this.connection!.receiver.subscribe(userId, {
       end: {
         behavior: EndBehaviorType.Manual,
@@ -42,7 +42,7 @@ class Recorder {
     });
 
     stream.on("data", async (packet: AudioPacket) => {
-      if (!ssrcs.has(packet.ssrc)) {
+      if (!this.ssrcSet.has(packet.ssrc)) {
         await this.writer!.write(
           {
             type: "stream",
@@ -50,7 +50,7 @@ class Recorder {
             userId,
           },
         );
-        ssrcs.add(packet.ssrc);
+        this.ssrcSet.add(packet.ssrc);
       }
 
       await this.writer!.write(
@@ -132,7 +132,8 @@ class Recorder {
     });
 
     this.startTimestamp = performance.timeOrigin + performance.now();
-    const file = await Deno.create("recording.yap");
+    this.fileName = await Deno.makeTempFile();
+    const file = await Deno.create(this.fileName);
     const stream = new CborSequenceEncoderStream();
     this.writer = stream.writable.getWriter();
 
@@ -226,8 +227,25 @@ export default class RecordCommand extends SlashCommand {
           return;
         }
 
+        const fileName = this.recorders[ctx.guildID!].fileName!;
         await this.recorders[ctx.guildID!].stop();
         delete this.recorders[ctx.guildID!];
+
+        const file = await Deno.open(fileName, {
+          read: true,
+        });
+
+        const reader = file.readable.pipeThrough(new CompressionStream("gzip"));
+
+        await new Upload({
+          client: s3,
+          params: {
+            Bucket: bucket,
+            Key: `recordings/${crypto.randomUUID()}/recording.yap.gz`,
+            Body: reader,
+            ContentType: "application/cbor-seq",
+          },
+        }).done();
 
         await ctx.sendFollowUp("Goodbye~ (o_o)/");
         break;

@@ -1,20 +1,13 @@
 import "@std/dotenv/load";
-import { createAzure } from "@ai-sdk/azure";
+import { mistral, MistralTranscriptionModelOptions } from "@ai-sdk/mistral";
 import { transcribe } from "ai";
 
-const azure = createAzure({
-  useDeploymentBasedUrls: true,
-  apiVersion: "2025-04-01-preview",
-});
-
 const out = await transcribe({
-  model: azure.transcription("whisper"),
-  audio: await Deno.readFile("output-0.webm"),
+  model: mistral.transcription("voxtral-mini-latest"),
+  audio: await Deno.readFile("output-0.wav"),
   providerOptions: {
-    openai: {
+    mistral: {
       timestampGranularities: ["segment"],
-    },
+    } satisfies MistralTranscriptionModelOptions,
   },
 });
-
-console.log(out);

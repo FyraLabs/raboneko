@@ -9,6 +9,9 @@
   },
   "imports": {
     "@ai-sdk/azure": "npm:@ai-sdk/azure@^4.0.24",
+    "@ai-sdk/mistral": "npm:@ai-sdk/mistral@^4.0.22",
+    "@aws-sdk/client-s3": "npm:@aws-sdk/client-s3@^3.1103.0",
+    "@aws-sdk/lib-storage": "npm:@aws-sdk/lib-storage@^3.1103.0",
     "@discordjs/voice": "npm:@discordjs/voice@^1.0.0-dev.1785370677-4b3f1c166",
     "@mediabunny/server": "npm:@mediabunny/server@^1.52.3",
     "@prisma/adapter-pg": "npm:@prisma/adapter-pg@^7.9.1",
