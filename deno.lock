@@ -1,8 +1,10 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@std/async@^1.5.0": "1.5.0",
     "jsr:@std/bytes@^1.0.6": "1.0.6",
     "jsr:@std/cbor@~0.1.9": "0.1.9",
+    "jsr:@std/data-structures@^1.1.1": "1.1.2",
     "jsr:@std/dotenv@*": "0.225.7",
     "jsr:@std/dotenv@~0.225.7": "0.225.7",
     "jsr:@std/streams@^1.0.14": "1.1.1",
@@ -32,6 +34,12 @@
     "npm:zod@^4.1.8": "4.4.3"
   },
   "jsr": {
+    "@std/async@1.5.0": {
+      "integrity": "4c1f22d287a17ad7d8643b1952bc5a4d21e5d8b68dc8c20d8268eecc69096e82",
+      "dependencies": [
+        "jsr:@std/data-structures"
+      ]
+    },
     "@std/bytes@1.0.6": {
       "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
     },
@@ -41,6 +49,9 @@
         "jsr:@std/bytes",
         "jsr:@std/streams"
       ]
+    },
+    "@std/data-structures@1.1.2": {
+      "integrity": "2471377c9e0051f9ec34e57d0ebd0ad133a5a889677446ec6ba9938e4e102918"
     },
     "@std/dotenv@0.225.7": {
       "integrity": "11d8db03ca4ad5aba9eba809f2e8058b2a4f320b7b09fea4b360e162928329e3"
@@ -3063,6 +3074,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@std/async@^1.5.0",
       "jsr:@std/cbor@~0.1.9",
       "jsr:@std/dotenv@~0.225.7",
       "npm:@ai-sdk/azure@^4.0.24",
