@@ -3,7 +3,7 @@
   "specifiers": {
     "jsr:@std/dotenv@*": "0.225.7",
     "jsr:@std/dotenv@~0.225.7": "0.225.7",
-    "npm:@ai-sdk/azure@^4.0.24": "4.0.28_zod@4.4.3",
+    "npm:@ai-sdk/azure@^4.0.31": "4.0.37_zod@4.4.3",
     "npm:@prisma/adapter-pg@^7.9.1": "7.9.1",
     "npm:@prisma/client@^7.9.1": "7.9.1_prisma@7.9.1__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.6.2": "3.6.2",
@@ -27,21 +27,21 @@
     }
   },
   "npm": {
-    "@ai-sdk/azure@4.0.28_zod@4.4.3": {
-      "integrity": "sha512-xYfopmNjhg21Rq6VfqZzaZe+avXXNdanHKGgBhgw7O8tPe6IyA4UM8c9PZJgSNLnfNSCZvpRQZD+HUdlLHd0XA==",
+    "@ai-sdk/azure@4.0.37_zod@4.4.3": {
+      "integrity": "sha512-6SzWoPNO+RxCx6EXHpLUaaGsYRJh733isN2kZML76IqBO2Nhnyo9vJn3okFtcb8oCv3Aw8hP8i0sgFwFnqA1Qw==",
       "dependencies": [
         "@ai-sdk/deepseek",
         "@ai-sdk/openai",
-        "@ai-sdk/provider@4.0.4",
-        "@ai-sdk/provider-utils@5.0.18_zod@4.4.3",
+        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider-utils@5.0.25_zod@4.4.3",
         "zod"
       ]
     },
-    "@ai-sdk/deepseek@3.0.19_zod@4.4.3": {
-      "integrity": "sha512-APzL/IpDSLhVlKQXo1gKCvTDLeli98ITzKnMq/eUNVWZ/UzWKYYG/0mCsmJRwTC37YE0ZzpxwDBw3J8xQT3lxg==",
+    "@ai-sdk/deepseek@3.0.26_zod@4.4.3": {
+      "integrity": "sha512-NLX7ExuHko38aBKM4x2BxC11fjqFz4lAxAH3v6IRdpUjn3nUunlUXk2Ma4qeDp2bczXs9pHzdHUaMpvXUJZRRw==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.4",
-        "@ai-sdk/provider-utils@5.0.18_zod@4.4.3",
+        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider-utils@5.0.25_zod@4.4.3",
         "zod"
       ]
     },
@@ -54,11 +54,11 @@
         "zod"
       ]
     },
-    "@ai-sdk/openai@4.0.27_zod@4.4.3": {
-      "integrity": "sha512-6MsWnbNG0ZjZgzYimNNjnTAlOFXn+jdLMFB47dDVUsRNjxdUoTSduCQPZZeTKoUl0ZNwCjsJ31of49l/t1r9MA==",
+    "@ai-sdk/openai@4.0.36_zod@4.4.3": {
+      "integrity": "sha512-wHJNArBdjJPXb8GXcA+FslbRt+7qIE1KoHSAVi+CeBFidinVrTVBZKFMJz3mNZMj8YILBMl/VIvTD/oGFjX6/g==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.4",
-        "@ai-sdk/provider-utils@5.0.18_zod@4.4.3",
+        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider-utils@5.0.25_zod@4.4.3",
         "zod"
       ]
     },
@@ -72,10 +72,10 @@
         "zod"
       ]
     },
-    "@ai-sdk/provider-utils@5.0.18_zod@4.4.3": {
-      "integrity": "sha512-UBNCrkxS5llgN2/RXLBRkjCFTIuL6YB1Goq5c+yRecnznhtX4XPjTwLHz2hrsTltTVZ0rqVegtnwFXdPBkjDHA==",
+    "@ai-sdk/provider-utils@5.0.25_zod@4.4.3": {
+      "integrity": "sha512-xscPPHCSjCHWrdhai25sbHCJeKNLW/3D1uSpUZa4cEtTKXA8OnPQ3+Rfu1SmM5Ea/Mf8Dfn3cllw9zeMzo/zFA==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.4",
+        "@ai-sdk/provider@4.0.7",
         "@standard-schema/spec",
         "@workflow/serde",
         "eventsource-parser",
@@ -89,8 +89,8 @@
         "json-schema"
       ]
     },
-    "@ai-sdk/provider@4.0.4": {
-      "integrity": "sha512-tbHKNLirllUNF3ZlkCsXnwab2ZV1Sl4b1H/Cp9ruCce15IBmskE8Gwkk0yo9xDWY+jho2of7lVXtwSsyrq7cwQ==",
+    "@ai-sdk/provider@4.0.7": {
+      "integrity": "sha512-6or44XprPzKbr8zkmzosowSE0pxkvJcoojBL+mCZvPUt3kvXp3XSNqeVun9golb1acEfSo6yaEBRT18h2VU+1Q==",
       "dependencies": [
         "json-schema"
       ]
@@ -1070,7 +1070,8 @@
       "integrity": "sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==",
       "dependencies": [
         "luxon"
-      ]
+      ],
+      "deprecated": true
     },
     "cross-spawn@7.0.6": {
       "integrity": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
@@ -2050,7 +2051,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/dotenv@~0.225.7",
-      "npm:@ai-sdk/azure@^4.0.24",
+      "npm:@ai-sdk/azure@^4.0.31",
       "npm:@prisma/adapter-pg@^7.9.1",
       "npm:@prisma/client@^7.9.1",
       "npm:@sentry/cli@^3.6.2",
