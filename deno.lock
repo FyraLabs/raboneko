@@ -1,8 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@std/dotenv@*": "0.225.7",
-    "jsr:@std/dotenv@~0.225.7": "0.225.7",
+    "jsr:@std/dotenv@~0.225.8": "0.225.8",
     "npm:@ai-sdk/azure@^4.0.24": "4.0.28_zod@4.4.3",
     "npm:@prisma/adapter-pg@^7.9.1": "7.9.1",
     "npm:@prisma/client@^7.9.1": "7.9.1_prisma@7.9.1__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
@@ -22,8 +21,8 @@
     "npm:zod@^4.1.8": "4.4.3"
   },
   "jsr": {
-    "@std/dotenv@0.225.7": {
-      "integrity": "11d8db03ca4ad5aba9eba809f2e8058b2a4f320b7b09fea4b360e162928329e3"
+    "@std/dotenv@0.225.8": {
+      "integrity": "27b8c1a9d00cbf938345a5924487c04d9b27bdd7e7bd1983f54bcf76d0a0174a"
     }
   },
   "npm": {
@@ -1070,7 +1069,8 @@
       "integrity": "sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==",
       "dependencies": [
         "luxon"
-      ]
+      ],
+      "deprecated": true
     },
     "cross-spawn@7.0.6": {
       "integrity": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
@@ -2049,7 +2049,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@std/dotenv@~0.225.7",
+      "jsr:@std/dotenv@~0.225.8",
       "npm:@ai-sdk/azure@^4.0.24",
       "npm:@prisma/adapter-pg@^7.9.1",
       "npm:@prisma/client@^7.9.1",
