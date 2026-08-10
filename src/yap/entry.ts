@@ -1,5 +1,3 @@
-// Types and utiltiies to work with yap files, Raboneko's append-only format for recording Discord call audio and user events.
-
 /// A yap file is a log of user events and audio packets from the recording of a Discord call.
 /// It is a CBOR sequence of the following entries, always starting with a header entry.
 export type YapEntry = {
@@ -7,7 +5,7 @@ export type YapEntry = {
   type: "header";
   /// The version of the yap format we're on.
   version: 0;
-  /// The starting timestamp for the recording, useful for cataloguing and as the base for the other timestamps.
+  /// The starting timestamp for the recording in milliseconds, useful for cataloguing and as the base for the other timestamps.
   timestamp: number;
 } | {
   /// Basically this creates an association between the RTP ssrc and the Discord user ID.

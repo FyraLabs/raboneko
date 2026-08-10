@@ -3,6 +3,7 @@ import { registerMediabunnyServer } from "@mediabunny/server";
 registerMediabunnyServer();
 
 import {
+  AppendOnlyStreamTarget,
   AudioBufferSink,
   AudioBufferSource,
   BufferSource,
@@ -16,6 +17,9 @@ import {
   MkvOutputFormat,
   Output,
   Quality,
+  ReadableStreamSource,
+  StreamTarget,
+  WAVE,
   WavOutputFormat,
 } from "mediabunny";
 import { OfflineAudioContext } from "node-web-audio-api";
@@ -25,58 +29,31 @@ import { transcribe } from "ai";
 import { pooledMap } from "@std/async/pool";
 
 import { decodeCborSequence } from "@std/cbor";
-import { YapEntry } from "./src/yap.ts";
-
-function opusPacketDuration(packet: Uint8Array): number {
-  const toc = packet[0];
-  const config = toc >> 3;
-  const code = toc & 0b11;
-
-  // Frame size in seconds, per RFC 6716 §3.1
-  let frameSize: number;
-  if (config < 12) {
-    frameSize = [0.01, 0.02, 0.04, 0.06][config % 4]; // SILK
-  } else if (config < 16) {
-    frameSize = [0.01, 0.02][config % 2]; // Hybrid
-  } else {
-    frameSize = [0.0025, 0.005, 0.01, 0.02][config % 4]; // CELT
-  }
-
-  const frameCount = code === 0
-    ? 1
-    : code === 1 || code === 2
-    ? 2
-    : packet[1] & 0b111111; // code 3: arbitrary count in the next byte
-
-  return frameSize * frameCount;
-}
-
-///
+import { YapEntry } from "./src/yap/entry.ts";
+import { decodeYapEntries, Packet } from "./src/yap/decode.ts";
 
 const muxStream = async (
-  id: number,
+  packets: Packet[],
   output: Output,
 ) => {
   let meow = false;
 
-  const streamPackets = packets.filter((packet) => packet.ssrc === id);
-  streamPackets.sort((a, b) => a.sequence - b.sequence);
-  const startRtpTimestamp = streamPackets[0].rtpTimestamp;
+  const startRtpTimestamp = packets[0].rtpTimestamp;
   // The muxed timeline is anchored to the first packet, so that packet's
   // `received` is where this stream starts within the recording as a whole.
-  const startSecond = streamPackets[0].received / 1000;
+  const startSecond = packets[0].received / 1000;
 
   const packetSource = new EncodedAudioPacketSource("opus");
   output.addAudioTrack(packetSource);
 
   await output.start();
 
-  for (const { data, rtpTimestamp } of streamPackets) {
+  for (const { data, rtpTimestamp, duration } of packets) {
     const packet = new EncodedPacket(
       data,
       "key",
       (rtpTimestamp - startRtpTimestamp) / 48000,
-      opusPacketDuration(data),
+      duration / 48000,
     );
 
     await packetSource.add(
@@ -153,11 +130,7 @@ let unifiedTranscript: {
 }[] = [];
 
 const file = await Deno.readFile("recording.yap");
-const entries = decodeCborSequence(file) as YapEntry[];
-
-const streams = entries.filter((entry) => entry.type === "stream");
-const packets = entries.filter((entry) => entry.type === "packet");
-const userStates = entries.filter((entry) => entry.type === "userState");
+const yap = decodeYapEntries(decodeCborSequence(file) as YapEntry[]);
 
 // Steps:
 // - Get streams, process them one by one into .wav files.
@@ -165,37 +138,49 @@ const userStates = entries.filter((entry) => entry.type === "userState");
 // - Upload individual streams to get transcripts
 // - Mix transcripts together
 
-const tracks = await Array.fromAsync(pooledMap(1, streams, async (stream) => {
-  const output = new Output({
-    format: new MkvOutputFormat(),
-    target: new BufferTarget(),
-  });
+const tracks = await Array.fromAsync(
+  pooledMap(1, yap.streams, async (stream) => {
+    const { readable, writable } = new TransformStream();
 
-  const startSecond = await muxStream(stream.ssrc, output);
+    const output = new Output({
+      format: new MkvOutputFormat({
+        appendOnly: true,
+      }),
+      target: new AppendOnlyStreamTarget(writable),
+    });
 
-  const input = new Input({
-    formats: [MATROSKA],
-    source: new BufferSource(output.target.buffer!),
-  });
+    const input = new Input({
+      formats: [MATROSKA],
+      source: new ReadableStreamSource(readable),
+    });
 
-  const sink = new AudioBufferSink((await input.getAudioTracks())[0]);
-  // const wav = new Output({
-  //   format: new WavOutputFormat(),
-  //   target: new BufferTarget(),
-  // });
-  // const conversion = await Conversion.init({
-  //   input,
-  //   output: wav,
-  // });
-  // await conversion.execute();
+    muxStream(stream.packets, output);
+    const sink = new AudioBufferSink((await input.getAudioTracks())[0]);
 
-  return {
-    userId: stream.userId,
-    start: startSecond,
-    // buffer: wav.target.buffer!,
-    sink,
-  };
-}));
+    const wav = new Output({
+      format: new WavOutputFormat(),
+      target: new BufferTarget(),
+    });
+
+    const conversion = await Conversion.init({
+      input,
+      output: wav,
+    });
+    await conversion.execute();
+
+    // const input2 = new Input({
+    //   formats: [WAVE],
+    //   source: new ReadableStreamSource(),
+    // });
+
+    return {
+      userId: stream.userId,
+      start: stream.packets[0].duration,
+      // buffer: wav.target.buffer!,
+      sink,
+    };
+  }),
+);
 
 {
   const ctx = new OfflineAudioContext({
