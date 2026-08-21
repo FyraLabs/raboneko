@@ -18,7 +18,7 @@
     "npm:prisma@^7.9.1": "7.9.1_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:slash-create@7": "7.0.0_fastify@5.10.0",
     "npm:slash-up@^1.4.2": "1.4.2_fastify@5.10.0",
-    "npm:zod@^4.1.8": "4.4.3"
+    "npm:zod@^4.4.3": "4.4.3"
   },
   "jsr": {
     "@std/dotenv@0.225.8": {
@@ -2035,7 +2035,7 @@
       "npm:prisma@^7.9.1",
       "npm:slash-create@7",
       "npm:slash-up@^1.4.2",
-      "npm:zod@^4.1.8"
+      "npm:zod@^4.4.3"
     ]
   }
 }
