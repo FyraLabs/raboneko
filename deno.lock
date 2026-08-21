@@ -9,7 +9,7 @@
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.69.0": "10.69.0",
     "npm:ai@^7.0.37": "7.0.37_zod@4.4.3",
-    "npm:bullmq@^5.81.2": "5.81.3",
+    "npm:bullmq@^6.0.8": "6.0.9",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.21": "1.11.21",
     "npm:discord-api-types@~0.38.52": "0.38.52",
@@ -359,9 +359,6 @@
         "@fastify/forwarded",
         "ipaddr.js"
       ]
-    },
-    "@ioredis/commands@1.10.0": {
-      "integrity": "sha512-UmeW7z4LfctwoQ5wkhVzgq8tXkreED2xZGpX+Bg+zA+WJFZCT6c062AfCK/Dfk81xZnnwdhJCUMkitihRaoC2Q=="
     },
     "@jridgewell/sourcemap-codec@1.5.5": {
       "integrity": "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="
@@ -969,11 +966,10 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@5.81.3": {
-      "integrity": "sha512-Q7uEH2G92rVjX3Yl2qw3+6VEO15uxehC6DfeTHQBQTehddcRDSDuquD9zuvDjxiCffXsPUaBwrRlvlbVcgKs7g==",
+    "bullmq@6.0.9": {
+      "integrity": "sha512-l7kNlirauwdZrqsViO6owHUAhSSN/aCDkrUwZQ2futIItlbJGAxgU+6IOQtTl5Re39GZJEPU6jelGuY1gQD28w==",
       "dependencies": [
         "cron-parser",
-        "ioredis",
         "msgpackr",
         "node-abort-controller",
         "semver",
@@ -1036,9 +1032,6 @@
         "wrap-ansi"
       ]
     },
-    "cluster-key-slot@1.1.1": {
-      "integrity": "sha512-rwHwUfXL40Chm1r08yrhU3qpUvdVlgkKNeyeGPOxnW8/SyVDvgRaed/Uz54AqWNaTCAThlj6QAs3TZcKI0xDEw=="
-    },
     "color-convert@1.9.3": {
       "integrity": "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==",
       "dependencies": [
@@ -1066,8 +1059,8 @@
     "cookie@1.1.1": {
       "integrity": "sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ=="
     },
-    "cron-parser@4.9.0": {
-      "integrity": "sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==",
+    "cron-parser@5.7.0": {
+      "integrity": "sha512-iSpDHpwwW/GhIg4JVODYlWUEpMNSimaHvqOhHpOz1W+Y97z1lL1nf+dpcF17cNwFRpTtKN9devgi1fxflp3Phw==",
       "dependencies": [
         "luxon"
       ]
@@ -1425,18 +1418,6 @@
     "internmap@2.0.3": {
       "integrity": "sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg=="
     },
-    "ioredis@5.11.1": {
-      "integrity": "sha512-ehuGcf94bQXhfagULNXrJdfnWO38v070jxSx/qE87Kjzmu2fU7ro5EFAb+OPituLqgfyuQaym5DlrNydW2sJ9A==",
-      "dependencies": [
-        "@ioredis/commands",
-        "cluster-key-slot",
-        "debug",
-        "denque",
-        "redis-errors",
-        "redis-parser",
-        "standard-as-callback"
-      ]
-    },
     "ipaddr.js@2.4.0": {
       "integrity": "sha512-9VGk3HGanVE6JoZXHiCpnGy5X0jYDnN4EA4lntFPj+1vIWlFhIylq2CrrCOJH9EAhc5CYhq18F2Av2tgoAPsYQ=="
     },
@@ -1778,15 +1759,6 @@
     "real-require@1.0.0": {
       "integrity": "sha512-P4nbQYQfePJxRSmY+v/KINxVucm4NF3p3s7pJveMTtom52FR4YGltUQLB8idDXwDDWW+eYrWDFbuzUnjoWHF7g=="
     },
-    "redis-errors@1.2.0": {
-      "integrity": "sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w=="
-    },
-    "redis-parser@3.0.0": {
-      "integrity": "sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==",
-      "dependencies": [
-        "redis-errors"
-      ]
-    },
     "remeda@2.33.4": {
       "integrity": "sha512-ygHswjlc/opg2VrtiYvUOPLjxjtdKvjGz1/plDhkG66hjNjFr1xmfrs2ClNFo/E6TyUFiwYNh53bKV26oBoMGQ=="
     },
@@ -1926,9 +1898,6 @@
     "sqlstring@2.3.3": {
       "integrity": "sha512-qC9iz2FlN7DQl3+wjwn3802RTyjCx7sDvfQEXchwa6CWOx07/WVfh91gBmQ9fahw8snwGEWU3xGzOt4tFyHLxg=="
     },
-    "standard-as-callback@2.1.0": {
-      "integrity": "sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A=="
-    },
     "std-env@3.10.0": {
       "integrity": "sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg=="
     },
@@ -2056,7 +2025,7 @@
       "npm:@sentry/cli@^3.6.2",
       "npm:@sentry/deno@^10.69.0",
       "npm:ai@^7.0.37",
-      "npm:bullmq@^5.81.2",
+      "npm:bullmq@^6.0.8",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.21",
       "npm:discord-api-types@~0.38.52",
