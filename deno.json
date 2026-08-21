@@ -13,7 +13,7 @@
     "@prisma/client": "npm:@prisma/client@^7.9.1",
     "@sentry/cli": "npm:@sentry/cli@^3.6.2",
     "@sentry/deno": "npm:@sentry/deno@^10.69.0",
-    "@std/dotenv": "jsr:@std/dotenv@^0.225.7",
+    "@std/dotenv": "jsr:@std/dotenv@^0.225.8",
     "ai": "npm:ai@^7.0.37",
     "bullmq": "npm:bullmq@^6.0.8",
     "cat-loggr": "npm:cat-loggr@^1.2.2",
