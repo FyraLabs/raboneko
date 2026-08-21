@@ -8,7 +8,7 @@
     "dev": "deno watch -P --unsafe-proto --watch --no-clear-screen src/index.ts"
   },
   "imports": {
-    "@ai-sdk/azure": "npm:@ai-sdk/azure@^4.0.24",
+    "@ai-sdk/azure": "npm:@ai-sdk/azure@^4.0.43",
     "@prisma/adapter-pg": "npm:@prisma/adapter-pg@^7.9.1",
     "@prisma/client": "npm:@prisma/client@^7.9.1",
     "@sentry/cli": "npm:@sentry/cli@^3.6.2",
