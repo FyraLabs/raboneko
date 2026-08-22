@@ -7,7 +7,7 @@
     "npm:@prisma/client@^7.9.1": "7.9.1_prisma@7.9.1__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.69.0": "10.69.0",
-    "npm:ai@^7.0.37": "7.0.37_zod@4.4.3",
+    "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
     "npm:bullmq@^6.0.8": "6.0.9",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.21": "1.11.21",
@@ -31,7 +31,7 @@
       "dependencies": [
         "@ai-sdk/deepseek",
         "@ai-sdk/openai",
-        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider",
         "@ai-sdk/provider-utils@5.0.28_zod@4.4.3",
         "zod"
       ]
@@ -39,16 +39,16 @@
     "@ai-sdk/deepseek@3.0.29_zod@4.4.3": {
       "integrity": "sha512-MgcBrpQ+zfDUfzNBbMtylzCE7xBlqZtshtBtYFhQbMxpcMSPvkQsI3RBR3bNG1LWqWU4tsIe4Qzc/enriYdY2A==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider",
         "@ai-sdk/provider-utils@5.0.28_zod@4.4.3",
         "zod"
       ]
     },
-    "@ai-sdk/gateway@4.0.28_zod@4.4.3": {
-      "integrity": "sha512-ee9TsNO3mkgHDWmTmJ8Fvltr6PFh52zhrV2+FaKJY3F3iu7kWZi5tCRJCR1HVhhlpj6lHniUb28nLQdPHkA/1Q==",
+    "@ai-sdk/gateway@4.0.62_zod@4.4.3": {
+      "integrity": "sha512-zR3pustGWhw5eUZHG+fJZx/V/PBe+LxdDpc5hDFWxozG/3MB/+eY62jn+YiR+9uOH+Hx63e5zJoeKLfZfPktWQ==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.3",
-        "@ai-sdk/provider-utils@5.0.12_zod@4.4.3",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils@5.0.29_zod@4.4.3",
         "@vercel/oidc",
         "zod"
       ]
@@ -56,25 +56,15 @@
     "@ai-sdk/openai@4.0.45_zod@4.4.3": {
       "integrity": "sha512-F/zHXTfCaHO0Q5egf8HRdc645Mp/ofLE9NSjl5RwaXfqrqLfiLROE9xScgKf4iziElsjuQYbesPEcW37mmZy3w==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider",
         "@ai-sdk/provider-utils@5.0.28_zod@4.4.3",
-        "zod"
-      ]
-    },
-    "@ai-sdk/provider-utils@5.0.12_zod@4.4.3": {
-      "integrity": "sha512-bbhlOgHeYwrIGheLkM6fhS8hVger8uFPmcOLg+kxc9EFh7y30XYorWhthlYAgpadO3SJhFZrIcEknN7qEqEVvA==",
-      "dependencies": [
-        "@ai-sdk/provider@4.0.3",
-        "@standard-schema/spec",
-        "@workflow/serde",
-        "eventsource-parser",
         "zod"
       ]
     },
     "@ai-sdk/provider-utils@5.0.28_zod@4.4.3": {
       "integrity": "sha512-TnHUyd/rCYQqHg5RuiOaz/hUql6U+kbUaBW0Rp+0N5UhnAInA9CzzV0HXvuAAPwppDsK6fAx9Rd+tRawpJ/3pg==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.7",
+        "@ai-sdk/provider",
         "@standard-schema/spec",
         "@workflow/serde",
         "eventsource-parser",
@@ -82,10 +72,15 @@
         "zod"
       ]
     },
-    "@ai-sdk/provider@4.0.3": {
-      "integrity": "sha512-e0CpNWJUY7OxAFAnCZkw+ri9QOHWwTs1tXP42782KFGCU07qt8NiXCrCVowyCB5dP2r5/Uls+g2oPd8kOJn9dw==",
+    "@ai-sdk/provider-utils@5.0.29_zod@4.4.3": {
+      "integrity": "sha512-7EIbwXiXKGa7EFk6tDZpuZBs6lxhEJpOuHeqrDb3Vd85uYdjwkdRuHnZDVDIIb2+QTSRmyph2NrXcbvuO/KAjQ==",
       "dependencies": [
-        "json-schema"
+        "@ai-sdk/provider",
+        "@standard-schema/spec",
+        "@workflow/serde",
+        "eventsource-parser",
+        "undici@7.29.0",
+        "zod"
       ]
     },
     "@ai-sdk/provider@4.0.7": {
@@ -897,12 +892,12 @@
     "abstract-logging@2.0.1": {
       "integrity": "sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA=="
     },
-    "ai@7.0.37_zod@4.4.3": {
-      "integrity": "sha512-stF+SEQJgKY3Qfe3FwNzqUrehHviOp2l7LemoI8YMOa0Zk5PxKsRNgUk3cHXz0RAue9RRyCAis2fz6LSCP6EKw==",
+    "ai@7.0.77_zod@4.4.3": {
+      "integrity": "sha512-muLtBSTAUCreR77L16w4AFBiX2gK/RNt84EKp8m03SN9+MfNlC5EGqYYttRjYKV3xe0a33yj1Zawj1EnjejIWw==",
       "dependencies": [
         "@ai-sdk/gateway",
-        "@ai-sdk/provider@4.0.3",
-        "@ai-sdk/provider-utils@5.0.12_zod@4.4.3",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils@5.0.29_zod@4.4.3",
         "zod"
       ]
     },
@@ -2023,7 +2018,7 @@
       "npm:@prisma/client@^7.9.1",
       "npm:@sentry/cli@^3.6.2",
       "npm:@sentry/deno@^10.69.0",
-      "npm:ai@^7.0.37",
+      "npm:ai@^7.0.68",
       "npm:bullmq@^6.0.8",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.21",
