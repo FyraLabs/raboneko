@@ -6,7 +6,7 @@
     "npm:@prisma/adapter-pg@^7.9.1": "7.9.1",
     "npm:@prisma/client@^7.9.1": "7.9.1_prisma@7.9.1__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.6.2": "3.6.2",
-    "npm:@sentry/deno@^10.69.0": "10.69.0",
+    "npm:@sentry/deno@^10.70.0": "10.70.0",
     "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
     "npm:bullmq@^6.0.8": "6.0.9",
     "npm:cat-loggr@^1.2.2": "1.2.2",
@@ -89,8 +89,8 @@
         "json-schema"
       ]
     },
-    "@apm-js-collab/code-transformer-bundler-plugins@0.7.3": {
-      "integrity": "sha512-qNbPwuMZ8f5ZuGj/ttPeB7a6C/S1bB6tNYaEL5vNiRKydSAxa4AU0gxCWgaP4fVju+AuwhcumSFjrEcGF9Dv7Q==",
+    "@apm-js-collab/code-transformer-bundler-plugins@0.7.4": {
+      "integrity": "sha512-nAfOeZPSUAQvJa1iFT/5oCrTm5YQhMMrfCNthNnaXHZiOQhu1KGuLoIx7HtbAi3wfwaBYLaICPIeenIaEwcXIg==",
       "dependencies": [
         "@apm-js-collab/code-transformer",
         "es-module-lexer",
@@ -679,22 +679,22 @@
     "@sentry/conventions@0.16.0": {
       "integrity": "sha512-fO9PLmHdVURcSPUpWCItWAtgKiMwGdJHbovoSEyLplX5sxs2ugvI4CBPTrkkgqhObnZOD0CnWBKDzSVQYBKEyQ=="
     },
-    "@sentry/core@10.69.0": {
-      "integrity": "sha512-+uuqVEeiDzYuAKjZLqsROKXvRTbl/QeH0gfGRtpYib1cud4rAFWRIkFmcR7Jb7JGFYwmReyQotiTj/hcDszTZg==",
+    "@sentry/core@10.70.0": {
+      "integrity": "sha512-ozhCTDqg89oB4XmWfAwuHshABpvT7AkRpaPnogopPfMAaI61G1t8EKCJ4W7aum8JSBonlfyjPCyW5oYZFm0KvA==",
       "dependencies": [
         "@sentry/conventions"
       ]
     },
-    "@sentry/deno@10.69.0": {
-      "integrity": "sha512-OmsSBuurSsdFMaFurR1yKXDwiMcr8ciPAPNCCoytg0QxzKvHd1DtotN8qxiPdX0VG58EPTlb0xGl8i3/ky5tZw==",
+    "@sentry/deno@10.70.0": {
+      "integrity": "sha512-t+DDYrzSciRsHgtgziJZQbUMoPokGvxkG2YXcXZ+n2kIAcilNKW+Y8ybC523u78b3XcRqa9Tup/IaJ+RmQHKng==",
       "dependencies": [
         "@opentelemetry/api",
         "@sentry/core",
         "@sentry/server-utils"
       ]
     },
-    "@sentry/server-utils@10.69.0": {
-      "integrity": "sha512-0MwHrA8+nNvMIsqf8m3cXwCBlUjr6AS7N6CZvHJtY1DkqEvQqEbD5VIrhzEyHN/KMZIgQ8XeDCQRhjnXFQGRhg==",
+    "@sentry/server-utils@10.70.0": {
+      "integrity": "sha512-rzegZjMFFgCp3o+N8+XU13rfSvz4B+f8rU0ijBGrQcHdMNyfsFDTu1UTm262JofmrV2u+s+D0u0vFTnqtOGkbA==",
       "dependencies": [
         "@apm-js-collab/code-transformer-bundler-plugins",
         "@apm-js-collab/tracing-hooks",
@@ -1227,8 +1227,8 @@
     "env-paths@3.0.0": {
       "integrity": "sha512-dtJUTepzMW3Lm/NPxRf3wP4642UWhjL2sQxc+ym2YMj1m/H2zDNQOlezafzkHwn6sMstjHTwG6iQQsctDW/b1A=="
     },
-    "es-module-lexer@2.3.1": {
-      "integrity": "sha512-shc1dbU90Yl/xq1QrC7QRtfcwURZuVRfPhZbDoldJ1cn1gzDvBaBWlv0eFolj5+0znnPJz5TXLxsN77X/12KTA=="
+    "es-module-lexer@2.3.2": {
+      "integrity": "sha512-poHGpORABojJJucnV9KbOavETW8lBVnphkW77ER5/BQ5Fz7oXSoCNek7IH3vR5nRjdsEz926ibFYX8KtLQmdyw=="
     },
     "esbuild@0.18.20": {
       "integrity": "sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA==",
@@ -2036,7 +2036,7 @@
       "npm:@prisma/adapter-pg@^7.9.1",
       "npm:@prisma/client@^7.9.1",
       "npm:@sentry/cli@^3.6.2",
-      "npm:@sentry/deno@^10.69.0",
+      "npm:@sentry/deno@^10.70.0",
       "npm:ai@^7.0.68",
       "npm:bullmq@^6.0.8",
       "npm:cat-loggr@^1.2.2",
