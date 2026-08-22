@@ -20,7 +20,7 @@
     "dayjs": "npm:dayjs@^1.11.21",
     "discord-api-types": "npm:discord-api-types@^0.38.52",
     "discord.js": "npm:discord.js@^14.27.0",
-    "fastify": "npm:fastify@^5.10.0",
+    "fastify": "npm:fastify@^5.12.1",
     "parse-duration": "npm:parse-duration@^2.1.6",
     "prisma": "npm:prisma@^7.9.1",
     "slash-create": "npm:slash-create@^7.0.0",
