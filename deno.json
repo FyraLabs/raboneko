@@ -18,7 +18,7 @@
     "bullmq": "npm:bullmq@^6.0.8",
     "cat-loggr": "npm:cat-loggr@^1.2.2",
     "dayjs": "npm:dayjs@^1.11.21",
-    "discord-api-types": "npm:discord-api-types@^0.38.52",
+    "discord-api-types": "npm:discord-api-types@^0.38.53",
     "discord.js": "npm:discord.js@^14.27.0",
     "fastify": "npm:fastify@^5.12.1",
     "parse-duration": "npm:parse-duration@^2.1.6",

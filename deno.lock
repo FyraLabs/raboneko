@@ -11,7 +11,7 @@
     "npm:bullmq@^6.0.8": "6.0.9",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.21": "1.11.21",
-    "npm:discord-api-types@~0.38.52": "0.38.52",
+    "npm:discord-api-types@~0.38.53": "0.38.53",
     "npm:discord.js@^14.27.0": "14.27.0",
     "npm:fastify@^5.12.1": "5.12.1",
     "npm:parse-duration@^2.1.6": "2.1.8",
@@ -1163,8 +1163,8 @@
     "detect-libc@2.1.2": {
       "integrity": "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ=="
     },
-    "discord-api-types@0.38.52": {
-      "integrity": "sha512-uwe9EKfbjsmgWc2fdFjvDbj+dQqx3lp7wqDCmIha0jInuU+xeQjkCK9tMMn+p7RXfdVQORCInq4cD3U2ymDmyg=="
+    "discord-api-types@0.38.53": {
+      "integrity": "sha512-HL1zz/UuZ+bbJjA/X8Kbxx9gk8v9rJAbTeWRNYKmIdjwJ7EovjlHgoJTxcLpATfNJ+AonOtMdy3Y5MVIJAAd/A=="
     },
     "discord.js@14.27.0": {
       "integrity": "sha512-qHbFlFG2N7y3LjPySYsL6A1+BnX6bkTVgo842EX0CqVPk/KTMwZkojPHEXKsQUpWZNyz5BISNHK1cPpQw0+m4A==",
@@ -2030,7 +2030,7 @@
       "npm:bullmq@^6.0.8",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.21",
-      "npm:discord-api-types@~0.38.52",
+      "npm:discord-api-types@~0.38.53",
       "npm:discord.js@^14.27.0",
       "npm:fastify@^5.12.1",
       "npm:parse-duration@^2.1.6",
