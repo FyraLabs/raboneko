@@ -1,6 +1,5 @@
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-// DENOFICATION: post-denofication, changes this to `../util.ts` because deno requires the extension
-import { convertFromCelsius, convertToCelsius, formatTemperatureUnit, TemperatureUnit } from '../util';
+import { convertFromCelsius, convertToCelsius, formatTemperatureUnit, TemperatureUnit } from '../util.ts';
 
 const unitChoices = [
   { name: 'Celsius', value: TemperatureUnit.Celsius },
