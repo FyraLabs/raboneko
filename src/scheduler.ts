@@ -35,15 +35,13 @@ const _reminder = new Worker(
   },
 );
 
-(async () => {
-  await reportQueue.add(
-    "generateFinalReport",
-    {},
-    {
-      repeat: {
-        pattern: "10 0 * * 1",
-        utc: true,
-      },
-    },
-  );
-})();
+await reportQueue.upsertJobScheduler(
+  "generateFinalReport",
+  {
+    pattern: "10 0 * * 1",
+    tz: "UTC",
+  },
+  {
+    name: "generateFinalReport",
+  },
+);

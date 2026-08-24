@@ -1,5 +1,6 @@
 # Packages
 node_modules/
+.deno-cache/
 yarn.lock
 bun.lockb
 package_lock.json
