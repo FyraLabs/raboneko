@@ -48,3 +48,43 @@ export const containsWord = (msg: Message, word: string): boolean => {
 };
 
 export const userURL = (id: string) => `https://discord.com/users/${id}`;
+
+export const enum TemperatureUnit {
+  Celsius = 'ºC',
+  Fahrenheit = 'ºF',
+  Kelvin = 'K',
+}
+
+export const formatTemperatureUnit = (unit: TemperatureUnit, long = false): string => {
+  if (!long) return unit;
+  switch (unit) {
+    case TemperatureUnit.Celsius:
+      return 'Celsius';
+    case TemperatureUnit.Fahrenheit:
+      return 'Fahrenheit';
+    case TemperatureUnit.Kelvin:
+      return 'Kelvin';
+  }
+};
+
+export const convertFromCelsius = (celsius: number, to: TemperatureUnit): number => {
+  switch (to) {
+    case TemperatureUnit.Celsius:
+      return celsius;
+    case TemperatureUnit.Fahrenheit:
+      return celsius * (9 / 5) + 32;
+    case TemperatureUnit.Kelvin:
+      return celsius + 273.15;
+  }
+};
+
+export const convertToCelsius = (value: number, from: TemperatureUnit): number => {
+  switch (from) {
+    case TemperatureUnit.Celsius:
+      return value;
+    case TemperatureUnit.Fahrenheit:
+      return (value - 32) * (5 / 9);
+    case TemperatureUnit.Kelvin:
+      return value - 273.15;
+  }
+};
