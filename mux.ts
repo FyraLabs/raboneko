@@ -2,6 +2,7 @@ import "node-web-audio-api/polyfill.js";
 import { registerMediabunnyServer } from "@mediabunny/server";
 registerMediabunnyServer();
 
+import { fromFileUrl, toFileUrl } from "jsr:@std/path";
 import {
   AppendOnlyStreamTarget,
   AudioBufferSink,
@@ -11,6 +12,7 @@ import {
   Conversion,
   EncodedAudioPacketSource,
   EncodedPacket,
+  FilePathSource,
   FilePathTarget,
   Input,
   MATROSKA,
@@ -27,81 +29,18 @@ import "@std/dotenv/load";
 import { mistral, MistralTranscriptionModelOptions } from "@ai-sdk/mistral";
 import { transcribe } from "ai";
 import { pooledMap } from "@std/async/pool";
+import * as bytes from "@std/bytes";
 
 import { decodeCborSequence } from "@std/cbor";
 import { YapEntry } from "./src/yap/entry.ts";
 import { decodeYapEntries, Packet } from "./src/yap/decode.ts";
+import { assert } from "node:console";
+import { muxStream } from "./src/yap/processing.ts";
 
-const muxStream = async (
-  packets: Packet[],
-  output: Output,
-) => {
-  let meow = false;
-
-  const startRtpTimestamp = packets[0].rtpTimestamp;
-  // The muxed timeline is anchored to the first packet, so that packet's
-  // `received` is where this stream starts within the recording as a whole.
-  const startSecond = packets[0].received / 1000;
-
-  const packetSource = new EncodedAudioPacketSource("opus");
-  output.addAudioTrack(packetSource);
-
-  await output.start();
-
-  for (const { data, rtpTimestamp, duration } of packets) {
-    const packet = new EncodedPacket(
-      data,
-      "key",
-      (rtpTimestamp - startRtpTimestamp) / 48000,
-      duration / 48000,
-    );
-
-    await packetSource.add(
-      packet,
-      !meow
-        ? {
-          decoderConfig: {
-            codec: "opus",
-            numberOfChannels: 2,
-            sampleRate: 48000,
-            description: new Uint8Array([
-              0x4f,
-              0x70,
-              0x75,
-              0x73,
-              0x48,
-              0x65,
-              0x61,
-              0x64,
-              0x01,
-              0x02,
-              0x00,
-              0x00,
-              0x80,
-              0xbb,
-              0x00,
-              0x00,
-              0x00,
-              0x00,
-              0x00,
-            ]),
-          },
-        }
-        : undefined,
-    );
-  }
-
-  packetSource.close();
-
-  await output.finalize();
-
-  return startSecond;
-};
-
-const transcribeStream = async (audio: Uint8Array, startSecond: number) => {
+const transcribeStream = async (audioFile: string, startSecond: number) => {
   const { text, segments, language } = await transcribe({
     model: mistral.transcription("voxtral-mini-latest"),
-    audio,
+    audio: toFileUrl(audioFile),
     providerOptions: {
       mistral: {
         timestampGranularities: ["segment"],
@@ -138,63 +77,53 @@ const yap = decodeYapEntries(decodeCborSequence(file) as YapEntry[]);
 // - Upload individual streams to get transcripts
 // - Mix transcripts together
 
-const tracks = await Array.fromAsync(
+await Array.fromAsync(
   pooledMap(1, yap.streams, async (stream) => {
-    const { readable, writable } = new TransformStream();
-
     const output = new Output({
       format: new MkvOutputFormat({
         appendOnly: true,
       }),
-      target: new AppendOnlyStreamTarget(writable),
+      target: new FilePathTarget(`output-${stream.ssrc}.mka`),
     });
 
-    const input = new Input({
-      formats: [MATROSKA],
-      source: new ReadableStreamSource(readable),
-    });
-
-    muxStream(stream.packets, output);
-    const sink = new AudioBufferSink((await input.getAudioTracks())[0]);
-
-    const wav = new Output({
-      format: new WavOutputFormat(),
-      target: new BufferTarget(),
-    });
-
-    const conversion = await Conversion.init({
-      input,
-      output: wav,
-    });
-    await conversion.execute();
-
-    // const input2 = new Input({
-    //   formats: [WAVE],
-    //   source: new ReadableStreamSource(),
-    // });
+    await muxStream(stream, output);
 
     return {
       userId: stream.userId,
       start: stream.packets[0].duration,
       // buffer: wav.target.buffer!,
-      sink,
     };
   }),
 );
 
-{
+// something something trim
+
+const meta = Object.fromEntries(
+  yap.streams.map(({ userId, received, ssrc }) => [ssrc, {
+    userId,
+    received,
+  }]),
+);
+
+const mixStreams = async () => {
   const ctx = new OfflineAudioContext({
     length: 48000 * 100,
     sampleRate: 48000,
     numberOfChannels: 2,
   });
 
-  for (const track of tracks) {
-    for await (const buffer of track.sink.buffers()) {
+  for (const stream of yap.streams) {
+    const input = new Input({
+      formats: [MATROSKA],
+      source: new FilePathSource(`output-${stream.ssrc}.mka`),
+    });
+    const bufferSink = new AudioBufferSink((await input.getAudioTracks())[0]);
+
+    for await (const buffer of bufferSink.buffers()) {
       const source = ctx.createBufferSource();
       source.buffer = buffer.buffer;
       source.connect(ctx.destination);
-      source.start(track.start + buffer.timestamp);
+      source.start(buffer.timestamp); // weird offset issue
     }
   }
 
@@ -202,7 +131,7 @@ const tracks = await Array.fromAsync(
 
   const output = new Output({
     format: new MkvOutputFormat(),
-    target: new FilePathTarget("lol.ogg"),
+    target: new FilePathTarget("lol.mka"),
   });
 
   const bufferSource = new AudioBufferSource({
@@ -217,7 +146,46 @@ const tracks = await Array.fromAsync(
   bufferSource.close();
 
   await output.finalize();
-}
+};
+
+mixStreams();
+
+// {
+//   const ctx = new OfflineAudioContext({
+//     length: 48000 * 100,
+//     sampleRate: 48000,
+//     numberOfChannels: 2,
+//   });
+
+//   for (const track of tracks) {
+//     for await (const buffer of track.sink.buffers()) {
+//       const source = ctx.createBufferSource();
+//       source.buffer = buffer.buffer;
+//       source.connect(ctx.destination);
+//       source.start(track.start + buffer.timestamp);
+//     }
+//   }
+
+//   const audioBuffer = await ctx.startRendering();
+
+//   const output = new Output({
+//     format: new MkvOutputFormat(),
+//     target: new FilePathTarget("lol.ogg"),
+//   });
+
+//   const bufferSource = new AudioBufferSource({
+//     codec: "opus",
+//     quality: new Quality("medium"),
+//   });
+//   output.addAudioTrack(bufferSource);
+
+//   await output.start();
+
+//   await bufferSource.add(audioBuffer);
+//   bufferSource.close();
+
+//   await output.finalize();
+// }
 
 // for (const [i, stream] of streams.entries()) {
 //   const output = new Output({

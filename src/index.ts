@@ -11,9 +11,6 @@ import "./scheduler.ts";
 import RaboSlashCreator from "./creator.ts";
 import * as http from "http";
 
-const logger = new CatLoggr().setLevel(
-  process.env.COMMANDS_DEBUG === "true" ? "debug" : "info",
-);
 const creator = new RaboSlashCreator({
   applicationID: process.env.DISCORD_APP_ID!,
   publicKey: process.env.DISCORD_PUBLIC_KEY!,
@@ -66,3 +63,4 @@ import "./modules/support.ts";
 import "./modules/logger.ts";
 import "./modules/wraps.ts";
 import "./modules/voiceTranscribe/index.ts";
+import { logger } from "./logger.ts";

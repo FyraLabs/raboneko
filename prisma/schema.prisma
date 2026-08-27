@@ -13,33 +13,42 @@ datasource db {
 }
 
 model ProgressLog {
-  id Int @id @default(autoincrement())
-  userID String
-  createdAt DateTime @default(now())
-  type Int
-  product Int
-  summary String
+  id           Int      @id @default(autoincrement())
+  userID       String
+  createdAt    DateTime @default(now())
+  type         Int
+  product      Int
+  summary      String
   // The Discord ID of the message logged in the updates channel, used so we can delete it if the user deletes the log
-  logMessageID String? @unique
+  logMessageID String?  @unique
 }
 
 model Wrap {
-  id Int @id @default(autoincrement())
-  userID String
-  createdAt DateTime @default(now())
-  content String
+  id            Int      @id @default(autoincrement())
+  userID        String
+  createdAt     DateTime @default(now())
+  content       String
   // The Discord ID of the wrap message sent
-  wrapMessageID String @unique
+  wrapMessageID String   @unique
 }
 
 model Reminder {
-  id Int @id @default(autoincrement())
-  userID String
-  channelID String
-  createdAt DateTime @default(now())
-  content String
-  time DateTime
-  link String
+  id                Int      @id @default(autoincrement())
+  userID            String
+  channelID         String
+  createdAt         DateTime @default(now())
+  content           String
+  time              DateTime
+  link              String
   // The Discord ID of the message that was sent to the user, to remind them of the reminder
-  reminderMessageID String? @unique
+  reminderMessageID String?  @unique
+}
+
+model Recording {
+  id        Int      @id @default(autoincrement())
+  storageID String   @unique
+  userID    String
+  createdAt DateTime @default(now())
+  // // The Discord ID of the message that was sent to the user, to remind them of the recording
+  // recordingMessageID String?  @unique
 }

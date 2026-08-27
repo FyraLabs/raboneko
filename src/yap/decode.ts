@@ -27,7 +27,9 @@ export type Packet = {
 export type Stream = {
   /// The Discord user ID associated with this stream.
   userId: string;
-  /// The RTP ssrc indentifying this stream. You can think of this as the stream ID.
+  /// The timestamp in milliseconds of when this stream was first received by the recorder (packet[0].received), relative to the start timestamp.
+  received: number;
+  /// The RTP ssrc identifying this stream. You can think of this as the stream ID.
   ssrc: number;
   /// The packets in this stream, sorted by their sequence.
   packets: Packet[];
@@ -101,6 +103,7 @@ export const decodeYapEntries = (entries: YapEntry[]): DecodedYap => {
         const stream = {
           ssrc: entry.ssrc,
           userId: entry.userId,
+          received: -1,
           packets: [],
         };
 
@@ -111,6 +114,10 @@ export const decodeYapEntries = (entries: YapEntry[]): DecodedYap => {
       case "packet": {
         const stream = ssrcToStream[entry.ssrc];
         const previousPacket = stream.packets.at(-1);
+
+        if (!previousPacket) {
+          stream.received = entry.received;
+        }
 
         const sequence = previousPacket
           ? previousPacket.sequence +

@@ -8,13 +8,154 @@ import {
 } from "@discordjs/voice";
 import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 import client from "../client.ts";
-import { CborSequenceEncoderStream } from "@std/cbor";
+import { client as prismaClient } from "../prisma.ts";
+
+import { decodeYapEntries, Packet } from "../yap/decode.ts";
+import { CborSequenceEncoderStream, decodeCborSequence } from "@std/cbor";
 import { Guild, VoiceState } from "discord.js";
 import { CommandOptionType } from "slash-create/web";
-import { YapEntry } from "../yap.ts";
+import { YapEntry } from "../yap/entry.ts";
 import { bucket, s3 } from "../s3.ts";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
+import * as path from "@std/path";
+import { pooledMap } from "@std/async";
+import {
+  AudioBufferSink,
+  AudioBufferSource,
+  FilePathSource,
+  FilePathTarget,
+  Input,
+  MATROSKA,
+  MkvOutputFormat,
+  Output,
+  Quality,
+} from "mediabunny";
+import { muxStream } from "../yap/processing.ts";
+import { transcribe } from "ai";
+import { mistral, MistralTranscriptionModelOptions } from "@ai-sdk/mistral";
+import { toFileUrl } from "@std/path/windows";
+import { recordingQueue } from "../scheduler.ts";
+
+export const handleRecordingEvent = async (
+  recordingId: number,
+) => {
+  const recording = await prismaClient.recording.findUnique({
+    where: {
+      id: recordingId,
+    },
+  });
+  if (!recording) return;
+
+  const workdir = await Deno.makeTempDir();
+
+  const res = await s3.send(
+    new GetObjectCommand({
+      Bucket: bucket,
+      Key: `recordings/${recording.storageID}/recording.yap.gz`,
+    }),
+  );
+
+  const yap = decodeYapEntries(
+    decodeCborSequence(
+      await new Response(
+        res.Body!.transformToWebStream().pipeThrough(
+          new DecompressionStream("gzip"),
+        ),
+      ).bytes(),
+    ) as YapEntry[],
+  );
+
+  const streams = await Array.fromAsync(
+    pooledMap(1, yap.streams, async (stream) => {
+      const audioFile = path.join(workdir, `output-${stream.ssrc}.mka`);
+
+      const output = new Output({
+        format: new MkvOutputFormat({
+          appendOnly: true,
+        }),
+        target: new FilePathTarget(
+          audioFile,
+        ),
+      });
+
+      await muxStream(stream, output);
+
+      const { segments } = await transcribe({
+        model: mistral.transcription("voxtral-mini-latest"),
+        audio: await Deno.readFile(audioFile),
+        providerOptions: {
+          mistral: {
+            timestampGranularities: ["segment"],
+          } satisfies MistralTranscriptionModelOptions,
+        },
+      });
+
+      return {
+        segments: segments.map((segment) => ({
+          ...segment,
+          startSecond: segment.startSecond + stream.received / 1000,
+          endSecond: segment.endSecond + stream.received / 1000,
+        })),
+      };
+    }),
+  );
+
+  const transcript = streams.flatMap((stream) => stream.segments);
+  transcript.sort((a, b) => a.startSecond - b.startSecond);
+
+  console.log(transcript);
+
+  // {
+  //   const ctx = new OfflineAudioContext({
+  //     length: 48000 * yap.streams.reduce((max, stream) =>
+  //       Math.max(
+  //         max,
+  //         stream.received +
+  //           ((stream.packets.at(-1)!.rtpTimestamp +
+  //             stream.packets.at(-1)!.duration -
+  //             stream.packets[0].rtpTimestamp) / 48000),
+  //       ), 0),
+  //     sampleRate: 48000,
+  //     numberOfChannels: 2,
+  //   });
+
+  //   for (const stream of yap.streams) {
+  //     const input = new Input({
+  //       formats: [MATROSKA],
+  //       source: new FilePathSource(`output-${stream.ssrc}.mka`),
+  //     });
+  //     const bufferSink = new AudioBufferSink((await input.getAudioTracks())[0]);
+
+  //     for await (const buffer of bufferSink.buffers()) {
+  //       const source = ctx.createBufferSource();
+  //       source.buffer = buffer.buffer;
+  //       source.connect(ctx.destination);
+  //       source.start(stream.received / 1000 + buffer.timestamp); // weird offset issue
+  //     }
+  //   }
+
+  //   const audioBuffer = await ctx.startRendering();
+
+  //   const output = new Output({
+  //     format: new MkvOutputFormat(),
+  //     target: new FilePathTarget("lol.mka"),
+  //   });
+
+  //   const bufferSource = new AudioBufferSource({
+  //     codec: "opus",
+  //     quality: new Quality("medium"),
+  //   });
+  //   output.addAudioTrack(bufferSource);
+
+  //   await output.start();
+
+  //   await bufferSource.add(audioBuffer);
+  //   bufferSource.close();
+
+  //   await output.finalize();
+  // }
+};
 
 class Recorder {
   private connection: VoiceConnection | null = null;
@@ -237,15 +378,28 @@ export default class RecordCommand extends SlashCommand {
 
         const reader = file.readable.pipeThrough(new CompressionStream("gzip"));
 
+        const storageId = crypto.randomUUID();
+
         await new Upload({
           client: s3,
           params: {
             Bucket: bucket,
-            Key: `recordings/${crypto.randomUUID()}/recording.yap.gz`,
+            Key: `recordings/${storageId}/recording.yap.gz`,
             Body: reader,
             ContentType: "application/cbor-seq",
           },
         }).done();
+
+        await Deno.remove(fileName);
+
+        const { id } = await prismaClient.recording.create({
+          data: {
+            storageID: storageId,
+            userID: "",
+          },
+        });
+
+        await recordingQueue.add("recording", { id });
 
         await ctx.sendFollowUp("Goodbye~ (o_o)/");
         break;
