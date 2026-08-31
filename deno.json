@@ -15,7 +15,7 @@
     "@sentry/deno": "npm:@sentry/deno@^10.69.0",
     "@std/dotenv": "jsr:@std/dotenv@^0.225.8",
     "ai": "npm:ai@^7.0.68",
-    "bullmq": "npm:bullmq@^6.0.8",
+    "bullmq": "npm:bullmq@^6.3.1",
     "cat-loggr": "npm:cat-loggr@^1.2.2",
     "dayjs": "npm:dayjs@^1.11.23",
     "discord-api-types": "npm:discord-api-types@^0.38.53",

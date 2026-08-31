@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.69.0": "10.69.0",
     "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
-    "npm:bullmq@^6.0.8": "6.0.9",
+    "npm:bullmq@^6.3.1": "6.3.2",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.53": "0.38.53",
@@ -966,8 +966,8 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.0.9": {
-      "integrity": "sha512-l7kNlirauwdZrqsViO6owHUAhSSN/aCDkrUwZQ2futIItlbJGAxgU+6IOQtTl5Re39GZJEPU6jelGuY1gQD28w==",
+    "bullmq@6.3.2": {
+      "integrity": "sha512-jW4mEG1JOKewI2IhtuMery+kNhCs+EZp4qeNXeYRfueW7P4NFOStFGHOdsiJE9EO9Abz+JMrYlymb+r7fCbT7A==",
       "dependencies": [
         "cron-parser",
         "msgpackr",
@@ -1059,8 +1059,8 @@
     "cookie@1.1.1": {
       "integrity": "sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ=="
     },
-    "cron-parser@5.7.0": {
-      "integrity": "sha512-iSpDHpwwW/GhIg4JVODYlWUEpMNSimaHvqOhHpOz1W+Y97z1lL1nf+dpcF17cNwFRpTtKN9devgi1fxflp3Phw==",
+    "cron-parser@5.10.0": {
+      "integrity": "sha512-izNAxJyRWUP8ljBoDSub5WyrVOUlT4SLGShswE7eoRBpp6QUsSycYxLBMJlbshgPBMcPT/nrfgjNY2918ayv2A==",
       "dependencies": [
         "luxon"
       ]
@@ -1542,8 +1542,8 @@
       "scripts": true,
       "bin": true
     },
-    "msgpackr@2.0.5": {
-      "integrity": "sha512-cef05H/dSYpLpqp3sj/qyZh5vhUYCalnaLO7j1yOmpsR0y/XwLVtK7r5gn+U/F7CTEfMowcGhlUQJDLcLf7jcA==",
+    "msgpackr@2.1.0": {
+      "integrity": "sha512-p/pBCVO63CsvvpkomUnNNag6+n38rULuDA6HHe70o2gtC8ODI52foF/4ko2qQcp6OiErJXTmrZeXmsGGHsIQNQ==",
       "optionalDependencies": [
         "msgpackr-extract"
       ]
@@ -2044,7 +2044,7 @@
       "npm:@sentry/cli@^3.6.2",
       "npm:@sentry/deno@^10.69.0",
       "npm:ai@^7.0.68",
-      "npm:bullmq@^6.0.8",
+      "npm:bullmq@^6.3.1",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.53",
