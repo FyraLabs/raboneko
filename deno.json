@@ -12,7 +12,7 @@
     "@prisma/adapter-pg": "npm:@prisma/adapter-pg@^7.9.1",
     "@prisma/client": "npm:@prisma/client@^7.9.1",
     "@sentry/cli": "npm:@sentry/cli@^3.6.2",
-    "@sentry/deno": "npm:@sentry/deno@^10.69.0",
+    "@sentry/deno": "npm:@sentry/deno@^10.71.0",
     "@std/dotenv": "jsr:@std/dotenv@^0.225.8",
     "ai": "npm:ai@^7.0.68",
     "bullmq": "npm:bullmq@^6.3.1",
