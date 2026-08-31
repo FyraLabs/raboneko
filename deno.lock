@@ -3,19 +3,19 @@
   "specifiers": {
     "jsr:@std/dotenv@~0.225.8": "0.225.8",
     "npm:@ai-sdk/azure@^4.0.49": "4.0.53_zod@4.4.3",
-    "npm:@prisma/adapter-pg@^7.9.1": "7.9.1",
-    "npm:@prisma/client@^7.9.1": "7.9.1_prisma@7.9.1__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
+    "npm:@prisma/adapter-pg@^7.10.0": "7.10.0",
+    "npm:@prisma/client@^7.10.0": "7.10.0_prisma@7.10.0__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.71.0": "10.72.0",
     "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
-    "npm:bullmq@^6.3.1": "6.3.2",
+    "npm:bullmq@^6.3.1": "6.3.2_pg@8.23.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.53": "0.38.53",
     "npm:discord.js@^14.27.0": "14.27.0",
     "npm:fastify@^5.12.1": "5.12.1",
     "npm:parse-duration@^2.1.6": "2.1.8",
-    "npm:prisma@^7.9.1": "7.9.1_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
+    "npm:prisma@^7.10.0": "7.10.0_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:slash-create@7": "7.0.0_fastify@5.10.0",
     "npm:slash-up@^1.4.2": "1.4.2_fastify@5.10.0",
     "npm:zod@^4.4.3": "4.4.3"
@@ -367,8 +367,8 @@
     "@pinojs/redact@0.4.0": {
       "integrity": "sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg=="
     },
-    "@prisma/adapter-pg@7.9.1": {
-      "integrity": "sha512-Ho2RK1KanQxLNSC0sR5bpiiVep10sWPLXCcxK+KXfI/Q69TMRbiafSvLPv3V9snimX72rMCqGlyJ4sBO4lKTAw==",
+    "@prisma/adapter-pg@7.10.0": {
+      "integrity": "sha512-N7nwSor0HO1Kz6xBv0TPAjAPysKK0fac6p4fVN3ensLOuzc/83Fgmln5k92eK/cvzqdkSR/2kkAqlbcdwVrwpw==",
       "dependencies": [
         "@prisma/driver-adapter-utils",
         "@types/pg",
@@ -376,11 +376,11 @@
         "postgres-array@3.0.4"
       ]
     },
-    "@prisma/client-runtime-utils@7.9.1": {
-      "integrity": "sha512-mVIBGYdO5CFmK0HvjxrtfIyQQcPdb88pSCeVQriVQPVZyDovIWblpHfOgcS8QO187j3QF0ePArH8qPhp0AU2vg=="
+    "@prisma/client-runtime-utils@7.10.0": {
+      "integrity": "sha512-cnCy7lUV8/CctgKVEmqAbSLAmwqJdE/qAlqTBk/0NDk59zEb2cZ0M0M0E4vVPnqbSEYudRroQDvOWfUZH6RIfw=="
     },
-    "@prisma/client@7.9.1_prisma@7.9.1__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8": {
-      "integrity": "sha512-+xgrh2EhJVF79wC0yX5G4PI1Rdcm7Qn/nekNQ+t/O153wtNggruHal+fXHSa0QE+Tp/Cw5wvxeCEhZZ59xGm8Q==",
+    "@prisma/client@7.10.0_prisma@7.10.0__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8": {
+      "integrity": "sha512-Ubw/QS9JGIBSBUsyxAUQuK/Jcu0Tsva7le7QbLd91Kix9yJvYDdj5QkwgEbbZniH80dd+sziQcALPc+HnvQC8Q==",
       "dependencies": [
         "@prisma/client-runtime-utils",
         "prisma"
@@ -389,8 +389,8 @@
         "prisma"
       ]
     },
-    "@prisma/config@7.9.1": {
-      "integrity": "sha512-4znKhxTmXmuPye9Z6pbIyYb5VZlkZ05qG1L6Dr4g+7oTwc6V50Bs9XirFBDdjWt+H/AabMn9aUnxBcvj8z05aA==",
+    "@prisma/config@7.10.0": {
+      "integrity": "sha512-Rcg828gIRE3HOQ3pOATFjV5d/P0U9OIobxhd/IMxlfWjA4vru0eGwb0AIwFw0rmcLMVShohZYWPixVxkBHsxUA==",
       "dependencies": [
         "c12",
         "deepmerge-ts",
@@ -398,11 +398,11 @@
         "empathic"
       ]
     },
+    "@prisma/debug@7.10.0": {
+      "integrity": "sha512-caygJKtltmRIgdJ3jRpkOr7yM4DW6zxo5uOmojKWFb3asnxWoRkQOwZmXBgD8FZp4htrX+nMpcWqDwzlQ1+Y4g=="
+    },
     "@prisma/debug@7.2.0": {
       "integrity": "sha512-YSGTiSlBAVJPzX4ONZmMotL+ozJwQjRmZweQNIq/ER0tQJKJynNkRB3kyvt37eOfsbMCXk3gnLF6J9OJ4QWftw=="
-    },
-    "@prisma/debug@7.9.1": {
-      "integrity": "sha512-/cpVZ4itxtcgB8GHBvZtcmuEjq+lWsLrRJxFMbwZrT1RIdtuKmUm7PPGo/wzfbYpBrk+9WmmBE8CHJw2rybKDQ=="
     },
     "@prisma/dev@0.24.17": {
       "integrity": "sha512-UvdZzmpFwknnfreh6Jije84ekkYGPYEJhXG1tFzCsCfQyzJifrOo38eZc0qajzvaC6OLUOrN9ML5XfCnEZL9DA==",
@@ -424,43 +424,43 @@
         "zeptomatch"
       ]
     },
-    "@prisma/driver-adapter-utils@7.9.1": {
-      "integrity": "sha512-vmHehG7nn/heW32DXXpp13DxxAxVVe6n250oEt3dOL2E/4bt3olktKZN0mzSuxMMronyMSkbeW2uCOn3F4g8RQ==",
+    "@prisma/driver-adapter-utils@7.10.0": {
+      "integrity": "sha512-u8zkcRLlaryO652T4qavBg0HmzNW5tSKdsCn6hc1PhWAp/J6k0vrxLuUs+b9o+HcjsK7Dfa01o4OFSn0frauJA==",
       "dependencies": [
-        "@prisma/debug@7.9.1"
+        "@prisma/debug@7.10.0"
       ]
     },
-    "@prisma/engines-version@7.9.0-1.e922089b7d7502aff4249d5da3420f6fa55fc6ad": {
-      "integrity": "sha512-2BsPPFksz3CQUXG6af3rVCtJKg6+JJGJTtfgu2fU8DdXhOfkBjulCq8mwybCd6ge0/jhZq2kOtLAbmUDMyI1nA=="
+    "@prisma/engines-version@7.10.0-4.0edf323efd1d98336f3f0a68684b56f689b900d3": {
+      "integrity": "sha512-8OJ6RuZTZ06eFUOtBwxVmv8XMmOW6HWN5F+uxUbZkGxR0Bfab1dfAdXaHPmR5mb59E+fmUo8IOzXlbLY1SClbw=="
     },
-    "@prisma/engines@7.9.1": {
-      "integrity": "sha512-UprXSMNXx2NF5ow4pqaQtE8OuBz6K78B0wc0tn2L28G5r933iWp1DR9Do2qWrsNvvFIP3x6mpEWnQtckMO0Uhg==",
+    "@prisma/engines@7.10.0": {
+      "integrity": "sha512-KNumN6NHFwybvfdYzTee9pqwx5PvknpWAaHn6L5NsbrKdl+SQrsVZs9opKs6U6SAsvB26HDt3WybRjOhgoWOYQ==",
       "dependencies": [
-        "@prisma/debug@7.9.1",
+        "@prisma/debug@7.10.0",
         "@prisma/engines-version",
         "@prisma/fetch-engine",
-        "@prisma/get-platform@7.9.1"
+        "@prisma/get-platform@7.10.0"
       ],
       "scripts": true
     },
-    "@prisma/fetch-engine@7.9.1": {
-      "integrity": "sha512-9DwxrNTeT25Orbu9CWh0CZvVlyY1lmscpbaeLZcOnuR7zcuFrt91YSmmOfIm7zJ08YOZ6mVzURKwLoMwEBcK8w==",
+    "@prisma/fetch-engine@7.10.0": {
+      "integrity": "sha512-Zqyu8DY14t6W/xwmAxUYWCXtHrvQnSvT644EAZSsdM8NSmCS74vJJbBKdVsK3ucFpnUWkEpbO1a0CxJXrg130g==",
       "dependencies": [
-        "@prisma/debug@7.9.1",
+        "@prisma/debug@7.10.0",
         "@prisma/engines-version",
-        "@prisma/get-platform@7.9.1"
+        "@prisma/get-platform@7.10.0"
+      ]
+    },
+    "@prisma/get-platform@7.10.0": {
+      "integrity": "sha512-0bra1LFYi8xNw0yqV62bHJNQk4BKleOngZiqPWIQc7a3+9q6rqsnqJ15BuepP8943PFMvtmgnP52juZsyYkA6w==",
+      "dependencies": [
+        "@prisma/debug@7.10.0"
       ]
     },
     "@prisma/get-platform@7.2.0": {
       "integrity": "sha512-k1V0l0Td1732EHpAfi2eySTezyllok9dXb6UQanajkJQzPUGi3vO2z7jdkz67SypFTdmbnyGYxvEvYZdZsMAVA==",
       "dependencies": [
         "@prisma/debug@7.2.0"
-      ]
-    },
-    "@prisma/get-platform@7.9.1": {
-      "integrity": "sha512-PK8R60YZRQvYxBrGG9i7l2/rFyzy+2MuI1dKtmtrCqPH8YpiJx/MfiC7LRzX5786rZDEv7BngcjfIJW4/9ADuw==",
-      "dependencies": [
-        "@prisma/debug@7.9.1"
       ]
     },
     "@prisma/query-plan-executor@7.2.0": {
@@ -734,8 +734,8 @@
         "undici-types"
       ]
     },
-    "@types/pg@8.20.3": {
-      "integrity": "sha512-4Tvg+HO6+oQaAkpT8GTYoSExzpGGZz532GXgbbCElWJQeQdMozBWxEKNBhJJpHFjWXsMxqPbyypvj/89FWNoSQ==",
+    "@types/pg@8.23.1": {
+      "integrity": "sha512-fKVHpikPdg4GKks3JuLEhvwSyvwzF23hnabPy6DD8ljVbC7+6J5dQzdv4arV6jqq57djnMgs1HKBxX4P8aBI3A==",
       "dependencies": [
         "@types/node",
         "pg-protocol",
@@ -924,14 +924,18 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.3.2": {
+    "bullmq@6.3.2_pg@8.23.0": {
       "integrity": "sha512-jW4mEG1JOKewI2IhtuMery+kNhCs+EZp4qeNXeYRfueW7P4NFOStFGHOdsiJE9EO9Abz+JMrYlymb+r7fCbT7A==",
       "dependencies": [
         "cron-parser",
         "msgpackr",
         "node-abort-controller",
+        "pg",
         "semver",
         "tslib"
+      ],
+      "optionalPeers": [
+        "pg"
       ]
     },
     "c12@3.3.4": {
@@ -1545,14 +1549,14 @@
     "pg-int8@1.0.1": {
       "integrity": "sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw=="
     },
-    "pg-pool@3.14.0_pg@8.22.0": {
+    "pg-pool@3.14.0_pg@8.23.0": {
       "integrity": "sha512-gKtPkFdQPU3DksooVLi9LsjZxrsBUZIpa+7aVx+LV5pNh0KzP4Zleud2po+ConrxbuXGBJ6Hfer6hdgpIBpBaw==",
       "dependencies": [
         "pg"
       ]
     },
-    "pg-protocol@1.15.0": {
-      "integrity": "sha512-cq9sECI5s0+uPUXjbz8ioyPJni6RzsRib0US67i5IoTZKw8fNeYlVE7u8F4dG7vEJJtc5wdD1K189lCCUwqWTQ=="
+    "pg-protocol@1.16.0": {
+      "integrity": "sha512-sILXutLVjCLjcDuOmvhX5e2Z4cS5qG/6Bu3VkpFwdf/633ElGLpEh9bgmuI5I4sqKqkifQiGyiCcx1HdtrK7tg=="
     },
     "pg-types@2.2.0": {
       "integrity": "sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==",
@@ -1564,8 +1568,8 @@
         "postgres-interval"
       ]
     },
-    "pg@8.22.0": {
-      "integrity": "sha512-8wih1vVIBMxoUM2oB4soJsD9tDnDpLv4OXBJ+EJzFsvycD+lfyIreC2gGHq78f8jbLLt+bvlPTFdFZfJkOuzAA==",
+    "pg@8.23.0": {
+      "integrity": "sha512-Ip2EQCngowJLGOfCwkFhPXU7/ljlhn6Rxlmy4XYfL2Y+vyRM59+8uR2xqRWKdYmbXmxCFOAmKxBuSUCdF34qLg==",
       "dependencies": [
         "pg-connection-string",
         "pg-pool",
@@ -1638,8 +1642,8 @@
     "postgres@3.4.7": {
       "integrity": "sha512-Jtc2612XINuBjIl/QTWsV5UvE8UHuNblcO3vVADSrKsrc6RqGX6lOW1cEo3CM2v0XG4Nat8nI+YM7/f26VxXLw=="
     },
-    "prisma@7.9.1_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8": {
-      "integrity": "sha512-aPqePoZIqwlAchbgbFDO/wHqGB+7H1nj9gaM+OsL9h77S5S3TnLd9BgD3LnoeDikULo7cl2HSUrEyQ55Z7DYbg==",
+    "prisma@7.10.0_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8": {
+      "integrity": "sha512-o0ornyJOWgygVAzGCpr8PdXV8EJLHyVGDDUr/voBQt8Azzw8cYTByzzPGcA/m4tCkPcnJA8raEOv2CslsKhPEw==",
       "dependencies": [
         "@prisma/config",
         "@prisma/dev",
@@ -1961,8 +1965,8 @@
     "dependencies": [
       "jsr:@std/dotenv@~0.225.8",
       "npm:@ai-sdk/azure@^4.0.49",
-      "npm:@prisma/adapter-pg@^7.9.1",
-      "npm:@prisma/client@^7.9.1",
+      "npm:@prisma/adapter-pg@^7.10.0",
+      "npm:@prisma/client@^7.10.0",
       "npm:@sentry/cli@^3.6.2",
       "npm:@sentry/deno@^10.71.0",
       "npm:ai@^7.0.68",
@@ -1973,7 +1977,7 @@
       "npm:discord.js@^14.27.0",
       "npm:fastify@^5.12.1",
       "npm:parse-duration@^2.1.6",
-      "npm:prisma@^7.9.1",
+      "npm:prisma@^7.10.0",
       "npm:slash-create@7",
       "npm:slash-up@^1.4.2",
       "npm:zod@^4.4.3"
