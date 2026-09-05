@@ -7,7 +7,7 @@
     "npm:@prisma/client@^7.10.0": "7.10.0_prisma@7.10.0__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.71.0": "10.72.0",
-    "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
+    "npm:ai@^7.0.90": "7.0.93_zod@4.4.3",
     "npm:bullmq@^6.3.1": "6.3.2_pg@8.23.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
@@ -44,11 +44,11 @@
         "zod"
       ]
     },
-    "@ai-sdk/gateway@4.0.62_zod@4.4.3": {
-      "integrity": "sha512-zR3pustGWhw5eUZHG+fJZx/V/PBe+LxdDpc5hDFWxozG/3MB/+eY62jn+YiR+9uOH+Hx63e5zJoeKLfZfPktWQ==",
+    "@ai-sdk/gateway@4.0.75_zod@4.4.3": {
+      "integrity": "sha512-HOnhw3oXtBnboBF7kAKipjToCN6+5w6EuukiUKiULcxBitS+vbHRRv9IUBcq+Z1wkXcJjfywKrt5r++I6OYyXg==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.7",
-        "@ai-sdk/provider-utils@5.0.29_zod@4.4.3",
+        "@ai-sdk/provider@4.0.10",
+        "@ai-sdk/provider-utils@5.0.36_zod@4.4.3",
         "@vercel/oidc",
         "zod"
       ]
@@ -58,17 +58,6 @@
       "dependencies": [
         "@ai-sdk/provider@4.0.8",
         "@ai-sdk/provider-utils@5.0.33_zod@4.4.3",
-        "zod"
-      ]
-    },
-    "@ai-sdk/provider-utils@5.0.29_zod@4.4.3": {
-      "integrity": "sha512-7EIbwXiXKGa7EFk6tDZpuZBs6lxhEJpOuHeqrDb3Vd85uYdjwkdRuHnZDVDIIb2+QTSRmyph2NrXcbvuO/KAjQ==",
-      "dependencies": [
-        "@ai-sdk/provider@4.0.7",
-        "@standard-schema/spec",
-        "@workflow/serde",
-        "eventsource-parser",
-        "undici@7.29.0",
         "zod"
       ]
     },
@@ -83,8 +72,19 @@
         "zod"
       ]
     },
-    "@ai-sdk/provider@4.0.7": {
-      "integrity": "sha512-6or44XprPzKbr8zkmzosowSE0pxkvJcoojBL+mCZvPUt3kvXp3XSNqeVun9golb1acEfSo6yaEBRT18h2VU+1Q==",
+    "@ai-sdk/provider-utils@5.0.36_zod@4.4.3": {
+      "integrity": "sha512-MFXBn6XDyf37PNQAge/HTatPJE8Vmg/g/w4WPtjSV53jq8FKAzoaN5+43hsdQa9bqgN+/13jxug9ChvsG+godQ==",
+      "dependencies": [
+        "@ai-sdk/provider@4.0.10",
+        "@standard-schema/spec",
+        "@workflow/serde",
+        "eventsource-parser",
+        "undici@7.29.0",
+        "zod"
+      ]
+    },
+    "@ai-sdk/provider@4.0.10": {
+      "integrity": "sha512-fX2ENAc7iDpZ+Wp4+Rk06Usn/Ys7dI9uAkGv0jlF6XVrW13NkRWx5Ou+U6lIM2E1fTLkCs16GGrUAaVvroag7A==",
       "dependencies": [
         "json-schema"
       ]
@@ -860,12 +860,12 @@
     "abstract-logging@2.0.1": {
       "integrity": "sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA=="
     },
-    "ai@7.0.77_zod@4.4.3": {
-      "integrity": "sha512-muLtBSTAUCreR77L16w4AFBiX2gK/RNt84EKp8m03SN9+MfNlC5EGqYYttRjYKV3xe0a33yj1Zawj1EnjejIWw==",
+    "ai@7.0.93_zod@4.4.3": {
+      "integrity": "sha512-CJss6zb9mlltk/mCr8qom20NBnqEQxVawkqwtT62tCwsxilZpXfHNRMRwcS3XRpzdP1kEluVuDBUayYWEEd95g==",
       "dependencies": [
         "@ai-sdk/gateway",
-        "@ai-sdk/provider@4.0.7",
-        "@ai-sdk/provider-utils@5.0.29_zod@4.4.3",
+        "@ai-sdk/provider@4.0.10",
+        "@ai-sdk/provider-utils@5.0.36_zod@4.4.3",
         "zod"
       ]
     },
@@ -1969,7 +1969,7 @@
       "npm:@prisma/client@^7.10.0",
       "npm:@sentry/cli@^3.6.2",
       "npm:@sentry/deno@^10.71.0",
-      "npm:ai@^7.0.68",
+      "npm:ai@^7.0.90",
       "npm:bullmq@^6.3.1",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
