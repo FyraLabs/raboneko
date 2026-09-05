@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.71.0": "10.72.0",
     "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
-    "npm:bullmq@^6.3.1": "6.3.2_pg@8.23.0",
+    "npm:bullmq@^6.3.4": "6.3.4",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.53": "0.38.53",
@@ -924,18 +924,14 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.3.2_pg@8.23.0": {
-      "integrity": "sha512-jW4mEG1JOKewI2IhtuMery+kNhCs+EZp4qeNXeYRfueW7P4NFOStFGHOdsiJE9EO9Abz+JMrYlymb+r7fCbT7A==",
+    "bullmq@6.3.4": {
+      "integrity": "sha512-DpilB5sayCB8huCp4YuzVhJjxB4ieHidzu+GPgbcjPi3kQv0gdLoLnk+I+mMACDQ88rTbSiT+B4crmhWFGL9GA==",
       "dependencies": [
         "cron-parser",
         "msgpackr",
         "node-abort-controller",
-        "pg",
         "semver",
         "tslib"
-      ],
-      "optionalPeers": [
-        "pg"
       ]
     },
     "c12@3.3.4": {
@@ -1970,7 +1966,7 @@
       "npm:@sentry/cli@^3.6.2",
       "npm:@sentry/deno@^10.71.0",
       "npm:ai@^7.0.68",
-      "npm:bullmq@^6.3.1",
+      "npm:bullmq@^6.3.4",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.53",
