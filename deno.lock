@@ -2,12 +2,12 @@
   "version": "5",
   "specifiers": {
     "jsr:@std/dotenv@~0.225.8": "0.225.8",
-    "npm:@ai-sdk/azure@^4.0.49": "4.0.53_zod@4.4.3",
+    "npm:@ai-sdk/azure@^4.0.49": "4.0.53_zod@4.5.4",
     "npm:@prisma/adapter-pg@^7.10.0": "7.10.0",
     "npm:@prisma/client@^7.10.0": "7.10.0_prisma@7.10.0__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.6.2": "3.6.2",
     "npm:@sentry/deno@^10.71.0": "10.72.0",
-    "npm:ai@^7.0.68": "7.0.77_zod@4.4.3",
+    "npm:ai@^7.0.68": "7.0.77_zod@4.5.4",
     "npm:bullmq@^6.3.1": "6.3.2_pg@8.23.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
@@ -18,7 +18,7 @@
     "npm:prisma@^7.10.0": "7.10.0_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:slash-create@7": "7.0.0_fastify@5.10.0",
     "npm:slash-up@^1.4.2": "1.4.2_fastify@5.10.0",
-    "npm:zod@^4.4.3": "4.4.3"
+    "npm:zod@^4.5.4": "4.5.4"
   },
   "jsr": {
     "@std/dotenv@0.225.8": {
@@ -26,42 +26,42 @@
     }
   },
   "npm": {
-    "@ai-sdk/azure@4.0.53_zod@4.4.3": {
+    "@ai-sdk/azure@4.0.53_zod@4.5.4": {
       "integrity": "sha512-A8tPuNlhrxbuhdvreK/8+LLrPCAvpgWSc6bga9+Hx1fmr2ZkXmXwCAzVaJR5cz6cA35dRYOU2YiXO6egvvuaTw==",
       "dependencies": [
         "@ai-sdk/deepseek",
         "@ai-sdk/openai",
         "@ai-sdk/provider@4.0.8",
-        "@ai-sdk/provider-utils@5.0.33_zod@4.4.3",
+        "@ai-sdk/provider-utils@5.0.33_zod@4.5.4",
         "zod"
       ]
     },
-    "@ai-sdk/deepseek@3.0.36_zod@4.4.3": {
+    "@ai-sdk/deepseek@3.0.36_zod@4.5.4": {
       "integrity": "sha512-W7GntNu2hsPBgimJl7/rKFviikILz2VP+7KnlN4ij9+8PEnwJrM7Dnm/2/vPoG/CHba2ZU6uczTR4DBBC0g7Zg==",
       "dependencies": [
         "@ai-sdk/provider@4.0.8",
-        "@ai-sdk/provider-utils@5.0.33_zod@4.4.3",
+        "@ai-sdk/provider-utils@5.0.33_zod@4.5.4",
         "zod"
       ]
     },
-    "@ai-sdk/gateway@4.0.62_zod@4.4.3": {
+    "@ai-sdk/gateway@4.0.62_zod@4.5.4": {
       "integrity": "sha512-zR3pustGWhw5eUZHG+fJZx/V/PBe+LxdDpc5hDFWxozG/3MB/+eY62jn+YiR+9uOH+Hx63e5zJoeKLfZfPktWQ==",
       "dependencies": [
         "@ai-sdk/provider@4.0.7",
-        "@ai-sdk/provider-utils@5.0.29_zod@4.4.3",
+        "@ai-sdk/provider-utils@5.0.29_zod@4.5.4",
         "@vercel/oidc",
         "zod"
       ]
     },
-    "@ai-sdk/openai@4.0.51_zod@4.4.3": {
+    "@ai-sdk/openai@4.0.51_zod@4.5.4": {
       "integrity": "sha512-ByLpf4FrmiAFFV/hI2f3EwtuRR+e0AWttik2UsUgTpS10KIGEOvdO6RSMcMcDINQyqIQh8iCb9V7MC/6RtmDsg==",
       "dependencies": [
         "@ai-sdk/provider@4.0.8",
-        "@ai-sdk/provider-utils@5.0.33_zod@4.4.3",
+        "@ai-sdk/provider-utils@5.0.33_zod@4.5.4",
         "zod"
       ]
     },
-    "@ai-sdk/provider-utils@5.0.29_zod@4.4.3": {
+    "@ai-sdk/provider-utils@5.0.29_zod@4.5.4": {
       "integrity": "sha512-7EIbwXiXKGa7EFk6tDZpuZBs6lxhEJpOuHeqrDb3Vd85uYdjwkdRuHnZDVDIIb2+QTSRmyph2NrXcbvuO/KAjQ==",
       "dependencies": [
         "@ai-sdk/provider@4.0.7",
@@ -72,7 +72,7 @@
         "zod"
       ]
     },
-    "@ai-sdk/provider-utils@5.0.33_zod@4.4.3": {
+    "@ai-sdk/provider-utils@5.0.33_zod@4.5.4": {
       "integrity": "sha512-TfjJqJmRsQyxAlb+3hGmP1o1xLUIT79yhOgtJuTF4hqsB37IC3CufGsuFhU04EeTOg7R9iptQ6Bzm0MW0n/c3g==",
       "dependencies": [
         "@ai-sdk/provider@4.0.8",
@@ -860,12 +860,12 @@
     "abstract-logging@2.0.1": {
       "integrity": "sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA=="
     },
-    "ai@7.0.77_zod@4.4.3": {
+    "ai@7.0.77_zod@4.5.4": {
       "integrity": "sha512-muLtBSTAUCreR77L16w4AFBiX2gK/RNt84EKp8m03SN9+MfNlC5EGqYYttRjYKV3xe0a33yj1Zawj1EnjejIWw==",
       "dependencies": [
         "@ai-sdk/gateway",
         "@ai-sdk/provider@4.0.7",
-        "@ai-sdk/provider-utils@5.0.29_zod@4.4.3",
+        "@ai-sdk/provider-utils@5.0.29_zod@4.5.4",
         "zod"
       ]
     },
@@ -1957,8 +1957,8 @@
         "graphmatch"
       ]
     },
-    "zod@4.4.3": {
-      "integrity": "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="
+    "zod@4.5.4": {
+      "integrity": "sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA=="
     }
   },
   "workspace": {
@@ -1980,7 +1980,7 @@
       "npm:prisma@^7.10.0",
       "npm:slash-create@7",
       "npm:slash-up@^1.4.2",
-      "npm:zod@^4.4.3"
+      "npm:zod@^4.5.4"
     ]
   }
 }
