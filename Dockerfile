@@ -27,6 +27,7 @@ RUN chown -R deno node_modules
 # Run Raboneko
 USER deno
 EXPOSE 3000/tcp
+ENV HEALTH_PORT="3000"
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD deno eval "Deno.exit((await fetch('http://localhost:3000')).ok ? 0 : 1)"
 CMD deno run -P prisma migrate deploy && deno run start
