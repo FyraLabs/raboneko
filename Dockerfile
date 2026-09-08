@@ -29,4 +29,4 @@ USER deno
 EXPOSE 3000/tcp
 HEALTHCHECK --interval=30s --timeout=3s \
   CMD deno eval "Deno.exit((await fetch('http://localhost:3000')).ok ? 0 : 1)"
-ENTRYPOINT [ "deno", "task", "start" ]
+CMD deno run -P prisma migrate deploy && deno run start
