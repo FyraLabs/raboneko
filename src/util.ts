@@ -39,6 +39,7 @@ export const getRedisConnection = (): ConnectionOptions => ({
   host: process.env.REDIS_HOST!,
   port: Number.parseInt(process.env.REDIS_PORT!, 10),
   db: process.env.REDIS_DB ? Number.parseInt(process.env.REDIS_DB!, 10) : 0,
+  username: process.env.REDIS_USERNAME,
   password: process.env.REDIS_PASSWORD,
 });
 
