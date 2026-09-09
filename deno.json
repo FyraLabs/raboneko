@@ -21,6 +21,7 @@
     "discord-api-types": "npm:discord-api-types@^0.38.54",
     "discord.js": "npm:discord.js@^14.27.0",
     "fastify": "npm:fastify@^5.12.1",
+    "ioredis": "npm:ioredis@^6.0.0",
     "parse-duration": "npm:parse-duration@^2.1.6",
     "prisma": "npm:prisma@^7.10.0",
     "slash-create": "npm:slash-create@^7.0.0",
