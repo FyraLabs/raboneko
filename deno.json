@@ -26,7 +26,7 @@
     "prisma": "npm:prisma@^7.10.0",
     "slash-create": "npm:slash-create@^7.0.0",
     "slash-up": "npm:slash-up@^1.4.2",
-    "zod": "npm:zod@^4.5.4"
+    "zod": "npm:zod@^4.6.5"
   },
   "permissions": {
     "default": {
