@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.7.0": "3.7.0",
     "npm:@sentry/deno@^10.74.0": "10.74.0",
     "npm:ai@^7.0.91": "7.0.93_zod@4.5.4",
-    "npm:bullmq@^6.3.4": "6.3.4_ioredis@6.0.0",
+    "npm:bullmq@^6.3.6": "6.3.8_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.55": "0.38.55",
@@ -928,8 +928,8 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.3.4_ioredis@6.0.0": {
-      "integrity": "sha512-DpilB5sayCB8huCp4YuzVhJjxB4ieHidzu+GPgbcjPi3kQv0gdLoLnk+I+mMACDQ88rTbSiT+B4crmhWFGL9GA==",
+    "bullmq@6.3.8_ioredis@6.0.0": {
+      "integrity": "sha512-09zcOQ1uycyCK2C9iY2Pm+/JPa/gIXiZqGBUiIlO1v3VshwBgarmAgWRTWDL/IAvI8NFE1zqrkdKFgRfXHHM5A==",
       "dependencies": [
         "cron-parser",
         "ioredis",
@@ -1028,8 +1028,8 @@
     "cookie@1.1.1": {
       "integrity": "sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ=="
     },
-    "cron-parser@5.10.0": {
-      "integrity": "sha512-izNAxJyRWUP8ljBoDSub5WyrVOUlT4SLGShswE7eoRBpp6QUsSycYxLBMJlbshgPBMcPT/nrfgjNY2918ayv2A==",
+    "cron-parser@5.10.1": {
+      "integrity": "sha512-pKRrRagItwk9rGIStcUyMxFX34x56zoX3KDf9HJ4ttwkXIK1qxK63EvXvEDmlxI9AdPJ+Y7TEKRftRlW5eSS7A==",
       "dependencies": [
         "luxon"
       ]
@@ -2003,7 +2003,7 @@
       "npm:@sentry/cli@^3.7.0",
       "npm:@sentry/deno@^10.74.0",
       "npm:ai@^7.0.91",
-      "npm:bullmq@^6.3.4",
+      "npm:bullmq@^6.3.6",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.55",
