@@ -11,7 +11,7 @@
     "npm:bullmq@^6.3.8": "6.3.9_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
-    "npm:discord-api-types@~0.38.55": "0.38.55",
+    "npm:discord-api-types@~0.38.56": "0.38.56",
     "npm:discord.js@^14.27.0": "14.27.0",
     "npm:fastify@^5.12.5": "5.12.5",
     "npm:ioredis@6": "6.0.0",
@@ -1159,8 +1159,8 @@
     "detect-libc@2.1.2": {
       "integrity": "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ=="
     },
-    "discord-api-types@0.38.55": {
-      "integrity": "sha512-ytuaRTzdnHUCXJ6KjL9MrItQX0xKncBKEeYI1Bst4+ud47eejH3cG6gaesYakjpPcUhh68XYS2YwGq3mmujFsA=="
+    "discord-api-types@0.38.56": {
+      "integrity": "sha512-Hti4RZsGvF5C7SM8rF2MDHtIm0Hyfrlk84GpEA29nj91tvVVMvX+oQSCodu10t2ZcjFGofq8TX0YyC04B2E69Q=="
     },
     "discord.js@14.27.0": {
       "integrity": "sha512-qHbFlFG2N7y3LjPySYsL6A1+BnX6bkTVgo842EX0CqVPk/KTMwZkojPHEXKsQUpWZNyz5BISNHK1cPpQw0+m4A==",
@@ -2016,7 +2016,7 @@
       "npm:bullmq@^6.3.8",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
-      "npm:discord-api-types@~0.38.55",
+      "npm:discord-api-types@~0.38.56",
       "npm:discord.js@^14.27.0",
       "npm:fastify@^5.12.5",
       "npm:ioredis@6",
