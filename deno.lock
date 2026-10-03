@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.8.0": "3.8.0",
     "npm:@sentry/deno@^11.1.0": "11.4.0",
     "npm:ai@^7.0.112": "7.0.116_zod@4.6.5",
-    "npm:bullmq@^6.3.8": "6.3.9_ioredis@6.0.0",
+    "npm:bullmq@^6.3.10": "6.3.11_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.56": "0.38.56",
@@ -938,8 +938,8 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.3.9_ioredis@6.0.0": {
-      "integrity": "sha512-wBGk4tHZRFcQayZlC5DPRxg2EFfCqhgkJq0uQ8EvufMgh2hYmPeH8tK+1U4ffimNmnJzTUhwwW1PNUIQMhvSpQ==",
+    "bullmq@6.3.11_ioredis@6.0.0": {
+      "integrity": "sha512-ylSY3FYil6E9IjqVtT+WHcZvS1rgTZ0L3Aev62u45NXQFe+H37a1AuC3WDATR7ScNDet1Ah8MnP3lf8XaUbPUw==",
       "dependencies": [
         "cron-parser",
         "ioredis",
@@ -2013,7 +2013,7 @@
       "npm:@sentry/cli@^3.8.0",
       "npm:@sentry/deno@^11.1.0",
       "npm:ai@^7.0.112",
-      "npm:bullmq@^6.3.8",
+      "npm:bullmq@^6.3.10",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.56",
