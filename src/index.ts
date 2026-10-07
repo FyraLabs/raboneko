@@ -40,7 +40,11 @@ creator.on(
 
 http
   .createServer((_, res) => {
-    res.writeHead(200);
+    if (client.isReady()) {
+      res.writeHead(200);
+    } else {
+      res.writeHead(503);
+    }
     res.end();
   })
   .listen(process.env.HEALTH_PORT);
