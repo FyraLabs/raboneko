@@ -35,6 +35,10 @@ export const getLoggingChannel = async (): Promise<Channel> =>
   (await client.channels.fetch(process.env.LOGGING_CHANNEL_ID!)) ??
     throwError("Logging channel not found");
 
+export const getModeratorsChannel = async (): Promise<Channel> =>
+  (await client.channels.fetch(process.env.MODERATORS_CHANNEL_ID!)) ??
+    throwError("Moderators channel not found");
+
 export const getRedisConnection = (): ConnectionOptions => ({
   host: process.env.REDIS_HOST!,
   port: Number.parseInt(process.env.REDIS_PORT!, 10),
