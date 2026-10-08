@@ -1,36 +1,47 @@
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import { convertFromCelsius, convertToCelsius, formatTemperatureUnit, TemperatureUnit } from '../util.ts';
+import {
+  CommandContext,
+  CommandOptionType,
+  SlashCommand,
+  SlashCreator,
+} from "slash-create";
+import {
+  convertFromCelsius,
+  convertToCelsius,
+  formatTemperatureUnit,
+  TemperatureUnit,
+} from "../util.ts";
 
 const unitChoices = [
-  { name: 'Celsius', value: TemperatureUnit.Celsius },
-  { name: 'Fahrenheit', value: TemperatureUnit.Fahrenheit },
-  { name: 'Kelvin', value: TemperatureUnit.Kelvin },
+  { name: "Celsius", value: TemperatureUnit.Celsius },
+  { name: "Fahrenheit", value: TemperatureUnit.Fahrenheit },
+  { name: "Kelvin", value: TemperatureUnit.Kelvin },
 ];
 
 export class Temperature extends SlashCommand {
   public constructor(creator: SlashCreator) {
     super(creator, {
-      name: 'temperature',
-      description: 'Convert a temperature between Celsius, Fahrenheit, and Kelvin',
+      name: "temperature",
+      description:
+        "Convert a temperature between Celsius, Fahrenheit, and Kelvin",
       deferEphemeral: true,
       options: [
         {
           type: CommandOptionType.NUMBER,
-          name: 'value',
-          description: 'The temperature value to convert',
+          name: "value",
+          description: "The temperature value to convert",
           required: true,
         },
         {
           type: CommandOptionType.STRING,
-          name: 'from',
-          description: 'The unit to convert from',
+          name: "from",
+          description: "The unit to convert from",
           required: true,
           choices: unitChoices,
         },
         {
           type: CommandOptionType.STRING,
-          name: 'to',
-          description: 'The unit to convert to',
+          name: "to",
+          description: "The unit to convert to",
           required: false,
           choices: unitChoices,
         },
@@ -55,7 +66,9 @@ export class Temperature extends SlashCommand {
 
     if (to === from) {
       await ctx.sendFollowUp(
-        `Nyu~ it's already in ${formatTemperatureUnit(to, true)}! Did you think I wouldn't notice? :3`,
+        `Nyu~ it's already in ${
+          formatTemperatureUnit(to, true)
+        }! Did you think I wouldn't notice? :3`,
       );
       return;
     }
@@ -71,7 +84,9 @@ export class Temperature extends SlashCommand {
     const result = convertFromCelsius(celsius, to);
 
     // Avoid floating point artifacts like 32.00000000000001
-    const prettyResult = Number.isInteger(result) ? result : parseFloat(result.toFixed(2));
+    const prettyResult = Number.isInteger(result)
+      ? result
+      : parseFloat(result.toFixed(2));
 
     await ctx.send(`${value}${from} is ${prettyResult}${to}`);
   }

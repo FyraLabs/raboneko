@@ -43,3 +43,25 @@ model Reminder {
   // The Discord ID of the message that was sent to the user, to remind them of the reminder
   reminderMessageID String? @unique
 }
+
+model StaffDailyReminder {
+  userID            String    @id
+  githubUsername    String?   @unique
+  optedIn           Boolean   @default(false)
+  time              String    @default("17:00")
+  timezone          String    @default("America/Chicago")
+  lastSentDate      String?
+  lastGithubCheckAt DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model GithubContribution {
+  deliveryID     String   @id
+  githubUsername String
+  repository     String
+  eventType      String
+  occurredAt     DateTime
+
+  @@index([occurredAt])
+}
