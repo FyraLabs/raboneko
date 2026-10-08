@@ -4,6 +4,7 @@
     "sync": "slash-up sync",
     "sync:dev": "slash-up sync -e development",
     "generate": "prisma generate",
+    "migrate": "prisma migrate deploy",
     "start": "deno run -P --unsafe-proto src/index.ts",
     "dev": "deno watch -P --unsafe-proto --watch --no-clear-screen src/index.ts"
   },
@@ -39,8 +40,5 @@
       "run": true
     }
   },
-  "allowScripts": [
-    "npm:@prisma/engines@",
-    "npm:prisma"
-  ]
+  "allowScripts": ["npm:@prisma/engines@", "npm:prisma"]
 }

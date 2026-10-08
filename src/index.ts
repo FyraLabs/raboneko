@@ -10,6 +10,7 @@ import client from "./client.ts";
 import "./scheduler.ts";
 import RaboSlashCreator from "./creator.ts";
 import * as http from "http";
+import { handleGitHubWebhook } from "./modules/github.ts";
 
 const logger = new CatLoggr().setLevel(
   process.env.COMMANDS_DEBUG === "true" ? "debug" : "info",
@@ -39,7 +40,11 @@ creator.on(
 );
 
 http
-  .createServer((_, res) => {
+  .createServer((req, res) => {
+    if (req.url?.split("?")[0] === "/github/webhook") {
+      void handleGitHubWebhook(req, res);
+      return;
+    }
     if (client.isReady()) {
       res.writeHead(200);
     } else {

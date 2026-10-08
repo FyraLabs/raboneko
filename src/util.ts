@@ -51,24 +51,30 @@ export const containsWord = (msg: Message, word: string): boolean => {
 export const userURL = (id: string) => `https://discord.com/users/${id}`;
 
 export const enum TemperatureUnit {
-  Celsius = 'ºC',
-  Fahrenheit = 'ºF',
-  Kelvin = 'K',
+  Celsius = "ºC",
+  Fahrenheit = "ºF",
+  Kelvin = "K",
 }
 
-export const formatTemperatureUnit = (unit: TemperatureUnit, long = false): string => {
+export const formatTemperatureUnit = (
+  unit: TemperatureUnit,
+  long = false,
+): string => {
   if (!long) return unit;
   switch (unit) {
     case TemperatureUnit.Celsius:
-      return 'Celsius';
+      return "Celsius";
     case TemperatureUnit.Fahrenheit:
-      return 'Fahrenheit';
+      return "Fahrenheit";
     case TemperatureUnit.Kelvin:
-      return 'Kelvin';
+      return "Kelvin";
   }
 };
 
-export const convertFromCelsius = (celsius: number, to: TemperatureUnit): number => {
+export const convertFromCelsius = (
+  celsius: number,
+  to: TemperatureUnit,
+): number => {
   switch (to) {
     case TemperatureUnit.Celsius:
       return celsius;
@@ -79,7 +85,10 @@ export const convertFromCelsius = (celsius: number, to: TemperatureUnit): number
   }
 };
 
-export const convertToCelsius = (value: number, from: TemperatureUnit): number => {
+export const convertToCelsius = (
+  value: number,
+  from: TemperatureUnit,
+): number => {
   switch (from) {
     case TemperatureUnit.Celsius:
       return value;
