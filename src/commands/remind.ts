@@ -214,13 +214,29 @@ export default class Remind extends SlashCommand {
       }
       case "delete": {
         const options = ctx.options[ctx.subcommands[0]];
-        const reminder = await client.reminder.delete({
+        const reminder_id = options.reminder;
+        if (typeof reminder_id !== "number") {
+          // We only get here if the user is being silly
+          return;
+        }
+
+        const reminder = await client.reminder.findFirst({
           where: {
             userID: ctx.user.id,
-            id: options.reminder,
+            id: reminder_id,
           },
         });
-        await ctx.sendFollowUp(`Deleted \`${reminder.content}\`!`);
+
+        if (!reminder) {
+          await ctx.sendFollowUp("Nyo reminder could be found");
+        } else {
+          await client.reminder.delete({
+            where: {
+              id: reminder.id,
+            },
+          });
+          await ctx.sendFollowUp(`Deleted \`${reminder.content}\`!`);
+        }
       }
     }
   }
