@@ -6,7 +6,7 @@
     "npm:@prisma/adapter-pg@^7.10.0": "7.10.0",
     "npm:@prisma/client@^7.10.0": "7.10.0_prisma@7.10.0__@types+react@19.2.18__react@19.2.8__react-dom@19.2.8___react@19.2.8_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
     "npm:@sentry/cli@^3.8.0": "3.8.0",
-    "npm:@sentry/deno@^11.4.0": "11.6.0",
+    "npm:@sentry/deno@^11.8.0": "11.8.0",
     "npm:ai@^7.0.123": "7.0.127_zod@4.6.5",
     "npm:bullmq@^6.3.15": "6.3.16_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
@@ -637,17 +637,17 @@
       "scripts": true,
       "bin": true
     },
-    "@sentry/conventions@0.26.0": {
-      "integrity": "sha512-ttSRcoLf2kIENDIFzH12aJaVMdxnidMYLvVNwEX/JjXfXaQot8u5M47QmgAFOOhVJ4nQ2uU8wTCh+fwSPrrCfg=="
+    "@sentry/conventions@0.27.0": {
+      "integrity": "sha512-Mrqd/o7n/z7qWSYfQQA7x4fFTA0IqOG6JNsbBpnC97khPwZk7n6DPtOO7YgaYplSl8R8QLRbBz9Xv2lVhToSAg=="
     },
-    "@sentry/core@11.6.0": {
-      "integrity": "sha512-PbITT1kfJYKJiS9fH4ZtOcwIONKyt+tUsTZSPtcAjPdkUDOzMKT61MkUa1Ze07VzNtLALT24ZdUOc6d9K4YoKA==",
+    "@sentry/core@11.8.0": {
+      "integrity": "sha512-4MVTthk6C/1oQFjbVIfygHyNkx2YGbwNLml0kJji0vjJXy6ZNls9zdIp0FTBTi4e3189IcSc5OXD4qcJdmEeKA==",
       "dependencies": [
         "@sentry/conventions"
       ]
     },
-    "@sentry/deno@11.6.0": {
-      "integrity": "sha512-ItyN6/6vOiUqktaE1e58GSuXRFNR0gyiTwgdj/sOxQJn4/dEdnHPsejDRbUxPy4UWn0PvCfajv8aeymgTqy3wg==",
+    "@sentry/deno@11.8.0": {
+      "integrity": "sha512-6jTT8FKS+fB+alFCmv+nJk8GYwyzb5qj+3BiSs5KeiQzylKqqxn4EO6UvddrVI+vZC15MdwiRmsYAv/ddkclig==",
       "dependencies": [
         "@opentelemetry/api",
         "@sentry/conventions",
@@ -656,15 +656,15 @@
         "@sentry/server-utils"
       ]
     },
-    "@sentry/server-runtime-injection@11.6.0": {
-      "integrity": "sha512-3plQzwQfvz4HJkXLDfr5VuQQL5vyjar7RKn7UwFne3jc+9OSXRkxkZ6S0Z3RdBgbaFO1GkFwf/mFNX4H8nNcuw==",
+    "@sentry/server-runtime-injection@11.8.0": {
+      "integrity": "sha512-4uB4E8+9ni5NcJ463aYK/+n1hTMw/vSt4s+AkQ84CKigRDwv2FNNnD1AWpipWNj/xEQ6eQbUitGl7wg7/Ri8Pg==",
       "dependencies": [
         "@sentry/core",
         "@sentry/server-utils"
       ]
     },
-    "@sentry/server-utils@11.6.0": {
-      "integrity": "sha512-pVpGqwxBOXDMSngxTVARRlYyEXEfKA3WU1ENCdgLCeJ4xJ4vNRf4ODGXYPvXBk0zkt2NZZFvray2JHXIeYG+tg==",
+    "@sentry/server-utils@11.8.0": {
+      "integrity": "sha512-2MRFz1rXxnuDGafl6o/itwKHZeZn5hUZYeXNbQK012uO/a2pXhEc8Zh3FeO5L4tjGrIWHx419saAFnKwbVC2IQ==",
       "dependencies": [
         "@opentelemetry/api",
         "@sentry/conventions",
@@ -1994,7 +1994,7 @@
       "npm:@prisma/adapter-pg@^7.10.0",
       "npm:@prisma/client@^7.10.0",
       "npm:@sentry/cli@^3.8.0",
-      "npm:@sentry/deno@^11.4.0",
+      "npm:@sentry/deno@^11.8.0",
       "npm:ai@^7.0.123",
       "npm:bullmq@^6.3.15",
       "npm:cat-loggr@^1.2.2",
