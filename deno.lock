@@ -2,7 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@std/dotenv@~0.225.8": "0.225.8",
-    "npm:@ai-sdk/azure@^4.0.104": "4.0.106_zod@4.6.7",
+    "npm:@ai-sdk/azure@^4.0.107": "4.0.109_zod@4.6.7",
     "npm:@prisma/adapter-pg@^7.10.1": "7.10.1",
     "npm:@prisma/client@^7.10.1": "7.10.1_prisma@7.10.1__@types+node@26.6.5__@types+react@19.3.0__react@19.3.1__react-dom@19.3.1___react@19.3.1_@types+node@26.6.5_@types+react@19.3.0_react@19.3.1_react-dom@19.3.1__react@19.3.1",
     "npm:@sentry/cli@^3.8.0": "3.8.0",
@@ -27,67 +27,50 @@
     }
   },
   "npm": {
-    "@ai-sdk/azure@4.0.106_zod@4.6.7": {
-      "integrity": "sha512-/Iiwia6R9pGJDcgfcaf0rp/6H64k0fstLDip7jISoneClK114Wh9v5M7Ba84wY/zCWa5HcZbz2gZz2rWhQ4KVg==",
+    "@ai-sdk/azure@4.0.109_zod@4.6.7": {
+      "integrity": "sha512-pBqQVjBKdAJ0dGubwj0O1uq3STT9IXqStcV0YIqBttueD4TXP9tsEQkNSvVCV8rje0XuiSc1MgA4ZI5sT652IA==",
       "dependencies": [
         "@ai-sdk/deepseek",
         "@ai-sdk/openai",
-        "@ai-sdk/provider@4.0.31",
-        "@ai-sdk/provider-utils@5.0.64_zod@4.6.7",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils",
         "zod"
       ]
     },
-    "@ai-sdk/deepseek@3.0.69_zod@4.6.7": {
-      "integrity": "sha512-NltFqxQhB0jGb0kY+Nevf2WnOkNkeY0cK5uiDMjgoFQv10VvzWahJYyRiWGivG1TQ0Jmi/3dsK2V7/wTWocsQQ==",
+    "@ai-sdk/deepseek@3.0.72_zod@4.6.7": {
+      "integrity": "sha512-VJD5MBdQLbDnBDwd4Li0Elj0tg/Yos7kTDn1ZhAz1H1yGAh5jg62CZbPL0Fx+Ib44ywRvhVq61t5mbqEeGFs3g==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.31",
-        "@ai-sdk/provider-utils@5.0.64_zod@4.6.7",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils",
         "zod"
       ]
     },
     "@ai-sdk/gateway@4.0.125_zod@4.6.7": {
       "integrity": "sha512-9raNdkENebDxVl4piGntpQgOBHB62K1rC87KceV8kkGOc/g7s6lwbxN7C6QTqXYJaM+h1Lnm64MDgnHAmzUApg==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.33",
-        "@ai-sdk/provider-utils@5.0.67_zod@4.6.7",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils",
         "@vercel/oidc",
         "zod"
       ]
     },
-    "@ai-sdk/openai@4.0.98_zod@4.6.7": {
-      "integrity": "sha512-RvrbLblENKj//cQWlzsbmVKvvV8ZUq8FFB8/68ODWnu5sS3T+lUmRoKOM7NjR2UIX0/7YDrtauJr9fxQ0cwkug==",
+    "@ai-sdk/openai@4.0.101_zod@4.6.7": {
+      "integrity": "sha512-GZ57KdfEfdHcM+Kkf1KsXq8T2KM2uG6BwPvWzL25F5uKjozpflol6hjxveKEf9v9YtbaKYi+t1PeaQ1g0jOThw==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.31",
-        "@ai-sdk/provider-utils@5.0.64_zod@4.6.7",
-        "zod"
-      ]
-    },
-    "@ai-sdk/provider-utils@5.0.64_zod@4.6.7": {
-      "integrity": "sha512-BDU8rDR6mBR+na5U/Dj4B33LX980x200lqhBGRIOxxx1NFunoixuvvweqIB+sCsCoFC8cGCsa82Ce2fKoAPOqw==",
-      "dependencies": [
-        "@ai-sdk/provider@4.0.31",
-        "@standard-schema/spec",
-        "@workflow/serde",
-        "eventsource-parser",
-        "undici@7.29.0",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils",
         "zod"
       ]
     },
     "@ai-sdk/provider-utils@5.0.67_zod@4.6.7": {
       "integrity": "sha512-EUzV6GXutGcesWKOY8tRKgijfuv1LUBpqAquMh5k0n74NCjDbca5d5ZG12qhVtM2X5UwM4B2ZMP2XpnAwZlA8Q==",
       "dependencies": [
-        "@ai-sdk/provider@4.0.33",
+        "@ai-sdk/provider",
         "@standard-schema/spec",
         "@workflow/serde",
         "eventsource-parser",
         "undici@7.29.0",
         "zod"
-      ]
-    },
-    "@ai-sdk/provider@4.0.31": {
-      "integrity": "sha512-3wJnwVTFg8SwOyoZCv+ov7Re2GB+7IQnU5a5MYJACrtiWDDUHgqTBeeesq2MB2ddgojzL8hgWleltwpAgtUqfg==",
-      "dependencies": [
-        "json-schema"
       ]
     },
     "@ai-sdk/provider@4.0.33": {
@@ -878,8 +861,8 @@
       "integrity": "sha512-cxQaE/17qhgqJcLCespbnyaN3c4IkGuNUtBXKSX1yTvlSsQ7ERV2ygFADMG7d+IWCUuvi7R8DrqAy9DGj0cgkg==",
       "dependencies": [
         "@ai-sdk/gateway",
-        "@ai-sdk/provider@4.0.33",
-        "@ai-sdk/provider-utils@5.0.67_zod@4.6.7",
+        "@ai-sdk/provider",
+        "@ai-sdk/provider-utils",
         "zod"
       ]
     },
@@ -2005,7 +1988,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/dotenv@~0.225.8",
-      "npm:@ai-sdk/azure@^4.0.104",
+      "npm:@ai-sdk/azure@^4.0.107",
       "npm:@prisma/adapter-pg@^7.10.1",
       "npm:@prisma/client@^7.10.1",
       "npm:@sentry/cli@^3.8.0",
