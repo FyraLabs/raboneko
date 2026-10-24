@@ -13,7 +13,7 @@
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.56": "0.38.56",
     "npm:discord.js@^14.27.0": "14.27.0",
-    "npm:fastify@^5.12.5": "5.12.5",
+    "npm:fastify@^5.12.7": "5.12.7",
     "npm:ioredis@6": "6.0.0",
     "npm:parse-duration@^2.1.9": "2.1.9",
     "npm:prisma@^7.10.0": "7.10.0_@types+react@19.2.18_react@19.2.8_react-dom@19.2.8__react@19.2.8",
@@ -1304,8 +1304,8 @@
         "toad-cache"
       ]
     },
-    "fastify@5.12.5": {
-      "integrity": "sha512-OB2k1dlxs5/NAABqeKV2FUHkSD2BbENsCak8yULVcymn3fHIPDVa9TI3SDnJSWYSllZmSYuZXy2gTnsT+Sut1A==",
+    "fastify@5.12.7": {
+      "integrity": "sha512-v4pEPsTRPuqlDIYiQFB+BHjVN4SdHX9u0ABk0ZDUKbbdY1vsNryUd1j4Z+jQEZajvYIVk047Kimva9/AJ79GYw==",
       "dependencies": [
         "@fastify/ajv-compiler",
         "@fastify/error",
@@ -2012,7 +2012,7 @@
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.56",
       "npm:discord.js@^14.27.0",
-      "npm:fastify@^5.12.5",
+      "npm:fastify@^5.12.7",
       "npm:ioredis@6",
       "npm:parse-duration@^2.1.9",
       "npm:prisma@^7.10.0",

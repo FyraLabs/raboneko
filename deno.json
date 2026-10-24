@@ -21,7 +21,7 @@
     "dayjs": "npm:dayjs@^1.11.23",
     "discord-api-types": "npm:discord-api-types@^0.38.56",
     "discord.js": "npm:discord.js@^14.27.0",
-    "fastify": "npm:fastify@^5.12.5",
+    "fastify": "npm:fastify@^5.12.7",
     "ioredis": "npm:ioredis@^6.0.0",
     "parse-duration": "npm:parse-duration@^2.1.9",
     "prisma": "npm:prisma@^7.10.0",
