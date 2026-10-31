@@ -15,7 +15,7 @@
     "npm:discord.js@^14.27.0": "14.27.0",
     "npm:fastify@^5.12.7": "5.12.7",
     "npm:ioredis@6": "6.0.0",
-    "npm:parse-duration@^2.1.9": "2.1.9",
+    "npm:parse-duration@^2.1.10": "2.1.11",
     "npm:prisma@^7.10.1": "7.10.1_@types+node@26.6.5_@types+react@19.3.0_react@19.3.1_react-dom@19.3.1__react@19.3.1",
     "npm:slash-create@7": "7.0.0_fastify@5.10.0",
     "npm:slash-up@^1.4.2": "1.4.2_fastify@5.10.0",
@@ -1561,8 +1561,8 @@
         "p-limit"
       ]
     },
-    "parse-duration@2.1.9": {
-      "integrity": "sha512-q73c2djLx0fPIEcnW4Eb9LBZnH+NunMUzKh3/UwHyMz8LKxd4hF0OVq3nap8x0AevX1QEyCojF7QO/vAb6PFiA=="
+    "parse-duration@2.1.11": {
+      "integrity": "sha512-Z1Njr25ZXSDXdN6u5s2rtnn4khB/Yc+/p0kWhJFnvCWJhDsf5hAv7AO0xMa/nF7uafwwi2JxIp6TGx9CTX4diQ=="
     },
     "path-exists@4.0.0": {
       "integrity": "sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w=="
@@ -2016,7 +2016,7 @@
       "npm:discord.js@^14.27.0",
       "npm:fastify@^5.12.7",
       "npm:ioredis@6",
-      "npm:parse-duration@^2.1.9",
+      "npm:parse-duration@^2.1.10",
       "npm:prisma@^7.10.1",
       "npm:slash-create@7",
       "npm:slash-up@^1.4.2",
