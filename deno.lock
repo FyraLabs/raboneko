@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.8.0": "3.8.0",
     "npm:@sentry/deno@^11.8.0": "11.8.0",
     "npm:ai@^7.0.148": "7.0.152_zod@4.6.7",
-    "npm:bullmq@^6.3.15": "6.3.16_ioredis@6.0.0_pg@8.23.1",
+    "npm:bullmq@^6.5.0": "6.5.3_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.57": "0.38.57",
@@ -921,20 +921,18 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.3.16_ioredis@6.0.0_pg@8.23.1": {
-      "integrity": "sha512-savxnrdqckobnm31XWwCKTAswkxrNIqLD/PsdwgYaDpst0UdULu/QjOtPdn86KNrBq8WoHKhJvbgGK13dgPJ8w==",
+    "bullmq@6.5.3_ioredis@6.0.0": {
+      "integrity": "sha512-XIgBXLfZH1faMw969AcLdTgDa2OegVYHbj+qGjkesAwGTr0ox0Wg57EComEIzkTKplLUgpENcNR0LM6sxIIiug==",
       "dependencies": [
         "cron-parser",
         "ioredis",
         "msgpackr",
         "node-abort-controller",
-        "pg",
         "semver",
         "tslib"
       ],
       "optionalPeers": [
-        "ioredis",
-        "pg"
+        "ioredis"
       ]
     },
     "c12@3.3.4": {
@@ -1493,8 +1491,8 @@
       "scripts": true,
       "bin": true
     },
-    "msgpackr@2.1.0": {
-      "integrity": "sha512-p/pBCVO63CsvvpkomUnNNag6+n38rULuDA6HHe70o2gtC8ODI52foF/4ko2qQcp6OiErJXTmrZeXmsGGHsIQNQ==",
+    "msgpackr@2.1.2": {
+      "integrity": "sha512-JHAdwubWNEadHQsFAib6uXOzKFxY8QOWHu9LCCksOINMC+TjgaKS2Tdrw7dW5SY0LLz8YK2/YqLSi2vigQt05w==",
       "optionalDependencies": [
         "msgpackr-extract"
       ]
@@ -1994,7 +1992,7 @@
       "npm:@sentry/cli@^3.8.0",
       "npm:@sentry/deno@^11.8.0",
       "npm:ai@^7.0.148",
-      "npm:bullmq@^6.3.15",
+      "npm:bullmq@^6.5.0",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.57",
