@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.8.2": "3.8.2",
     "npm:@sentry/deno@^11.9.0": "11.10.0",
     "npm:ai@^7.0.162": "7.0.164_zod@4.6.7",
-    "npm:bullmq@^6.5.0": "6.5.3_ioredis@6.0.0",
+    "npm:bullmq@^6.6.0": "6.7.1_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.57": "0.38.57",
@@ -335,33 +335,33 @@
     "@ioredis/commands@2.0.0": {
       "integrity": "sha512-vrx0AE/T0h7cRZwfo1M39Cr+ZhZrkf0V8mQN75wucKCxCLD9l/VX6no3gFvrLqD1IlG/1LtzWovqEw3t0Vr9zg=="
     },
-    "@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.4": {
-      "integrity": "sha512-LCkGo6JDfaBhgST7UpPWgNgLINpcpabaHfyz5OBx75nUYxBsaEPxjnyNjWpeb/xBup/682QnBfRBy2/LvPutZQ==",
+    "@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.7": {
+      "integrity": "sha512-2zPHLn+MuGJ6GP/5jDrwa9Jy0CI+D3Ibpvopf5SFfmc1G9gdofR4uB7YrJAAp4vodn/7iDOciyv8bgkRPLw7cA==",
       "os": ["darwin"],
       "cpu": ["arm64"]
     },
-    "@msgpackr-extract/msgpackr-extract-darwin-x64@3.0.4": {
-      "integrity": "sha512-zExlW9zUJKZH/tOtVMttwjKa4Xm/3KcNjnE3dPN92uCktwavMxpgCA3MoJK/DOnTWsQgo224OaST27/mPNAf+w==",
+    "@msgpackr-extract/msgpackr-extract-darwin-x64@3.0.7": {
+      "integrity": "sha512-of1miwFfEdgs5nythewsEoocfpbjzUf8PC996YDe3kAyv0ZJiMJs5NXlYhE6IdjxfNEPqUXj/BYBnpD8kRdfeQ==",
       "os": ["darwin"],
       "cpu": ["x64"]
     },
-    "@msgpackr-extract/msgpackr-extract-linux-arm64@3.0.4": {
-      "integrity": "sha512-dgX0P/9wGPJeHFBG+ZmhgE6bmtMt7NP5CRBGyyktpopdk/mW4POnrpQsSLtKI1dwpc+pPLuXHDh6vvskyQE/sw==",
+    "@msgpackr-extract/msgpackr-extract-linux-arm64@3.0.7": {
+      "integrity": "sha512-jcRydYARTW0gX5idJhxV7m3KkRUD7KtZLYFF1ZY18HrPqpGY0TCqPUTJCwka2kVfVOwfKs3ZmlPSmQb4S6xj7w==",
       "os": ["linux"],
       "cpu": ["arm64"]
     },
-    "@msgpackr-extract/msgpackr-extract-linux-arm@3.0.4": {
-      "integrity": "sha512-Tg3yX65f5GbtXLkrYEHE5oibZG9epyYWas7FogTTEJeDEF9JlXJzKgXaNhT3UXlTOeA+AfZpYZYZ0uPj7Cfquw==",
+    "@msgpackr-extract/msgpackr-extract-linux-arm@3.0.7": {
+      "integrity": "sha512-aDPbiEkFHs3H68705JKxJ15IT41wFdvDhba1pL8ygfdoshboL5dsXtiu76/CqhLWYneE+9hwBE+0abqNOiQ4Bw==",
       "os": ["linux"],
       "cpu": ["arm"]
     },
-    "@msgpackr-extract/msgpackr-extract-linux-x64@3.0.4": {
-      "integrity": "sha512-8TNXMEjJc3QEy7R/x1INhgiU+XakDAFUzBhaz7+Rbrs8NH5UQeHQxxmzsSBJGyV6I1jW79undiQm8tOI+D+8FQ==",
+    "@msgpackr-extract/msgpackr-extract-linux-x64@3.0.7": {
+      "integrity": "sha512-A9xOmARctmUvHrBj5GGzGAigsZFnqE4kld5oprX3PyPbkVALV4jwBc17gPZrhSOvnXQc81hE9K7S2hDUCgialA==",
       "os": ["linux"],
       "cpu": ["x64"]
     },
-    "@msgpackr-extract/msgpackr-extract-win32-x64@3.0.4": {
-      "integrity": "sha512-CmCXPQrkbwExx3j946/PtHWHbYJiCRBRDl4BlkRQcJB/YOwQxJRTpoo7aTsortjgoJ1x7opzTSxn7C+ASSLVjQ==",
+    "@msgpackr-extract/msgpackr-extract-win32-x64@3.0.7": {
+      "integrity": "sha512-PRBiOqK4mcR0rvm6nybO7pSOYRR2Zza0+43UK2IvbVGelzMqZViiZJmOWGuWOX678QKESO6YrHx36z43nSS6iQ==",
       "os": ["win32"],
       "cpu": ["x64"]
     },
@@ -938,8 +938,8 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.5.3_ioredis@6.0.0": {
-      "integrity": "sha512-XIgBXLfZH1faMw969AcLdTgDa2OegVYHbj+qGjkesAwGTr0ox0Wg57EComEIzkTKplLUgpENcNR0LM6sxIIiug==",
+    "bullmq@6.7.1_ioredis@6.0.0": {
+      "integrity": "sha512-WIm9+O2ULs4tcEeKBwlH2so7Vzs6/K2Ru+FFb0V/v3FAlBjj5yNk7kC2KOm0/yMpdE93SvgPR+FC0jznX6ce1g==",
       "dependencies": [
         "cron-parser",
         "ioredis",
@@ -1038,8 +1038,8 @@
     "cookie@1.1.1": {
       "integrity": "sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ=="
     },
-    "cron-parser@5.10.2": {
-      "integrity": "sha512-JfAYMY0LZaWQTuict8PhtF/ksSnq8xefSDmQUnnoqvkPYkU/y3UP0DTWzJKFBz0P1IXsDG8q0vY3zHkoFZOhvw==",
+    "cron-parser@5.10.3": {
+      "integrity": "sha512-Fwlmlgiyoj5e7XDCy5T3ueFd3imgt714k7xjAzhkOBUrUgQxWtsjS7kWSEN3efDX34bebxBJAmPoCSisHvjlpw==",
       "dependencies": [
         "luxon"
       ]
@@ -1306,7 +1306,6 @@
         "pino",
         "rfdc",
         "secure-json-parse",
-        "semver",
         "toad-cache"
       ]
     },
@@ -1492,8 +1491,8 @@
     "ms@2.1.3": {
       "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
     },
-    "msgpackr-extract@3.0.4": {
-      "integrity": "sha512-4kmO/MdyUIkLIvTPr8VHLil4AtoKIoniWPIEk5+CDy0xnWC84azhSFmuJ7PxZdsYtiP5kEeQsORAVIeMgxT+Hw==",
+    "msgpackr-extract@3.0.7": {
+      "integrity": "sha512-/dOQboWnkR1cjm88XyH/cGSivECGgyQu3814+bNUAq5wACQC8Ya/CViB9WApvWJ5Hya/JJQQmUeBFOZj8MLjGA==",
       "dependencies": [
         "node-gyp-build-optional-packages"
       ],
@@ -1508,8 +1507,8 @@
       "scripts": true,
       "bin": true
     },
-    "msgpackr@2.1.2": {
-      "integrity": "sha512-JHAdwubWNEadHQsFAib6uXOzKFxY8QOWHu9LCCksOINMC+TjgaKS2Tdrw7dW5SY0LLz8YK2/YqLSi2vigQt05w==",
+    "msgpackr@2.1.4": {
+      "integrity": "sha512-TvP18sX5U3MXoHHSUZen/FagaNTEJObyb8OlnJcNbqN6Ux/oCwYJrHhCOzi31bItyW/Efz1IDnRDKQ23j4ZuvA==",
       "optionalDependencies": [
         "msgpackr-extract"
       ]
@@ -1792,8 +1791,8 @@
     "secure-json-parse@4.1.0": {
       "integrity": "sha512-l4KnYfEyqYJxDwlNVyRfO2E4NTHfMKAWdUuA8J0yve2Dz/E/PdBepY03RvyJpssIpRFwJoCD55wA+mEDs6ByWA=="
     },
-    "semver@7.8.5": {
-      "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+    "semver@7.8.6": {
+      "integrity": "sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==",
       "bin": true
     },
     "set-cookie-parser@2.7.2": {
@@ -1923,8 +1922,8 @@
     "ts-mixer@6.0.4": {
       "integrity": "sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA=="
     },
-    "tslib@2.8.1": {
-      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="
+    "tslib@2.9.1": {
+      "integrity": "sha512-a4Ux9VKuIMHsOS7ENbEq6hK2ZGYIT27Rtl0E4eD9KqwxhKiQeMZE/9xb3IdYwWaSOyIBQLExhQgXDTYoiCxnWA=="
     },
     "tweetnacl@1.0.3": {
       "integrity": "sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw=="
@@ -2009,7 +2008,7 @@
       "npm:@sentry/cli@^3.8.2",
       "npm:@sentry/deno@^11.9.0",
       "npm:ai@^7.0.162",
-      "npm:bullmq@^6.5.0",
+      "npm:bullmq@^6.6.0",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.57",
