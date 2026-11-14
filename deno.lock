@@ -13,11 +13,11 @@
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.58": "0.38.59",
     "npm:discord.js@^14.28.1": "14.28.1",
-    "npm:fastify@^5.12.7": "5.12.7",
+    "npm:fastify@^5.12.8": "5.12.8",
     "npm:ioredis@6": "6.0.0",
     "npm:parse-duration@^2.1.11": "2.1.11",
     "npm:prisma@^7.10.1": "7.10.1_@types+node@26.6.5_@types+react@19.3.0_react@19.3.1_react-dom@19.3.1__react@19.3.1",
-    "npm:slash-create@^7.1.0": "7.1.0_fastify@5.12.7",
+    "npm:slash-create@^7.1.0": "7.1.0_fastify@5.12.8",
     "npm:slash-up@^1.4.2": "1.4.2_fastify@5.10.0",
     "npm:zod@^4.6.7": "4.6.7"
   },
@@ -416,7 +416,7 @@
         "@prisma/get-platform@7.2.0",
         "@prisma/query-plan-executor",
         "@prisma/streams-local",
-        "find-my-way",
+        "find-my-way@9.7.0",
         "foreground-child",
         "get-port-please",
         "pathe",
@@ -1300,7 +1300,6 @@
         "abstract-logging",
         "avvio",
         "fast-json-stringify",
-        "find-my-way",
         "light-my-request",
         "pino",
         "rfdc",
@@ -1308,8 +1307,8 @@
         "toad-cache"
       ]
     },
-    "fastify@5.12.7": {
-      "integrity": "sha512-v4pEPsTRPuqlDIYiQFB+BHjVN4SdHX9u0ABk0ZDUKbbdY1vsNryUd1j4Z+jQEZajvYIVk047Kimva9/AJ79GYw==",
+    "fastify@5.12.8": {
+      "integrity": "sha512-moP8exb2sCHLUbJkwp+I6C0padhy4D8lp0SdmzY7HhSdZuqm7O/u3o2aq7u8okaQ//33QDzj3G/u+FsSdB8Qzw==",
       "dependencies": [
         "@fastify/ajv-compiler",
         "@fastify/error",
@@ -1318,7 +1317,7 @@
         "abstract-logging",
         "avvio",
         "fast-json-stringify",
-        "find-my-way",
+        "find-my-way@9.10.0",
         "light-my-request",
         "pino",
         "process-warning@5.1.0",
@@ -1332,6 +1331,14 @@
       "integrity": "sha512-GGToxJ/w1x32s/D2EKND7kTil4n8OVk/9mycTc4VDza13lOvpUZTGX3mFSCtV9ksdGBVzvsyAVLM6mHFThxXxw==",
       "dependencies": [
         "reusify"
+      ]
+    },
+    "find-my-way@9.10.0": {
+      "integrity": "sha512-eru+uCPQ2g+nLBkf84MHP/KyNNMar0BDy0j+i8Fb72GF9/YHBZ58q7FODUtfVV7XU9nfRUHXSmaM8NmZcIbZ4Q==",
+      "dependencies": [
+        "fast-deep-equal",
+        "fast-querystring",
+        "safe-regex2"
       ]
     },
     "find-my-way@9.7.0": {
@@ -1826,17 +1833,17 @@
         "fastify@5.10.0"
       ]
     },
-    "slash-create@7.1.0_fastify@5.12.7": {
+    "slash-create@7.1.0_fastify@5.12.8": {
       "integrity": "sha512-0WAW6gP7RjGRwHAXNH8elv+izy3AyHoPXsTz6j+z4FiKyazWfC8LJb5naHvn/oLBNpnAWY+qn9jyGqIR8GHCTQ==",
       "dependencies": [
         "dequal",
         "eventemitter3",
-        "fastify@5.12.7",
+        "fastify@5.12.8",
         "tweetnacl",
         "undici@6.28.0"
       ],
       "optionalPeers": [
-        "fastify@5.12.7"
+        "fastify@5.12.8"
       ]
     },
     "slash-up@1.4.2_fastify@5.10.0": {
@@ -2013,7 +2020,7 @@
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.58",
       "npm:discord.js@^14.28.1",
-      "npm:fastify@^5.12.7",
+      "npm:fastify@^5.12.8",
       "npm:ioredis@6",
       "npm:parse-duration@^2.1.11",
       "npm:prisma@^7.10.1",
