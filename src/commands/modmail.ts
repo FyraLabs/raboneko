@@ -39,10 +39,13 @@ export class Modmail extends SlashCommand {
     await moderatorsChannel.send({
       content: moderatorRoleID ? `<@&${moderatorRoleID}>` : undefined,
       embeds: [embed],
-      allowedMentions: {
-        parse: [],
-        roles: moderatorRoleID ? [moderatorRoleID] : [],
-      },
+      allowedMentions: moderatorRoleID
+        ? {
+            roles: [moderatorRoleID],
+          }
+        : {
+            parse: [],
+          }
     });
 
     await ctx.sendFollowUp(
