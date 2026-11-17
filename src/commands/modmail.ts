@@ -34,6 +34,10 @@ export class Modmail extends SlashCommand {
           ctx.user.username,
         iconURL: ctx.member?.avatarURL ?? ctx.user.avatarURL,
         url: `https://discord.com/users/${ctx.user.id}`,
+      })
+      .setFields({
+        name: "Channel",
+        value: ctx.channel.mention
       });
     const moderatorRoleID = process.env.MODERATOR_ROLE_ID;
     await moderatorsChannel.send({
