@@ -2,7 +2,7 @@
   "version": "5",
   "specifiers": {
     "jsr:@std/dotenv@~0.225.8": "0.225.8",
-    "npm:@ai-sdk/azure@^4.0.122": "4.0.126_zod@4.6.7",
+    "npm:@ai-sdk/azure@^4.0.131": "4.0.133_zod@4.6.7",
     "npm:@prisma/adapter-pg@^7.10.1": "7.10.1",
     "npm:@prisma/client@^7.10.1": "7.10.1_prisma@7.10.1__@types+node@26.6.5__@types+react@19.3.0__react@19.3.1__react-dom@19.3.1___react@19.3.1_@types+node@26.6.5_@types+react@19.3.0_react@19.3.1_react-dom@19.3.1__react@19.3.1",
     "npm:@sentry/cli@^3.8.2": "3.8.2",
@@ -27,45 +27,55 @@
     }
   },
   "npm": {
-    "@ai-sdk/azure@4.0.126_zod@4.6.7": {
-      "integrity": "sha512-/oz8M5iI7JYodcGEsSL5DZpq/H9voER4HMqstdu2xJMaLyOZ5mLJL+VXuNckK96IQ6tl/FCDnm9HyjjEjdyg2A==",
+    "@ai-sdk/azure@4.0.133_zod@4.6.7": {
+      "integrity": "sha512-uqxv4kx+N6xCPg1Q6GY2wswhdC30RcGtvs1/i+BSrrgoG0MmNgnw3OGTJo38pWaEISK2dBw/diCfFNxSSxch2g==",
       "dependencies": [
         "@ai-sdk/deepseek",
         "@ai-sdk/openai",
-        "@ai-sdk/provider",
-        "@ai-sdk/provider-utils",
+        "@ai-sdk/provider@4.0.39",
+        "@ai-sdk/provider-utils@5.0.85_zod@4.6.7",
         "zod"
       ]
     },
-    "@ai-sdk/deepseek@3.0.87_zod@4.6.7": {
-      "integrity": "sha512-byIeauKjVE/G6FbMd5LnWk/NKr7RnD3rTL81OSrXBv4Fykijyn63JNeB8y+exxjYHPlWJedkR4FLLel5AYpFgw==",
+    "@ai-sdk/deepseek@3.0.91_zod@4.6.7": {
+      "integrity": "sha512-QLEJbJmkGA/kSP6COPrX4iNxgAe2egdUPj9fZULOgzHefhat/tL1K9zGZdqNOTo+Aj/3qR49aj3IiCOayvjCHA==",
       "dependencies": [
-        "@ai-sdk/provider",
-        "@ai-sdk/provider-utils",
+        "@ai-sdk/provider@4.0.39",
+        "@ai-sdk/provider-utils@5.0.85_zod@4.6.7",
         "zod"
       ]
     },
     "@ai-sdk/gateway@4.0.146_zod@4.6.7": {
       "integrity": "sha512-rJ5NQSyjnpo6HSBEYc9Ff6k1EROUuB7KeAfHYVbVDsk68ynY0Eb8JeWflZKXlT6NhYgqyCiBDxE5blXWACXMKQ==",
       "dependencies": [
-        "@ai-sdk/provider",
-        "@ai-sdk/provider-utils",
+        "@ai-sdk/provider@4.0.38",
+        "@ai-sdk/provider-utils@5.0.81_zod@4.6.7",
         "@vercel/oidc",
         "zod"
       ]
     },
-    "@ai-sdk/openai@4.0.118_zod@4.6.7": {
-      "integrity": "sha512-pBsFeB+IudrX96P0ic9AO/1NPnfB6IyoS2B2pnhBJ/Ovt4bsvAmBOPeUxwEfYbQyfetJdVFep9sfYX42uVX3SQ==",
+    "@ai-sdk/openai@4.0.125_zod@4.6.7": {
+      "integrity": "sha512-YKYn8DVW8YbosdshXfPbcX9J1EORv72TMnw7eLn8i3uX7lHtW+/on5V8cfeGJYci0boDvxv7yD8J7vUovIwaOQ==",
       "dependencies": [
-        "@ai-sdk/provider",
-        "@ai-sdk/provider-utils",
+        "@ai-sdk/provider@4.0.39",
+        "@ai-sdk/provider-utils@5.0.85_zod@4.6.7",
         "zod"
       ]
     },
     "@ai-sdk/provider-utils@5.0.81_zod@4.6.7": {
       "integrity": "sha512-pfvvdQ3d1WxdBuug/mnGEP6E48cPokwD8dMBnsFeeAUp0/rb/H2aj0f3mwOiY62gu/Cu5GO44e+SE5nDHyBWMA==",
       "dependencies": [
-        "@ai-sdk/provider",
+        "@ai-sdk/provider@4.0.38",
+        "@standard-schema/spec",
+        "@workflow/serde",
+        "eventsource-parser",
+        "zod"
+      ]
+    },
+    "@ai-sdk/provider-utils@5.0.85_zod@4.6.7": {
+      "integrity": "sha512-kpqFmdbhtslrRKbEvX/FuazM/4ZWGweHRczGsz+NTk3lXfqfjLBRrEdyOn+kZV5Lr6RTkfZqH0C5ny/CTFwq+Q==",
+      "dependencies": [
+        "@ai-sdk/provider@4.0.39",
         "@standard-schema/spec",
         "@workflow/serde",
         "eventsource-parser",
@@ -74,6 +84,12 @@
     },
     "@ai-sdk/provider@4.0.38": {
       "integrity": "sha512-GElz70UUCuDFFyD6m6aQJFgRY0HEABQzB5otzgkrisYaF5mnss7o0upAmbBTSD6KWiM9h7lZm1ls2c7xzHR8CA==",
+      "dependencies": [
+        "json-schema"
+      ]
+    },
+    "@ai-sdk/provider@4.0.39": {
+      "integrity": "sha512-jRvAhvW23+TeMGVCME2WGejP/TjzyDg7TplUep3t8HcEYnC2/8zqhCy9RRrjjVs1ljcygABZ8pQ21MbCRdF01w==",
       "dependencies": [
         "json-schema"
       ]
@@ -571,8 +587,7 @@
       "dependencies": [
         "fast-deep-equal",
         "lodash"
-      ],
-      "deprecated": true
+      ]
     },
     "@sapphire/snowflake@3.5.5": {
       "integrity": "sha512-xzvBr1Q1c4lCe7i6sRnrofxeO1QTP/LKQ6A6qy0iB4x5yfiSfARMEQEghojzTNALDTcv8En04qYNIco9/K9eZQ=="
@@ -861,8 +876,8 @@
       "integrity": "sha512-dLea37zT1h7cjkUsBprU4Rq35HJqhtHHaq1jTAXjHQoyfpeswpgCrhjZJWdWc10gjEAxmz114py7iLGQ3xIMxw==",
       "dependencies": [
         "@ai-sdk/gateway",
-        "@ai-sdk/provider",
-        "@ai-sdk/provider-utils",
+        "@ai-sdk/provider@4.0.38",
+        "@ai-sdk/provider-utils@5.0.81_zod@4.6.7",
         "zod"
       ]
     },
@@ -1233,8 +1248,8 @@
     "eventemitter3@5.0.4": {
       "integrity": "sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw=="
     },
-    "eventsource-parser@3.1.0": {
-      "integrity": "sha512-kJezFj9YFAMLeORyi7aCLxLbD5/qWMQnoMVlVPyHIll7lgRJCc3JVln9Vgl9nwQi0YkMnhdGTMNn7CkRRAptMg=="
+    "eventsource-parser@3.1.1": {
+      "integrity": "sha512-EKN1vKAMcZ8MlYMpaNuxN6R9yakzH6uajHcHVTqWJzvu5pWw9DyhbP35HH8MVBQ+dZjAfDxk+A8NiR9KWaXiyQ=="
     },
     "exsolve@1.1.0": {
       "integrity": "sha512-D+42+T12DdIlJM3uepa55qGiL3sYdLBOxIl2ifQCzCHz4c7eiolaHsi3BIqEr7JxBzxv2pYZQX9kw16ziMcEmw=="
@@ -1990,7 +2005,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/dotenv@~0.225.8",
-      "npm:@ai-sdk/azure@^4.0.122",
+      "npm:@ai-sdk/azure@^4.0.131",
       "npm:@prisma/adapter-pg@^7.10.1",
       "npm:@prisma/client@^7.10.1",
       "npm:@sentry/cli@^3.8.2",
