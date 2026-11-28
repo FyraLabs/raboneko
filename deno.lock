@@ -8,7 +8,7 @@
     "npm:@sentry/cli@^3.8.2": "3.8.2",
     "npm:@sentry/deno@^11.14.0": "11.16.0",
     "npm:ai@^7.0.169": "7.0.173_zod@4.6.7",
-    "npm:bullmq@^6.7.7": "6.7.8_ioredis@6.0.0",
+    "npm:bullmq@^6.7.10": "6.7.10_ioredis@6.0.0",
     "npm:cat-loggr@^1.2.2": "1.2.2",
     "npm:dayjs@^1.11.23": "1.11.23",
     "npm:discord-api-types@~0.38.59": "0.38.59",
@@ -571,8 +571,7 @@
       "dependencies": [
         "fast-deep-equal",
         "lodash"
-      ],
-      "deprecated": true
+      ]
     },
     "@sapphire/snowflake@3.5.5": {
       "integrity": "sha512-xzvBr1Q1c4lCe7i6sRnrofxeO1QTP/LKQ6A6qy0iB4x5yfiSfARMEQEghojzTNALDTcv8En04qYNIco9/K9eZQ=="
@@ -921,8 +920,8 @@
     "buffer-from@1.1.2": {
       "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
     },
-    "bullmq@6.7.8_ioredis@6.0.0": {
-      "integrity": "sha512-Mt0+nKGNFWAruuwwzEUVE+5yEgK5XgzjoR2BjSKp/JeqfgeYO0pFh6oy78Ls8u9upVTsaLhBzSaEZAhYvjPlJg==",
+    "bullmq@6.7.10_ioredis@6.0.0": {
+      "integrity": "sha512-Gd+z7bqpO2WeTtol8q01OpIf2kWLrVJcpvJGYsB8c/GeLZgeW6ezyeg4DIs7u8+LTJt1y8XMI2BPmIXlgFe7xg==",
       "dependencies": [
         "cron-parser",
         "ioredis",
@@ -1996,7 +1995,7 @@
       "npm:@sentry/cli@^3.8.2",
       "npm:@sentry/deno@^11.14.0",
       "npm:ai@^7.0.169",
-      "npm:bullmq@^6.7.7",
+      "npm:bullmq@^6.7.10",
       "npm:cat-loggr@^1.2.2",
       "npm:dayjs@^1.11.23",
       "npm:discord-api-types@~0.38.59",
